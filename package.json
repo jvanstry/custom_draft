@@ -1,0 +1,13 @@
+{
+  "name": "custom_draft",
+  "version": "0.0.1",
+  "description": "draft anything with friends",
+  "author": "jerry vanstrydonck <jvanstry@gmail.com>",
+  "main": "./lib",
+  "dependencies": {
+    "express": "4.x",
+    "pg": "^3.0.1",
+    "morgan": "^1.0.0"
+  },
+  "devDependencies": {}
+}

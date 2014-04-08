@@ -1,0 +1,1 @@
+App to allow groups to run "fantasy drafts" for whatever they would like. Suggestions: Masters, Oscars, Olympics.
