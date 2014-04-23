@@ -6,11 +6,11 @@ var pg = require('pg');
 var routes = require('./routes/aggregated_routes')
 var logger = require('morgan');
 var path = require('path');
-var connString = process.env.POSTGRES_CONNECT 
-  || 'postgres://postgres@localhost/custom_draft';
+var connString = process.env.POSTGRES_CONNECT || 
+  'postgres://postgres@localhost/custom_draft';
 
 app.set('port', process.env.PORT || 4114);
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/build/views');
 app.set('view engine', 'ejs');
 app.use(logger());
 app.use(bodyParser());
@@ -22,7 +22,7 @@ app.get('/', routes.index);
 
 
 app.start = function(){
-  this.listen(app.get('port'), function(){
+  return this.listen(app.get('port'), function(){
     console.log("Express on port: " + app.get('port'));
   })
 }
