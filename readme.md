@@ -1,1 +1,1 @@
-App to allow groups to run "fantasy drafts" for whatever they would like. Suggestions: Masters, Oscars, Olympics.
+App to allow groups to run custom "fantasy drafts" for whatever they would like. Suggestions: Golf Majors, Oscars, Olympics. Betting is encouraged ! 
