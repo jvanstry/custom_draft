@@ -1,6 +1,6 @@
 module.exports = function(orm, db){
   var Pick = db.define('pick', {
-    id: { type: 'number', required: true },
+    overallPick: { type: 'number' },
     createdAt: { type: 'date', time: true }
   },
   {
@@ -10,15 +10,13 @@ module.exports = function(orm, db){
       }
     },
     methods: {
-      slot: function () {
-        return this.id;
-      }      
+    
     }
   });
 
-  Pick.hasOne('user', db.models.user, {
+  Pick.hasOne('user', db.models.users, {
     required: true,
-    reverse: 'draftPick',
+    reverse: 'draftPicks',
     autoFetch: true
   });
   Pick.hasOne('draftee', db.models.draftee, {

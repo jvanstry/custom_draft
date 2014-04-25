@@ -4,11 +4,11 @@ var orm = require('orm');
 var connection = null;
 
 function setup(db, cb) {
-  require('./user')(orm, db);
-  require('./draft')(orm, db);
-  require('./pick')(orm, db);
-  require('./draftee')(orm, db);
+  require('./users')(orm, db);
   require('./league')(orm, db);
+  require('./draft')(orm, db);
+  require('./draftee')(orm, db);
+  require('./pick')(orm, db);
 
   return cb(null, db);
 }

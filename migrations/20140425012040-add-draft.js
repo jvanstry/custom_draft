@@ -3,12 +3,11 @@ var type = dbm.dataType;
 
 exports.up = function(db, callback) {
   db.createTable('draft', {
-    id: { type: 'int', primaryKey: true},
+    id: { type: 'int', primaryKey: true, autoIncrement: true },
     start_time: 'timestamp',
     league_id: 'int',
-    created_at: 'timestamp',
-    updated_at: 'timestamp'
-
+    createdAt: 'timestamp'
+    
   }, callback);
 };
 

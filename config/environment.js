@@ -20,8 +20,11 @@ module.exports = function(app){
 
       req.models = db.models;
       req.db     = db;
+      console.log(req.models);
 
       return next();
     });
   });
 }
+
+
