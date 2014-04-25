@@ -1,1 +1,1 @@
-require('./scripts/pizza')
+require('./scripts/pizza');

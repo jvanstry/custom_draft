@@ -13,6 +13,6 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-dist
+build
 node_modules
 test.js

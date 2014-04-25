@@ -1,3 +1,3 @@
-var index = require('./index')
+var index = require('./index');
 
 exports.index = index;
