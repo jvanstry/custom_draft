@@ -3,7 +3,7 @@ var app = require('express')();
 var bodyParser = require('body-parser');
 var http = require('http');
 var pg = require('pg');
-var routes = require('./routes/aggregated_routes');
+var routes = require('./routes');
 var logger = require('morgan');
 var path = require('path');
 var connString = process.env.POSTGRES_CONNECT || 
@@ -16,7 +16,7 @@ app.use(logger());
 app.use(bodyParser());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/', routes.index);
+app.get('/', routes.home);
 // app.get('/lobby/:id', routes.lobby);
 // app.get('/signup', routes.signup);
 

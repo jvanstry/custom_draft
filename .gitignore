@@ -16,3 +16,4 @@ coverage
 build
 node_modules
 test.js
+settings.js
