@@ -73,6 +73,7 @@ gulp.task('html', function() {
     .pipe(refresh(lr))
 })
 
+//TODO: figure out why the heck we can't get a new app instance
 function breakRequireCache(cb){
   for(key in require.cache){
     delete require.cache[key];
@@ -98,6 +99,7 @@ gulp.task('default', defaultTasks, function() {
     gulp.watch(serverScriptsLocation, ['lint', 'server-scripts'])
       .on('change', function(data) {
     // delay executing to ensure server-scripts task completion
+    // fileChanged = data.path;
         process.nextTick(function(){
           breakRequireCache(restartExpressServer)
         });

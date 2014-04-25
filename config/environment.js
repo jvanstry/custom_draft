@@ -14,14 +14,14 @@ module.exports = function(app){
   app.use(bodyParser);
   app.use(methodOverride)
   app.use(express.static(path.join(__dirname, '../build')));
-  // app.use(function (req, res, next) {
-  //   models(function (err, db) {
-  //     if (err) return next(err);
+  app.use(function (req, res, next) {
+    models(function (err, db) {
+      if (err) return next(err);
 
-  //     req.models = db.models;
-  //     req.db     = db;
+      req.models = db.models;
+      req.db     = db;
 
-  //     return next();
-  //   });
-  // });
+      return next();
+    });
+  });
 }

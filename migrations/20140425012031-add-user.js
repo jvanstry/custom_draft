@@ -2,10 +2,11 @@ var dbm = require('db-migrate');
 var type = dbm.dataType;
 
 exports.up = function(db, callback) {
-  db.createTable('drafts', {
+  db.createTable('user', {
     id: { type: 'int', primaryKey: true},
-    start_time: 'timestamp',
-    league_id: 'int',
+    name: { type: 'string', notNull: true },
+    email: 'string',
+    password_hash: 'string',
     created_at: 'timestamp',
     updated_at: 'timestamp'
 
@@ -13,5 +14,5 @@ exports.up = function(db, callback) {
 };
 
 exports.down = function(db, callback) {
-  db.dropTable('drafts', callback);
+  db.dropTable('user', callback);
 };
