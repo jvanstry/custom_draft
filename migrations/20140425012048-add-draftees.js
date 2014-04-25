@@ -6,7 +6,9 @@ exports.up = function(db, callback) {
     id: { type: 'int', primaryKey: true },
     name: { type: 'string', notNull: true },
     available: { type: 'string', defaultValue: 'yes' },
-    draft_id: 'int'
+    draft_id: 'int',
+    created_at: 'timestamp',
+    updated_at: 'timestamp'
 
   }, callback);
 };

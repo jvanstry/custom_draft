@@ -1,1 +1,3 @@
-var bcrypt = require('bcrypt');
+module.exports = {
+
+};

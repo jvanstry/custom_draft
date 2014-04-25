@@ -6,7 +6,9 @@ exports.up = function(db, callback) {
     id: { type: 'int', primaryKey: true},
     name: { type: 'string', notNull: true },
     email: 'string',
-    password_hash: 'string'
+    password_hash: 'string',
+    created_at: 'timestamp',
+    updated_at: 'timestamp'
 
   }, callback);
 };

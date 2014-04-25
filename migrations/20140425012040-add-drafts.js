@@ -5,7 +5,9 @@ exports.up = function(db, callback) {
   db.createTable('drafts', {
     id: { type: 'int', primaryKey: true},
     start_time: 'timestamp',
-    league_id: 'int'
+    league_id: 'int',
+    created_at: 'timestamp',
+    updated_at: 'timestamp'
 
   }, callback);
 };

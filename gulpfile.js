@@ -13,8 +13,12 @@ var gulp = require('gulp'),
   path = require('path');
 
 var clientScriptsLocation = 'public/scripts/*.js',
-  serverScriptsLocation = ['models/*.js', 'routes/*.js', './app.js'],
-  scriptsLocation = ['models/*.js', 'routes/*.js', './app.js', 'public/scripts/*.js'],
+  serverScriptsLocation = ['models/*.js', 'config/*.js', 
+                            'controllers/*.js', './app.js'],
+
+  scriptsLocation = ['models/*.js', 'config.*js', 'controllers/*.js', 
+                      './app.js', 'public/scripts/*.js'],
+                      
   testsLocation = ['spec/client/*.js', 'spec/server/*.js'],
   stylesLocation = 'public/styles/*.css',
   viewsLocation = 'views/*.ejs',

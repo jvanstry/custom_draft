@@ -1,24 +1,9 @@
-var express = require('express');
 var app = require('express')();
-var bodyParser = require('body-parser');
-var http = require('http');
-var pg = require('pg');
-var routes = require('./routes');
-var logger = require('morgan');
-var path = require('path');
-var connString = process.env.POSTGRES_CONNECT || 
-  'postgres://postgres@localhost/custom_draft';
+var routes = require('./config/routes');
+var environment = require('./config/environment');
 
-app.set('port', process.env.PORT || 4114);
-app.set('views', __dirname + '/build/views');
-app.set('view engine', 'ejs');
-app.use(logger());
-app.use(bodyParser());
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/', routes.home);
-// app.get('/lobby/:id', routes.lobby);
-// app.get('/signup', routes.signup);
+environment(app);
+routes(app);
 
 
 app.start = function(){

@@ -13,9 +13,10 @@
     "body-parser": "^1.0.2",
     "ejs": "^1.0.0",
     "express": "4.x",
+    "method-override": "^1.0.0",
     "morgan": "^1.0.0",
     "orm": "^2.1.7",
-    "pg": "^3.0.1",
+    "pg": "^3.0.3",
     "socket.io": "^0.9.16"
   },
   "devDependencies": {
