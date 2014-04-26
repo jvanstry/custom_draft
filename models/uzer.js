@@ -1,5 +1,5 @@
 module.exports = function(orm, db){
-  var Users = db.define('users', {
+  var Uzer = db.define('uzer', {
     name: { type: 'text', required: true },
     email: { type:'text' },
     password_hash: { type: 'text' },
@@ -19,6 +19,4 @@ module.exports = function(orm, db){
     },
     autoFetch: true
   });
-
-  Users.hasMany('leagues', db.models.league)
 };

@@ -16,10 +16,12 @@ module.exports = function(orm, db){
 
     }
   });
-
+  
   Draft.hasOne('league', db.models.league, {
     required: true,
     reverse: 'draft',
     autoFetch: true
   });
+
+  Draft.sync();
 };

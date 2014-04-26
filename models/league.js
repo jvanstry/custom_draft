@@ -17,11 +17,16 @@ module.exports = function(orm, db){
     }
   });
 
-  League.hasOne('creator', db.models.users, {
+  League.hasOne('creator', db.models.uzer, {
     required: true,
     reverse: 'createdLeagues',
     autoFetch: true
   });
-  League.hasMany('members', db.models.users)
+
+  db.models.uzer.hasMany('leagues', League, { why: String }, 
+    { reverse: 'members' });
+
+  db.models.uzer.hasMany('createdLeagues', League);
+
   League.sync();
 };
