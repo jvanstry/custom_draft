@@ -1,4 +1,4 @@
-process.env.test = true;
+process.env.NODE_ENV = 'test';
 
 exports.clientSetup = function(){
   var jsdom = require('jsdom');

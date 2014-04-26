@@ -2,11 +2,7 @@ var settings = require('../settings');
 var orm = require('orm');
 var dbObj;
 
-if(process.env.test){
-  dbObj = settings.test
-}else{
-  dbObj = settings.database
-}
+var dbObj = settings.database[process.env.NODE_ENV || 'dev'];
 
 var connection = null;
 
