@@ -1,0 +1,1 @@
+drop database custom_draft_test;

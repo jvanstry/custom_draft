@@ -15,12 +15,11 @@ module.exports = function(app){
   app.use(methodOverride)
   app.use(express.static(path.join(__dirname, '../build')));
   app.use(function (req, res, next) {
-    models(function (err, db) {
+    models(function setUp(err, db) {
       if (err) return next(err);
 
       req.models = db.models;
       req.db     = db;
-      console.log(req.models);
 
       return next();
     });

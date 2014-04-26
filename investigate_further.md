@@ -1,0 +1,1 @@
+Optimize database operations... fully understand eager loading, indexing, etc. 

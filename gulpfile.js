@@ -9,8 +9,7 @@ var gulp = require('gulp'),
   browserify = require('browserify'),
   source = require('vinyl-source-stream'),
   streamify = require('gulp-streamify'),
-  mocha = require('gulp-mocha'),
-  path = require('path');
+  mocha = require('gulp-mocha');
 
 var clientScriptsLocation = 'public/scripts/*.js',
   serverScriptsLocation = ['models/*.js', 'config/*.js', 
@@ -19,7 +18,7 @@ var clientScriptsLocation = 'public/scripts/*.js',
   scriptsLocation = ['models/*.js', 'config.*js', 'controllers/*.js', 
                       './app.js', 'public/scripts/*.js'],
                       
-  testsLocation = ['spec/client/*.js', 'spec/server/*.js'],
+  testsLocation = ['test/client/*.js', 'test/server/*.js', 'test/db/*.js'],
   stylesLocation = 'public/styles/*.css',
   viewsLocation = 'views/*.ejs',
   LIVERELOAD_PORT = 35729,
