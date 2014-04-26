@@ -15,7 +15,6 @@
     "express": "4.x",
     "lodash-node": "^2.4.1",
     "method-override": "^1.0.0",
-    "moment": "^2.6.0",
     "morgan": "^1.0.0",
     "orm": "^2.1.7",
     "pg": "^3.0.3",
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "browserify": "^3.44.2",
-    "db-migrate": "^0.6.4",
     "gulp": "^3.6.0",
     "gulp-concat": "^2.2.0",
     "gulp-embedlr": "^0.5.2",
