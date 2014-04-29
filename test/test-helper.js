@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test';
+var exec = require('child_process').exec;
 
 exports.clientSetup = function(){
   var jsdom = require('jsdom');
@@ -16,49 +16,75 @@ exports.clientSetup = function(){
   global.C = require('../build/bundle.min.js');
 };
 
-exports.dbCreate = function(next){
-  var exec = require('child_process').exec;
-  var sqlLocation = '~/' + __dirname + '/testdb.sql';
+function doesDbExist(cb){
+  var ls = exec('psql -l | grep custom_draft_test | wc -l', function(err){
+    if(err){
+      console.log('err determining db existence: ', err)
+    }
+  });
+
+  ls.stdout.on('data', function dataResponder(data) {
+    // exec command checks for existence of db
+    // returns string representation of 1 or 0 
+    // in 7th digit of string accordingly
+    var dbExists = parseInt(data[7]);
+
+    cb(dbExists)
+  });
+}
+
+function loadDbFromSQLFile(next){
+  var sqlLocation = __dirname + '/testdb.sql';
   var dbLoadExecStr = 'psql -d custom_draft_test -f ' + sqlLocation;
 
-  exec('createdb custom_draft_test', function(err){
+  exec(dbLoadExecStr, function(err){
     if(err){
-      console.error('Error in test db creation: ', err);
+      console.error('Error in test db loading: ', err);
     }
-    exec(dbLoadExecStr, function(err){
-      if(err){
-        console.error('Error in test db loading: ', err);
-      }
-      next()
-    })
-  })
+    next(err);
+  });
 }
 
 exports.dbSetup = function(next){
+  doesDbExist(function(dbExists){
+    if(dbExists){
+      loadDbFromSQLFile(next);
+    }else{
+      exec('createdb custom_draft_test', function(err){
+        if(err){
+          console.error('Error in test db creation: ', err);
+        }
+        loadDbFromSQLFile(next)
+     })
+    }
+  })
+}
+
+exports.modelSetup = function(next){
   var models = require('../models');
   
   models(function testDbSetUp(err, db){
     if(err){
       console.error('Error in test db setup: ', err);
     }
-
     global.models = db.models;
     global.db = db;
     
-    next(); 
+    next(err); 
   });
 };
 
 exports.dbCleanup = function(next){
-  var exec = require('child_process').exec;
-  var sqlLocation = '~/' + __dirname + '/drop_testdb.sql';
+  var sqlLocation = __dirname + '/drop_testdb_schema.sql';
+  // console.log(sqlLocation);
   var dbDropExecStr = 'psql -d custom_draft_test -f ' + sqlLocation;
 
   exec(dbDropExecStr, function(err){
     if(err){
       console.error('Error in test db dropping: ', err);
     }
-
+    console.log('hi')
     next();
   });
+
 }
