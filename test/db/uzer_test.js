@@ -2,6 +2,8 @@ var helper = require('../test-helper');
 var Uzer;
 var validProperties = { email: 'jer@example.com', 
   password: 'notSecurezYet', name: 'jerbear' };
+var makePwHash = require('../../models/helpers/make-hash-pw');
+validProperties.password_hash = makePwHash(validProperties.password);
 
 function letsMakeReferencingUzerEasy(){
   Uzer = models.uzer;
@@ -44,7 +46,6 @@ describe('Uzer class', function(){
 
     it('should not allow duplicate uzer emails', function(done){
       Uzer.create(validProperties, function(err, results){
-        console.log(err)
         expect(err).to.not.exist;
         expect(results).to.exist;
         
@@ -58,7 +59,7 @@ describe('Uzer class', function(){
     });
 
     it('should not save without a password', function(done){
-      var noPassword = omit(validProperties, 'password');
+      var noPassword = omit(validProperties, 'password_hash');
 
       Uzer.create(noPassword, function(err){
         expect(err).to.exist;
@@ -72,7 +73,6 @@ describe('Uzer class', function(){
 
     it('should save with valid properties', function(done){
       Uzer.create(validProperties, function(err){
-        console.log(err);
         expect(err).to.not.exist;
 
         Uzer.find({ email: validProperties.email }, function(err, results){
@@ -82,17 +82,5 @@ describe('Uzer class', function(){
         });
       }); 
     })
-
-    it('should shouldnt save the pw in plain text', function(done){
-      Uzer.create(validProperties, function(err){
-        console.log(err)
-        expect(err).to.not.exist;
-
-        Uzer.find({ email: validProperties.email }, function(err, results){
-          expect(results[0].password_hash).to.not.equal(validProperties.password);
-          done();
-        });
-      });
-    });
   });
 });
