@@ -34,6 +34,8 @@
     "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.2.1",
     "jsdom": "^0.10.5",
+    "lodash.omit": "^2.4.1",
+    "lodash.pick": "^2.4.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
     "tiny-lr": "0.0.5",

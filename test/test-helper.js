@@ -83,7 +83,6 @@ exports.dbCleanup = function(next){
     if(err){
       console.error('Error in test db dropping: ', err);
     }
-    console.log('hi')
     next();
   });
 
