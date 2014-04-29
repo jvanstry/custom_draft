@@ -3,6 +3,7 @@ module.exports = function(orm, db){
     name: { type: 'text', required: true },
     overallPick: { type: 'number' },
     available: { type: 'boolean', defaultValue: true },
+    score: { type: 'number', defaultValue: 0 },
     createdAt: { type: 'date', time: true }
   },
   {
@@ -29,9 +30,9 @@ module.exports = function(orm, db){
     autoFetch: true
   });
 
-  db.models.draft.hasMany('eligiblePicks', Draftee);
+  // db.models.draft.hasMany('eligiblePicks', Draftee);
 
-  db.models.uzer.hasMany('draftPicks', Draftee);
+  // db.models.uzer.hasMany('draftPicks', Draftee);
 
   db.models.draft.sync();
   db.models.uzer.sync();

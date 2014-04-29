@@ -20,7 +20,7 @@ module.exports = function(app){
 
       req.models = db.models;
       req.db     = db;
-
+      
       return next();
     });
   });

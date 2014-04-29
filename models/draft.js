@@ -23,5 +23,6 @@ module.exports = function(orm, db){
     autoFetch: true
   });
 
+  db.models.league.sync();
   Draft.sync();
 };
