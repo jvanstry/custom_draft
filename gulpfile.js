@@ -9,7 +9,7 @@ var gulp = require('gulp'),
   browserify = require('browserify'),
   source = require('vinyl-source-stream'),
   streamify = require('gulp-streamify'),
-  mocha = require('gulp-mocha');
+  mocha = require('gulp-spawn-mocha');
 
 var clientScriptsLocation = 'public/scripts/*.js',
   serverScriptsLocation = ['models/*.js', 'config/*.js', 
@@ -34,9 +34,19 @@ gulp.task('lint', function() {
 })
 
 gulp.task('test', function () {
-  gulp.src(testsLocation)
-    .pipe(mocha({reporter: 'nyan'}));
+  return test().on('error', function (e) {
+    throw e;
+  });  
 })
+
+function test() {
+  return gulp.src(testsLocation, {read: false}).pipe(mocha({
+    r: 'test/setup.js',
+    R: 'spec',
+    c: true,
+    debug: true
+  })).on('error', console.warn.bind(console));
+}
 
 gulp.task('client-scripts', function() {
   var bundleStream = browserify('./public/main.js').bundle();
