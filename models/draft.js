@@ -7,10 +7,14 @@ module.exports = function(orm, db){
     hooks: {
       beforeValidation: function(){
         this.createdAt = new Date();
+        this.start_time = Date.parse(new Date(this.start_time));
+      }, 
+      beforeSave: function(){
+        this.start_time = new Date(this.start_time);
       }
     },
     validations: {
-      //TODO add validation for time in future
+      start_time: orm.enforce.ranges.number(Date.now(), undefined, 'draft must be in future')
     },
     methods: {
 

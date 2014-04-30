@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 
+
 exports.clientSetup = function(){
   var jsdom = require('jsdom');
 
@@ -85,5 +86,4 @@ exports.dbCleanup = function(next){
     }
     next();
   });
-
 }

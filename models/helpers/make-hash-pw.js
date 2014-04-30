@@ -5,7 +5,6 @@ module.exports = function(password){
     return null;
   }
   
-  console.log(password, 'in method');
   var salt = bcrypt.genSaltSync(10);
   return bcrypt.hashSync(password, salt);
 }

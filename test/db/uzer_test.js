@@ -1,22 +1,24 @@
 var helper = require('../test-helper');
 var Uzer;
+
 var validProperties = { email: 'jer@example.com', 
   password: 'notSecurezYet', name: 'jerbear' };
+
 var makePwHash = require('../../models/helpers/make-hash-pw');
 validProperties.password_hash = makePwHash(validProperties.password);
 
-function letsMakeReferencingUzerEasy(){
+function referenceUzer(){
   Uzer = models.uzer;
-};
+};  
 
 describe('Uzer class', function(){
   beforeEach(helper.dbSetup);
   beforeEach(helper.modelSetup);
-  beforeEach(letsMakeReferencingUzerEasy);
+  beforeEach(referenceUzer);
   afterEach(helper.dbCleanup);
 
 
-  describe('creating a uzer', function(){
+  describe('Saving uzer to db', function(){
     it('should should not save without a name', function(done){
       var noName = omit(validProperties, 'name');
 
@@ -76,6 +78,7 @@ describe('Uzer class', function(){
         expect(err).to.not.exist;
 
         Uzer.find({ email: validProperties.email }, function(err, results){
+          console.log(results[0].createdAt);  
           expect(results[0].name).to.equal(validProperties.name);
           expect(results.length).to.equal(1);
           done();
