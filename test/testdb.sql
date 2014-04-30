@@ -43,18 +43,6 @@ CREATE TABLE draft (
 ALTER TABLE public.draft OWNER TO jer;
 
 --
--- Name: draft_eligiblePicks; Type: TABLE; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE TABLE "draft_eligiblePicks" (
-    draft_id real,
-    eligiblepicks_id real
-);
-
-
-ALTER TABLE public."draft_eligiblePicks" OWNER TO jer;
-
---
 -- Name: draft_id_seq; Type: SEQUENCE; Schema: public; Owner: jer
 --
 
@@ -83,8 +71,11 @@ CREATE TABLE draftee (
     name text NOT NULL,
     "overallPick" real,
     available boolean DEFAULT true,
+    score real DEFAULT 0,
     "createdAt" timestamp without time zone,
-    id integer NOT NULL
+    id integer NOT NULL,
+    draft_id integer NOT NULL,
+    picker_id integer
 );
 
 
@@ -119,7 +110,7 @@ CREATE TABLE league (
     name text NOT NULL,
     "createdAt" timestamp without time zone,
     id integer NOT NULL,
-    creator_id integer NOT NULL
+    creator_id integer
 );
 
 
@@ -152,38 +143,14 @@ ALTER SEQUENCE league_id_seq OWNED BY league.id;
 
 CREATE TABLE uzer (
     name text NOT NULL,
-    email text,
-    password_hash text,
+    email text NOT NULL,
+    password_hash text NOT NULL,
     "createdAt" timestamp without time zone,
     id integer NOT NULL
 );
 
 
 ALTER TABLE public.uzer OWNER TO jer;
-
---
--- Name: uzer_createdLeagues; Type: TABLE; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE TABLE "uzer_createdLeagues" (
-    uzer_id real,
-    createdleagues_id real
-);
-
-
-ALTER TABLE public."uzer_createdLeagues" OWNER TO jer;
-
---
--- Name: uzer_draftPicks; Type: TABLE; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE TABLE "uzer_draftPicks" (
-    uzer_id real,
-    draftpicks_id real
-);
-
-
-ALTER TABLE public."uzer_draftPicks" OWNER TO jer;
 
 --
 -- Name: uzer_id_seq; Type: SEQUENCE; Schema: public; Owner: jer
@@ -211,8 +178,8 @@ ALTER SEQUENCE uzer_id_seq OWNED BY uzer.id;
 --
 
 CREATE TABLE uzer_leagues (
-    uzer_id real,
     leagues_id real,
+    uzer_id real,
     why text
 );
 
@@ -256,14 +223,6 @@ COPY draft (start_time, "createdAt", id, league_id) FROM stdin;
 
 
 --
--- Data for Name: draft_eligiblePicks; Type: TABLE DATA; Schema: public; Owner: jer
---
-
-COPY "draft_eligiblePicks" (draft_id, eligiblepicks_id) FROM stdin;
-\.
-
-
---
 -- Name: draft_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jer
 --
 
@@ -274,7 +233,7 @@ SELECT pg_catalog.setval('draft_id_seq', 1, false);
 -- Data for Name: draftee; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY draftee (name, "overallPick", available, "createdAt", id) FROM stdin;
+COPY draftee (name, "overallPick", available, score, "createdAt", id, draft_id, picker_id) FROM stdin;
 \.
 
 
@@ -305,23 +264,6 @@ SELECT pg_catalog.setval('league_id_seq', 1, false);
 --
 
 COPY uzer (name, email, password_hash, "createdAt", id) FROM stdin;
-jerry	\N	\N	2014-04-25 20:37:13.351	1
-\.
-
-
---
--- Data for Name: uzer_createdLeagues; Type: TABLE DATA; Schema: public; Owner: jer
---
-
-COPY "uzer_createdLeagues" (uzer_id, createdleagues_id) FROM stdin;
-\.
-
-
---
--- Data for Name: uzer_draftPicks; Type: TABLE DATA; Schema: public; Owner: jer
---
-
-COPY "uzer_draftPicks" (uzer_id, draftpicks_id) FROM stdin;
 \.
 
 
@@ -329,14 +271,14 @@ COPY "uzer_draftPicks" (uzer_id, draftpicks_id) FROM stdin;
 -- Name: uzer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jer
 --
 
-SELECT pg_catalog.setval('uzer_id_seq', 1, true);
+SELECT pg_catalog.setval('uzer_id_seq', 1, false);
 
 
 --
 -- Data for Name: uzer_leagues; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY uzer_leagues (uzer_id, leagues_id, why) FROM stdin;
+COPY uzer_leagues (leagues_id, uzer_id, why) FROM stdin;
 \.
 
 
@@ -370,48 +312,6 @@ ALTER TABLE ONLY league
 
 ALTER TABLE ONLY uzer
     ADD CONSTRAINT uzer_pkey PRIMARY KEY (id);
-
-
---
--- Name: draft_eligiblePicks_draft_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "draft_eligiblePicks_draft_id_index" ON "draft_eligiblePicks" USING btree (draft_id);
-
-
---
--- Name: draft_eligiblePicks_eligiblepicks_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "draft_eligiblePicks_eligiblepicks_id_index" ON "draft_eligiblePicks" USING btree (eligiblepicks_id);
-
-
---
--- Name: uzer_createdLeagues_createdleagues_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "uzer_createdLeagues_createdleagues_id_index" ON "uzer_createdLeagues" USING btree (createdleagues_id);
-
-
---
--- Name: uzer_createdLeagues_uzer_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "uzer_createdLeagues_uzer_id_index" ON "uzer_createdLeagues" USING btree (uzer_id);
-
-
---
--- Name: uzer_draftPicks_draftpicks_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "uzer_draftPicks_draftpicks_id_index" ON "uzer_draftPicks" USING btree (draftpicks_id);
-
-
---
--- Name: uzer_draftPicks_uzer_id_index; Type: INDEX; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE INDEX "uzer_draftPicks_uzer_id_index" ON "uzer_draftPicks" USING btree (uzer_id);
 
 
 --

@@ -1,5 +1,5 @@
 var helper = require('../test-helper');
-
+var Draft;
 var validProperties = { start_time: new Date(Date.now() + 100000), league_id: 14 }
 
 function referenceDraft(){
@@ -28,6 +28,19 @@ describe('Draft class', function(){
       })
     });
 
+    it('should not save without a league_id', function(done){
+      var noLeagueID = omit(validProperties, 'league_id')
+
+      Draft.create(noLeagueID, function(err, results){
+        expect(err).to.exist;
+        
+        Draft.find(noLeagueID, function(err, results){
+          expect(results).to.be.empty;
+          done();
+        }); 
+      });
+    });
+
     it('should save with valid properties', function(done){
       Draft.create(validProperties, function(err){
         expect(err).to.not.exist;
@@ -39,17 +52,5 @@ describe('Draft class', function(){
         });
       });
     });
-    it('should not save without a league_id', function(done){
-      var noLeagueID = omit(validProperties, 'league_id')
-
-      Draft.create(noLeagueID, function(err, results){
-        expect(err).to.exist;
-        
-        Draft.find(noLeagueID, function(err, results){
-          expect(results).to.be.empty;
-          done();
-        }); 
-      })
-    }) 
   });
 });

@@ -26,7 +26,6 @@ module.exports = function(orm, db){
   });
 
   Draftee.hasOne('picker', db.models.uzer, {
-    required: true, 
     autoFetch: true
   });
 
