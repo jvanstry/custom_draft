@@ -110,7 +110,7 @@ CREATE TABLE league (
     name text NOT NULL,
     "createdAt" timestamp without time zone,
     id integer NOT NULL,
-    creator_id integer
+    creator_id integer NOT NULL
 );
 
 
@@ -178,8 +178,8 @@ ALTER SEQUENCE uzer_id_seq OWNED BY uzer.id;
 --
 
 CREATE TABLE uzer_leagues (
-    leagues_id real,
     uzer_id real,
+    leagues_id real,
     why text
 );
 
@@ -278,7 +278,7 @@ SELECT pg_catalog.setval('uzer_id_seq', 1, false);
 -- Data for Name: uzer_leagues; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY uzer_leagues (leagues_id, uzer_id, why) FROM stdin;
+COPY uzer_leagues (uzer_id, leagues_id, why) FROM stdin;
 \.
 
 

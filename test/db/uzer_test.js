@@ -78,7 +78,6 @@ describe('Uzer class', function(){
         expect(err).to.not.exist;
 
         Uzer.find({ email: validProperties.email }, function(err, results){
-          console.log(results[0].createdAt);  
           expect(results[0].name).to.equal(validProperties.name);
           expect(results.length).to.equal(1);
           done();

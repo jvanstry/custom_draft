@@ -12,6 +12,8 @@ describe('Draft class', function(){
   beforeEach(referenceDraft);
   afterEach(helper.dbCleanup);
 
+  console.log('~~~~~~~~~~~~~DB TESTS~~~~~~~~~~~~~~~~');
+
   describe('Saving draft to db', function(){
     it('should only save with draft time in future', function(done){
       var pastStartTime = new Date(Date.now() - 1 );
@@ -25,7 +27,7 @@ describe('Draft class', function(){
           expect(results).to.be.empty;
           done();
         }); 
-      })
+      });
     });
 
     it('should not save without a league_id', function(done){
