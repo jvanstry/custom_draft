@@ -3,7 +3,7 @@ var controllers = require('../controllers')
 module.exports = function (app) {
   app.get('/',            controllers.home.get);
   app.post('/',           controllers.home.signIn);
-  app.delete('/',         controllers.home.signOut)
+  app.delete('/',         controllers.home.signOut);
 
   app.get('/signup',      controllers.uzer.new);
   app.post('/signup',     controllers.uzer.create);
