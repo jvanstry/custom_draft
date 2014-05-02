@@ -1,11 +1,10 @@
 var helper = require('../test-helper');
 var Uzer;
+var path = require('path');
 
-var validProperties = { email: 'jer@example.com', 
-  password: 'notSecurezYet', name: 'jerbear' };
-
-var makePwHash = require('../../models/helpers/make-hash-pw');
-validProperties.password_hash = makePwHash(validProperties.password);
+// var validProperties = { email: 'jer@example.com', 
+//   password: 'notSecurezYet', password_hash: 'notSecurezYet', 
+//   name: 'jerbear', poop: 'hi' };
 
 function referenceUzer(){
   Uzer = models.uzer;
@@ -17,8 +16,10 @@ describe('Uzer class', function(){
   beforeEach(referenceUzer);
   afterEach(helper.dbCleanup);
 
-
   describe('Saving uzer to db', function(){
+    var validProperties = { email: 'jer@example.com', 
+      password: 'notSecurezYet', password_hash: 'notSecurezYet', 
+      name: 'jerbear'};
     it('should should not save without a name', function(done){
       var noName = omit(validProperties, 'name');
 
@@ -83,6 +84,38 @@ describe('Uzer class', function(){
           done();
         });
       }); 
+    });
+  });
+  
+  describe('#authenticate', function(){
+    var validProperties = { email: 'jer@example.com', 
+      password: 'notSecurezYet', password_hash: 'notSecurezYet', 
+      name: 'jerbear'};
+    beforeEach(function(done){
+      Uzer.create(validProperties, function(err){
+        done();
+      });
+    });
+
+    it('should not login uzer with invalid credentials', function(done){
+      Uzer.authenticate(validProperties.email, 'not the pw', function(uzer){
+        expect(uzer.error).to.exist;
+        done();      
+      });
+    });
+
+    it('should login uzer with valid credentials', function(done){
+      Uzer.authenticate(validProperties.email, 'notSecurezYet', function(uzer){
+        expect(uzer.name).to.equal(validProperties.name);
+        done();
+      });
+    });
+
+    it('should let it be known that no user found by email', function(done){
+      Uzer.authenticate('nobodies email', 'notSecurezYet', function(uzer){
+        expect(uzer.error).to.equal('no uzer by that email found');
+        done();
+      })
     })
   });
 });

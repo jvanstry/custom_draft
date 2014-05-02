@@ -1,4 +1,5 @@
 var exec = require('child_process').exec;
+// require('./setup');
 
 exports.clientSetup = function(){
   var jsdom = require('jsdom');
@@ -76,7 +77,6 @@ exports.modelSetup = function(next){
 
 exports.dbCleanup = function(next){
   var sqlLocation = __dirname + '/drop_testdb_schema.sql';
-  // console.log(sqlLocation);
   var dbDropExecStr = 'psql -d custom_draft_test -f ' + sqlLocation;
 
   exec(dbDropExecStr, function(err){
