@@ -1,6 +1,6 @@
 var helper = require('../test-helper');
 var Draft;
-var validProperties = { start_time: new Date(Date.now() + 100000), league_id: 14 }
+var validProperties = { start_time: new Date(Date.now() + 100000000), league_id: 14 }
 
 function referenceDraft(){
   Draft = models.draft;
@@ -23,7 +23,7 @@ describe('Draft class', function(){
         expect(err).to.exist;
         
 
-        Draft.find(invalidProperties, function(err, results){
+        Draft.find({ league_id: 14 }, function(err, results){
           expect(results).to.be.empty;
           done();
         }); 
