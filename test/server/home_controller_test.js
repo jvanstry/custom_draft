@@ -1,7 +1,6 @@
 var helper = require('../test-helper.js');
 var app = require('../../app.js').start();
 var request = require('supertest');
-// var homeController = require('../../controllers/home-controller');
 
 describe('Home Controller', function(){
   describe('#get', function(){
@@ -11,7 +10,6 @@ describe('Home Controller', function(){
         .expect('Content-Type', 'text/html; charset=utf-8')
         .expect(200).end(function(err, res){
           expect(err).to.not.exist;
-          // console.log(res);
           done();
         })
     });
@@ -35,15 +33,33 @@ describe('Home Controller', function(){
 
           var parsed = JSON.parse(res.text);
           expect(parsed.email).to.equal('valid');
+          console.log(res.header);
 
           models.uzer.authenticate.restore();
           done();
         })
     });
 
-    // it('should redirect you to home page without', function(done){
+    it('should not log you in with invalid creds', function(done){
+      var invalidLogin = { email: 'valid', password: 'invalid' };
 
-    // });
+      var authStub = sinon.stub(models.uzer, 'authenticate')
+        .withArgs(invalidLogin.email, invalidLogin.password)
+        .callsArgWith(2, { email: 'valid', error: true });
+
+      request(app)
+        .post('/')
+        .send(invalidLogin)
+        .expect(200).end(function(err, res){
+          expect(err).to.not.exist;
+
+          var parsed = JSON.parse(res.text);
+          expect(parsed.error).to.equal('invalid credentials');
+
+          models.uzer.authenticate.restore();
+          done();
+        })
+    });
   });
 
   describe('#signOut', function(){

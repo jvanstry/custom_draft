@@ -14,7 +14,10 @@ module.exports = {
 
     function callback(uzer){
       if(!(uzer.error)){
+        // put in session cookies
         res.send(uzer);
+      }else{
+        res.send({ error: 'invalid credentials' })
       }
     }
 

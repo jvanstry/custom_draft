@@ -21,8 +21,8 @@ module.exports = function(app){
   app.use(compress())
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
-  app.use(cookieParser(sessionSecret));
-  app.use(session());
+  app.use(cookieParser());
+  app.use(session({ secret: sessionSecret, cookie: { maxAge: 60 * 60 * 1000 }}));
   app.use(express.static(path.join(__dirname, '../build')));
   app.use(function (req, res, next) {
     models(function setUp(err, db) {
