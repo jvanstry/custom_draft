@@ -2,10 +2,6 @@ var helper = require('../test-helper');
 var Uzer;
 var path = require('path');
 
-// var validProperties = { email: 'jer@example.com', 
-//   password: 'notSecurezYet', password_hash: 'notSecurezYet', 
-//   name: 'jerbear', poop: 'hi' };
-
 function referenceUzer(){
   Uzer = models.uzer;
 };  
