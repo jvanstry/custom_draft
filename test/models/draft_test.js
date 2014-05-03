@@ -16,7 +16,7 @@ describe('Draft class', function(){
 
   describe('Saving draft to db', function(){
     it('should only save with draft time in future', function(done){
-      var pastStartTime = new Date(Date.now() - 1 );
+      var pastStartTime = new Date(Date.now() - 10000 );
       var invalidProperties = { start_time: pastStartTime, league_id: 14 };
 
       Draft.create(invalidProperties, function(err, results){
