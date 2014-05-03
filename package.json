@@ -21,7 +21,7 @@
     "static-favicon": "^1.0.2",
     "cookie-parser": "^1.0.1",
     "compression": "^1.0.2",
-    "cookie-session": "^1.0.1"
+    "express-session": "^1.0.4"
   },
   "devDependencies": {
     "browserify": "^3.44.2",
@@ -43,7 +43,6 @@
     "sinon-chai": "^2.5.0",
     "tiny-lr": "0.0.5",
     "vinyl-source-stream": "^0.1.1",
-    "supertest": "^0.12.0",
-    "htmlparser2": "^3.7.1"
+    "supertest": "^0.12.0"
   }
 }

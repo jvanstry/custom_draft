@@ -23,7 +23,7 @@ describe('Home Controller', function(){
 
       var authStub = sinon.stub(models.uzer, 'authenticate')
         .withArgs(validLogin.email, validLogin.password)
-        .callsArgWith(2, { email: 'valid', error: false });
+        .callsArgWith(2, { email: 'valid', error: false, id: 14 });
 
       request(app)
         .post('/')
@@ -33,7 +33,7 @@ describe('Home Controller', function(){
 
           var parsed = JSON.parse(res.text);
           expect(parsed.email).to.equal('valid');
-          console.log(res.header);
+          // expect(res.session.id).to.equal(14);
 
           models.uzer.authenticate.restore();
           done();
@@ -62,14 +62,10 @@ describe('Home Controller', function(){
     });
   });
 
-  describe('#signOut', function(){
-    // it('should log you out', function(done){
+  // describe('#signOut', function(){
+  //   it('should log you out', function(done){
 
-    // });
-
-    // it('should redirect you to home page', function(done){
-
-    // });
-  });
+  //   });
+  // });
 });
 

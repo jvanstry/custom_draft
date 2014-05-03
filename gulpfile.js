@@ -18,7 +18,7 @@ var clientScriptsLocation = 'public/scripts/*.js',
   scriptsLocation = ['models/*.js', 'config.*js', 'controllers/*.js', 
                       './app.js', 'public/scripts/*.js'],
                       
-  testsLocation = ['test/client/*.js', 'test/server/*.js', 'test/db/*.js'],
+  testsLocation = ['test/client/*.js', 'test/server/*.js', 'test/models/*.js'],
   stylesLocation = 'public/styles/*.css',
   viewsLocation = 'views/*.ejs',
   LIVERELOAD_PORT = 35729,

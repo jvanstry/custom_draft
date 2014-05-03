@@ -7,5 +7,8 @@ module.exports = {
   },
   get: function(req, res, next){
 
+  },
+  index: function(req, res, next){
+    
   }
 };
