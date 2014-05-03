@@ -8,10 +8,7 @@ describe('Home Controller', function(){
       request(app)
         .get('/')
         .expect('Content-Type', 'text/html; charset=utf-8')
-        .expect(200).end(function(err, res){
-          expect(err).to.not.exist;
-          done();
-        })
+        .expect(200).end(done);
     });
   });
   
@@ -33,7 +30,6 @@ describe('Home Controller', function(){
 
           var parsed = JSON.parse(res.text);
           expect(parsed.email).to.equal('valid');
-          // expect(res.session.id).to.equal(14);
 
           models.uzer.authenticate.restore();
           done();
@@ -62,10 +58,12 @@ describe('Home Controller', function(){
     });
   });
 
-  // describe('#signOut', function(){
-  //   it('should log you out', function(done){
-
-  //   });
-  // });
+  describe('#signOut', function(){
+    it('should log you out', function(done){
+      request(app)
+        .del('/')
+        .expect(200).end(done);
+    });
+  });
 });
 

@@ -2,7 +2,7 @@ var orm = require('orm');
 
 module.exports = {
   get: function(req, res, next){
-    res.render('home.ejs', { title: 'home' });
+    res.render('home', { title: 'home' });
   },
   signIn: function(req, res, next){
     var email = req.body.email;
@@ -13,6 +13,7 @@ module.exports = {
     function callback(uzer){
       if(!(uzer.error)){
         req.session.id = uzer.id;
+        //TODO: investigate if possible to use res.json within stubbed method
         res.send(uzer);
       }else{
         res.send({ error: 'invalid credentials' })
@@ -22,6 +23,9 @@ module.exports = {
     req.models.uzer.authenticate(email, password, callback);
   },
   signOut: function(req, res, next){
+    delete req.session;
 
+    res.locals = { title: 'home', justLoggedOut: true }
+    res.render('home')
   }
 };
