@@ -5,6 +5,10 @@ var environment = require('./config/environment');
 
 environment(app);
 routes(app);
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.send(500);
+});
 
 app.start = function(){
   return this.listen(app.get('port'), function(){

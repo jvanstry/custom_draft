@@ -46,7 +46,7 @@ describe('Home Controller', function(){
       request(app)
         .post('/')
         .send(invalidLogin)
-        .expect(200).end(function(err, res){
+        .expect(401).end(function(err, res){
           expect(err).to.not.exist;
 
           var parsed = JSON.parse(res.text);

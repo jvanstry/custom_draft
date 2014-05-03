@@ -31,7 +31,6 @@ module.exports = function(app){
     next()
   })
   app.use(function (req, res, next) {
-    // console.log(req.cookies, req.session.yolo, req.session.counter);
     models(function setUp(err, db) {
       if (err) return next(err);
 

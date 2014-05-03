@@ -32,29 +32,23 @@ module.exports = function (app) {
 
 var uzer;
 
-function restrictToLoggedInUzer(){
-  return function(req, res, next){
-    if(!(req.session.id)){
-      next(new Error('Unauthorized'));
-    }
-
-    var seshedId = req.session.id;
+function restrictToLoggedInUzer(req, res, next){
+  if(!req.session || !req.session.uzer_id){
+    return next(new Error('Unauthorized'));
+  }
+  
+  var seshedId = req.session.uzer_id;
 
     req.models.uzer.find({ id: seshedId }, function(err, result){
-      if(err || (result.length === 0)){
-        next(new Error('Cannot find uzer'));
+      if(err || result.length === 0){
+        return next(new Error('Cannot find uzer'));
       }
 
-      var membershipLeagueIds = getMemberLeagues(result[0]);
+      var membershipLeaguesIds = getMemberLeagues(result[0]);
 
-      uzer = {
-        id: uzer.id,
-        leagues: membershipLeaguesIds
-      }
-
+      uzer = { id: result[0].id, leagues: membershipLeaguesIds }
       next();
     });
-  }
 }
 
 function getMemberLeagues(uzer){
@@ -68,39 +62,37 @@ function getMemberLeagues(uzer){
   return membershipLeaguesIds;
 }
 
-function restrictToLeagueCreator(){
-  return function(req, res, next){
-    var leagueId = parseInt(req.params.leagueId);
+function restrictToLeagueCreator(req, res, next){
+  var leagueId = parseInt(req.params.leagueId);
 
-    req.models.league.find({ id: leagueId }, function(err, result){
-      if(err){
-        next(new Error('Cannot find league'));
-      }
-
-      var creatorId = result[0].creator_id;
-
-      if(creator_id === uzer.id){
-        next();
-      }
-
-      next(new Error('Only league '))
-    });
-  }
-}
-
-
-function restrictToLeagueMember(){
-  return function(req, res, next){
-    var leagueId = parseInt(req.params.leagueId);
-    var isLeagueMember = inArray(uzer.leagues, leagueId)
-
-    if(isLeagueMember){
-      next()
-    }else{
-      next(new Error('Unauthorized'));
+  req.models.league.find({ id: leagueId }, function(err, result){
+    if(err){
+      next(new Error('Cannot find league'));
     }
+
+    var creatorId = result[0].creator_id;
+
+    if(creator_id === uzer.id){
+      next();
+    }
+
+    next(new Error('Only league '))
+  });
+}
+
+
+
+function restrictToLeagueMember(req, res, next){
+  var leagueId = parseInt(req.params.leagueId);
+  var isLeagueMember = inArray(uzer.leagues, leagueId)
+
+  if(isLeagueMember){
+    next()
+  }else{
+    next(new Error('Unauthorized'));
   }
 }
+
 
 function inArray(array, value) {
   for (var i = 0; i < array.length; i++){
