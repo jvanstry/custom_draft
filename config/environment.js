@@ -8,6 +8,7 @@ var favicon = require('static-favicon');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
 var compress = require('compression');
+var sessionSecret = require('../settings').cookieSecret;
 
 
 module.exports = function(app){
@@ -20,7 +21,8 @@ module.exports = function(app){
   app.use(compress())
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
-  app.use(cookieParser());
+  app.use(cookieParser(sessionSecret));
+  app.use(session());
   app.use(express.static(path.join(__dirname, '../build')));
   app.use(function (req, res, next) {
     models(function setUp(err, db) {
