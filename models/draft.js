@@ -18,7 +18,8 @@ module.exports = function(orm, db){
     },
     methods: {
 
-    }
+    },
+    cache: !(process.env.NODE_ENV === 'test')
   });
   
   Draft.hasOne('league', db.models.league, {
