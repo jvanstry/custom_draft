@@ -2,7 +2,7 @@ var orm = require('orm');
 
 module.exports = {
   get: function(req, res, next){
-    // req.session.uzer_id = 1;
+    req.session.uzer_id = 1;
     res.render('home', { title: 'home' });
   },
   signIn: function(req, res, next){

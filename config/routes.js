@@ -46,7 +46,7 @@ function restrictToLoggedInUzer(req, res, next){
 
       var membershipLeaguesIds = getMemberLeagues(result[0]);
 
-      uzer = { id: result[0].id, leagues: membershipLeaguesIds }
+      uzer = result[0];
       next();
     });
 }
@@ -67,23 +67,22 @@ function restrictToLeagueCreator(req, res, next){
 
   req.models.league.find({ id: leagueId }, function(err, result){
     if(err){
-      next(new Error('Cannot find league'));
+      return next(new Error('Cannot find league'));
     }
 
     var creatorId = result[0].creator_id;
 
-    if(creator_id === uzer.id){
-      next();
+    if(creatorId === uzer.id){
+      return next();
     }
 
     next(new Error('Only league '))
   });
 }
 
-
-
 function restrictToLeagueMember(req, res, next){
   var leagueId = parseInt(req.params.leagueId);
+  console.log(leagueId, uzer);
   var isLeagueMember = inArray(uzer.leagues, leagueId)
 
   if(isLeagueMember){
