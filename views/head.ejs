@@ -5,7 +5,18 @@
   <meta name="viewport" content="initial-scale=1.0">
   <script src="bundle.min.js"></script>
   <link rel="stylesheet" type="text/css" href="../styles/<%= title %>.css">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <title><%= title %></title>
+  <div id="jer">hi</div>
+  <script>
+    $(document).ready(function(){
+      $('#jer').click(function(){
+        $.post('/draft/1', function(data){
+          console.log(data)
+        })
+      })
+    })
+  </script>
 </head>
 <body>
   boooo yaaaa

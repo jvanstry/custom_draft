@@ -1,5 +1,5 @@
 module.exports = function(orm, db){
-  var League = db.define('league', {
+  db.define('league', {
     name: { type: 'text', required: true },
     createdAt: { type: 'date', time: true }
   },
@@ -17,11 +17,15 @@ module.exports = function(orm, db){
     }
   });
 
-  League.hasOne('creator', db.models.uzer, {
-    required: true,
-    autoFetch: true
-  });
-
-  db.models.uzer.hasMany('leagues', League, { why: String }, 
-    { reverse: 'members' });
+  db.models.uzer.hasMany('leagues', db.models.league, 
+    { 
+      isCreator: { type: 'boolean', defaultValue: false }, 
+      join_id: { type: 'serial', primaryKey: true } 
+    },
+    { 
+      reverse: 'members' 
+    },
+    { 
+      autoFetch: true
+    });
 };

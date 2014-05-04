@@ -109,8 +109,7 @@ ALTER SEQUENCE draftee_id_seq OWNED BY draftee.id;
 CREATE TABLE league (
     name text NOT NULL,
     "createdAt" timestamp without time zone,
-    id integer NOT NULL,
-    creator_id integer NOT NULL
+    id integer NOT NULL
 );
 
 
@@ -180,11 +179,33 @@ ALTER SEQUENCE uzer_id_seq OWNED BY uzer.id;
 CREATE TABLE uzer_leagues (
     uzer_id real,
     leagues_id real,
-    why text
+    "isCreator" boolean DEFAULT false,
+    join_id integer NOT NULL
 );
 
 
 ALTER TABLE public.uzer_leagues OWNER TO jer;
+
+--
+-- Name: uzer_leagues_join_id_seq; Type: SEQUENCE; Schema: public; Owner: jer
+--
+
+CREATE SEQUENCE uzer_leagues_join_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.uzer_leagues_join_id_seq OWNER TO jer;
+
+--
+-- Name: uzer_leagues_join_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jer
+--
+
+ALTER SEQUENCE uzer_leagues_join_id_seq OWNED BY uzer_leagues.join_id;
+
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jer
@@ -212,6 +233,13 @@ ALTER TABLE ONLY league ALTER COLUMN id SET DEFAULT nextval('league_id_seq'::reg
 --
 
 ALTER TABLE ONLY uzer ALTER COLUMN id SET DEFAULT nextval('uzer_id_seq'::regclass);
+
+
+--
+-- Name: join_id; Type: DEFAULT; Schema: public; Owner: jer
+--
+
+ALTER TABLE ONLY uzer_leagues ALTER COLUMN join_id SET DEFAULT nextval('uzer_leagues_join_id_seq'::regclass);
 
 
 --
@@ -248,7 +276,8 @@ SELECT pg_catalog.setval('draftee_id_seq', 1, false);
 -- Data for Name: league; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY league (name, "createdAt", id, creator_id) FROM stdin;
+COPY league (name, "createdAt", id) FROM stdin;
+jer league	\N	1
 \.
 
 
@@ -264,6 +293,7 @@ SELECT pg_catalog.setval('league_id_seq', 1, false);
 --
 
 COPY uzer (name, email, password_hash, "createdAt", id) FROM stdin;
+jerry	jer@example.com	14monkeys	\N	1
 \.
 
 
@@ -278,8 +308,16 @@ SELECT pg_catalog.setval('uzer_id_seq', 1, false);
 -- Data for Name: uzer_leagues; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY uzer_leagues (uzer_id, leagues_id, why) FROM stdin;
+COPY uzer_leagues (uzer_id, leagues_id, "isCreator", join_id) FROM stdin;
+1	1	t	1
 \.
+
+
+--
+-- Name: uzer_leagues_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jer
+--
+
+SELECT pg_catalog.setval('uzer_leagues_join_id_seq', 1, true);
 
 
 --
@@ -296,6 +334,14 @@ ALTER TABLE ONLY draft
 
 ALTER TABLE ONLY draftee
     ADD CONSTRAINT draftee_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: join_id; Type: CONSTRAINT; Schema: public; Owner: jer; Tablespace: 
+--
+
+ALTER TABLE ONLY uzer_leagues
+    ADD CONSTRAINT join_id PRIMARY KEY (join_id);
 
 
 --

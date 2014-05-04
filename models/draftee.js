@@ -1,5 +1,5 @@
 module.exports = function(orm, db){
-  var Draftee = db.define('draftee', {
+  db.define('draftee', {
     name: { type: 'text', required: true },
     overallPick: { type: 'number' },
     available: { type: 'boolean', defaultValue: true },
@@ -20,20 +20,14 @@ module.exports = function(orm, db){
     }
   });
 
-  Draftee.hasOne('draft', db.models.draft, {
+  db.models.draftee.hasOne('draft', db.models.draft, {
     required: true,
     autoFetch: true
   });
 
-  Draftee.hasOne('picker', db.models.uzer, {
+  db.models.draftee.hasOne('picker', db.models.uzer, {
     autoFetch: true
   });
 
-  // db.models.draft.hasMany('eligiblePicks', Draftee);
-
-  // db.models.uzer.hasMany('draftPicks', Draftee);
-
-  db.models.draft.sync();
-  db.models.uzer.sync();
-  Draftee.sync();
+  db.sync();
 };

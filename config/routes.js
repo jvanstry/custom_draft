@@ -27,7 +27,7 @@ module.exports = function (app) {
     restrictToLeagueCreator, controllers.draft.create);
 
   app.post('/draft/:leagueId',  restrictToLoggedInUzer, 
-    restrictToLeagueMember, controllers.draft.makePick);
+    restrictToLeagueMembers, controllers.draft.makePick);
 };
 
 var uzer;
@@ -36,68 +36,55 @@ function restrictToLoggedInUzer(req, res, next){
   if(!req.session || !req.session.uzer_id){
     return next(new Error('Unauthorized'));
   }
-  
-  var seshedId = req.session.uzer_id;
+
+  var seshedId = req.session.uzer_id || 1;
 
     req.models.uzer.find({ id: seshedId }, function(err, result){
       if(err || result.length === 0){
         return next(new Error('Cannot find uzer'));
       }
-
-      var membershipLeaguesIds = getMemberLeagues(result[0]);
-
       uzer = result[0];
+
       next();
     });
 }
 
-function getMemberLeagues(uzer){
-  var membershipLeaguesIds = [];
-
-  for(var i=0; i < uzer.leagues; i++){
-    var leagueId = uzer.leagues[i].id;
-    membershipLeaguesIds.push(leagueId);
-  }
-
-  return membershipLeaguesIds;
-}
-
 function restrictToLeagueCreator(req, res, next){
   var leagueId = parseInt(req.params.leagueId);
+  var creator;
 
-  req.models.league.find({ id: leagueId }, function(err, result){
-    if(err){
-      return next(new Error('Cannot find league'));
-    }
+  // avoid hitting db for league.find and below middleware
+  // or have more coherent code?
+  //   for now: lets not hit the db, think more later.
 
-    var creatorId = result[0].creator_id;
-
-    if(creatorId === uzer.id){
-      return next();
-    }
-
-    next(new Error('Only league '))
+  uzer.leagues.forEach(function(element, index){
+    if((element.id === leagueId) && (element.isCreator)){
+      creator = true;
+      // more elegant work around possible?
+    };
   });
-}
 
-function restrictToLeagueMember(req, res, next){
-  var leagueId = parseInt(req.params.leagueId);
-  console.log(leagueId, uzer);
-  var isLeagueMember = inArray(uzer.leagues, leagueId)
-
-  if(isLeagueMember){
-    next()
+  if(creator){
+    next();
   }else{
-    next(new Error('Unauthorized'));
+    next(new Error('Only for league creator!'));
   }
 }
 
+function restrictToLeagueMembers(req, res, next){
+  var leagueId = parseInt(req.params.leagueId);
+  var member;
 
-function inArray(array, value) {
-  for (var i = 0; i < array.length; i++){
-    if (array[i] == value){
-      return true;
-    }
-  }    
-  return false;
+  uzer.leagues.forEach(function(element, index){
+    if(element.id === leagueId){
+      member = true;
+    };
+  });
+
+  if(member){
+    next()
+  }else{
+    next(new Error('Only league members may make picks, duh'));
+  }
 }
+

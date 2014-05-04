@@ -36,9 +36,6 @@ module.exports = function(app){
 
       req.models = db.models;
       req.db     = db;
-      user = new req.models.uzer();
-      console.log(user);
-      debugger;
       
       return next();
     });

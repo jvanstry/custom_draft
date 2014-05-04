@@ -15,5 +15,5 @@ app.start = function(){
     console.log("Express on port: " + app.get('port'));
   });
 };
-app.start();
+
 module.exports = app;

@@ -1,5 +1,5 @@
 module.exports = function(orm, db){
-  var Draft = db.define('draft', {
+  db.define('draft', {
     start_time: { type: 'date', required: true, time: true },
     createdAt: { type: 'date', time: true }
   },
@@ -22,12 +22,9 @@ module.exports = function(orm, db){
     cache: !(process.env.NODE_ENV === 'test')
   });
   
-  Draft.hasOne('league', db.models.league, {
+  db.models.draft.hasOne('league', db.models.league, {
     required: true,
     reverse: 'draft',
     autoFetch: true
   });
-
-  db.models.league.sync();
-  Draft.sync();
 };

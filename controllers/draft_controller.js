@@ -9,6 +9,6 @@ module.exports = {
 
   },
   makePick: function(req, res, next){
-
+    res.send('yessss')
   }
 };

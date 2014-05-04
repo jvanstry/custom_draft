@@ -16,7 +16,7 @@ function setup(db, cb) {
   return cb(null, db);
 }
 
-module.exports = function (cb) {
+module.exports = function(cb) {
   if (connection) return cb(null, connection);
 
   orm.connect(dbObj, function (err, db) {

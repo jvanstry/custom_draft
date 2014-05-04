@@ -2,7 +2,6 @@ var orm = require('orm');
 
 module.exports = {
   get: function(req, res, next){
-    req.session.uzer_id = 1;
     res.render('home', { title: 'home' });
   },
   signIn: function(req, res, next){
@@ -12,7 +11,7 @@ module.exports = {
     function callback(uzer){
       if(!(uzer.error)){
         req.session.uzer_id = uzer.id;
-        //TODO: investigate if possible to use res.json within stubbed method
+//TODO: investigate if possible to use res.json within stubbed method
         res.send(uzer);
       }else{
         res.send(401, { error: 'invalid credentials' })

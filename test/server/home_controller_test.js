@@ -3,6 +3,9 @@ var app = require('../../app.js').start();
 var request = require('supertest');
 
 describe('Home Controller', function(){
+  before(helper.dbSetup);
+  before(helper.modelSetup);
+
   describe('#get', function(){
     it('should respond with plain text', function(done){
       request(app)
