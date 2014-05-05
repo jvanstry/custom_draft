@@ -276,9 +276,6 @@ SELECT pg_catalog.setval('draftee_id_seq', 1, false);
 -- Data for Name: league; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY league (name, "createdAt", id) FROM stdin;
-jer league	\N	1
-\.
 
 
 --
@@ -292,9 +289,6 @@ SELECT pg_catalog.setval('league_id_seq', 1, false);
 -- Data for Name: uzer; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY uzer (name, email, password_hash, "createdAt", id) FROM stdin;
-jerry	jer@example.com	14monkeys	\N	1
-\.
 
 
 --
@@ -308,9 +302,7 @@ SELECT pg_catalog.setval('uzer_id_seq', 1, false);
 -- Data for Name: uzer_leagues; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY uzer_leagues (uzer_id, leagues_id, "isCreator", join_id) FROM stdin;
-1	1	t	1
-\.
+
 
 
 --

@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-// require('./setup');
+require('./setup');
 
 exports.clientSetup = function(){
   var jsdom = require('jsdom');
@@ -55,6 +55,7 @@ exports.dbSetup = function(next){
         if(err){
           console.error('Error in test db creation: ', err);
         }
+
         loadDbFromSQLFile(next)
      })
     }

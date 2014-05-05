@@ -1,6 +1,6 @@
 var helper = require('../test-helper');
 var League;
-var validProperties = { name: 'jerry_league', creator_id: 1 };
+var validProperties = { name: 'jerry_league' };
 
 function referenceLeague(){
   League = models.league;
@@ -20,19 +20,6 @@ describe('League class', function(){
         expect(err).to.exist;
         
         League.find(noName, function(err, results){
-          expect(results).to.be.empty;
-          done();
-        }); 
-      });
-    });
-
-    it('should not save without a creator_id', function(done){
-      var noCreatorID = omit(validProperties, 'creator_id');
-
-      League.create(noCreatorID, function(err, results){
-        expect(err).to.exist;
-        
-        League.find(noCreatorID, function(err, results){
           expect(results).to.be.empty;
           done();
         }); 
