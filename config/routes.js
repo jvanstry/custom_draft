@@ -37,7 +37,7 @@ function restrictToLoggedInUzer(req, res, next){
     return next(new Error('Unauthorized'));
   }
 
-  var seshedId = req.session.uzer_id || 1;
+  var seshedId = req.session.uzer_id;
 
     req.models.uzer.find({ id: seshedId }, function(err, result){
       if(err || result.length === 0){

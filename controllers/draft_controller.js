@@ -1,6 +1,6 @@
 module.exports = {
   new: function(req, res, next){
-    res.send('hello')
+    res.send('hello');
   },
   create: function(req, res, next){
 
@@ -9,6 +9,6 @@ module.exports = {
 
   },
   makePick: function(req, res, next){
-    res.send('yessss')
+    res.send('yessss');
   }
 };

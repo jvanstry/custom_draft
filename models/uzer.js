@@ -15,22 +15,24 @@ module.exports = function(orm, db){
       },
       afterCreate: function(){
         // Hack for testing purposes otherwise setPwHash password_hash persists
-        this.password_hash = 'notSecurezYet'
+        this.password_hash = 'notSecurezYet';
       }
     },
+    /* jshint ignore:start */
     validations: {
       name: orm.enforce.ranges.length(1, 128),
       email: orm.enforce.unique(),
       password_hash: orm.enforce.ranges.length(1,128),
       email: orm.enforce.ranges.length(1,128)
     },
+    /* jshint ignore:end */
     methods: {
       setPwHash: function(){
         this.password_hash = pwHelper.makePwHash(this.password_hash);
       }
     },
     autoFetch: true,
-    cache: !(process.env.NODE_ENV === 'test')
+    cache: (process.env.NODE_ENV !== 'test')
   });
 
   db.models.uzer.authenticate = function(email, password_attempt, cb){

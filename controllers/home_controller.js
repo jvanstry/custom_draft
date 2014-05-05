@@ -14,7 +14,7 @@ module.exports = {
 //TODO: investigate if possible to use res.json within stubbed method
         res.send(uzer);
       }else{
-        res.send(401, { error: 'invalid credentials' })
+        res.send(401, { error: 'invalid credentials' });
       }
     }
 
@@ -23,7 +23,7 @@ module.exports = {
   signOut: function(req, res, next){
     delete req.session;
 
-    res.locals = { title: 'home', justLoggedOut: true }
-    res.render('home')
+    res.locals = { title: 'home', justLoggedOut: true };
+    res.render('home');
   }
 };
