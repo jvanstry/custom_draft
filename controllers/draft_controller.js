@@ -3,7 +3,7 @@ module.exports = {
     res.locals = {
       title: 'New Draft',
       styles: ['new-draft']
-    }
+    };
     res.render('new-draft');
   },
   create: function(req, res, next){
@@ -14,7 +14,7 @@ module.exports = {
         console.error(err);
       }
 
-      res.end('hi')
+      res.end('hi');
     });
  
   },

@@ -5,7 +5,7 @@ module.exports = {
     res.locals = {
       title: 'Custo Drafto',
       styles: ['home']
-    }
+    };
     res.render('home', { title: 'home' });
   },
   signIn: function(req, res, next){

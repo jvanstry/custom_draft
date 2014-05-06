@@ -20,7 +20,7 @@ var clientScriptsLocation = 'public/scripts/*.js',
                       
   testsLocation = ['test/client/*.js', 'test/server/*.js', 'test/models/*.js'],
   stylesLocation = 'public/styles/*.css',
-  viewsLocation = 'views/*.ejs',
+  viewsLocation = 'public/views/*.ejs',
   LIVERELOAD_PORT = 35729,
   EXPRESS_PORT = 4114;
 
