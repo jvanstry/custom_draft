@@ -19,9 +19,10 @@ module.exports = {
  
   },
   getLobby: function(req, res, next){
+    res.end();
 
   },
   makePick: function(req, res, next){
-    res.send('yessss');
+    res.end();
   }
 };

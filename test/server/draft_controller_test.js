@@ -64,19 +64,27 @@ describe('Draft Controller', function(){
     });
   });
 
-  // describe('#getLobby', function(){
-  //   it('should log you out', function(done){
-  //     request(app)
-  //       .del('/')
-  //       .expect(200).end(done);
-  //   });
-  // });
+  describe('#getLobby', function(){
+    it('Should be accessible by anyone', function(done){
+      request(app)
+        .get('/draft/1')
+        .expect(200).end(done);
+    });
+  });
 
-  // describe('#makePick', function(){
-  //   it('should log you out', function(done){
-  //     request(app)
-  //       .del('/')
-  //       .expect(200).end(done);
-  //   });
-  // });
+  describe('#makePick', function(){
+    it('Should not be accessible by a rando', function(done){
+      request(app)
+        .post('/draft/1')
+        .form({ name: 'jerry' })
+        .expect(500).end(done);
+    });
+
+    it('Should be accessible by league member', function(done){
+      helper.logInWithLeagueMember()
+        .post('/draft/1')
+        .form({ name: 'jerry' })
+        .expect(200).end(done);
+    });
+  });
 });
