@@ -58,12 +58,14 @@ function restrictToLeagueCreator(req, res, next){
   //   for now: lets not hit the db, think more later.
 
   uzer.leagues.forEach(function(element, index){
+    console.log(element.id, element.isCreator, 61)
     if((element.id === leagueId) && (element.isCreator)){
       creator = true;
       // more elegant work around possible?
     };
   });
 
+// this should work fine since uzer.leagues gets autoFetched
   if(creator){
     next();
   }else{

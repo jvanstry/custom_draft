@@ -12,7 +12,7 @@ module.exports = {
     var email = req.body.email;
     var password = req.body.password;
 
-    function callback(uzer){
+    function userAuthCallback(uzer){
       if(!(uzer.error)){
         req.session.uzer_id = uzer.id;
 //TODO: investigate if possible to use res.json within stubbed method
@@ -22,7 +22,7 @@ module.exports = {
       }
     }
 
-    req.models.uzer.authenticate(email, password, callback);
+    req.models.uzer.authenticate(email, password, userAuthCallback);
   },
   signOut: function(req, res, next){
     delete req.session;

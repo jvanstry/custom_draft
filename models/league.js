@@ -14,7 +14,8 @@ module.exports = function(orm, db){
     },
     methods: {
 
-    }
+    },
+    cache: (process.env.NODE_ENV !== 'test')
   });
 
   db.models.uzer.hasMany('leagues', db.models.league, 
@@ -26,6 +27,7 @@ module.exports = function(orm, db){
       reverse: 'members' 
     },
     { 
-      autoFetch: true
+      autoFetch: true,
+      cache: (process.env.NODE_ENV !== 'test')
     });
 };
