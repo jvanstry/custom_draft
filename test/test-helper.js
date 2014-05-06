@@ -1,4 +1,5 @@
 var exec = require('child_process').exec;
+var request = require('supertest')
 require('./setup');
 
 exports.clientSetup = function(){
@@ -88,4 +89,63 @@ exports.dbCleanup = function(next){
   });
 }
 
-// sooooo hacky, FIX #1!
+exports.seed = function(next){
+  var EventEmitter = require('events').EventEmitter;
+  var util = require('util');
+
+  var Counter = function(){ this.count = 0; };
+  util.inherits(Counter, EventEmitter);
+
+  var counter = new Counter();
+  var league;
+  var uzer;
+
+  function uzerCreator(email){
+    models.uzer.create({ name: 'jerbear', email: email, 
+      password_hash: 'notSecurezYet' }, 
+      function(err, result){
+        counter.count++;
+        counter.emit('save-success');
+    });
+  }
+
+  function uzerLeagueAdder(uzerId, isCreator){
+    models.uzer.get(uzerId, function(err, result){
+      result.addLeagues(league, { isCreator: isCreator}, function(err){
+        counter.count++;
+        counter.emit('save-success');
+      });
+    });    
+  }
+
+  function respondToSaveAttempt(err, result){
+    if(err){
+      console.error(err)
+    }else if(result.name === 'jerbear league'){
+      league = result;
+    }
+    counter.count++
+    counter.emit('save-success');
+  };
+
+  counter.on('save-success', function(){
+    if(this.count === 3){
+      uzerCreator('jer@example.com');
+    }else if(this.count === 4){
+      uzerLeagueAdder(1, true);
+    }else if(this.count === 5){
+      uzerCreator('jer@foo.com');
+    }else if(this.count === 6){
+      uzerLeagueAdder(2, true);
+    }else if(this.count > 6){
+      next();
+    }
+  });
+
+  models.league.create({ name: 'jerbear league' }, respondToSaveAttempt);
+
+  models.draft.create({ start_time: new Date(1497758400000), league_id: 1 },
+    respondToSaveAttempt);
+
+  models.draftee.create({ name: 'jerry', draft_id: 1 }, respondToSaveAttempt);
+}
