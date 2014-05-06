@@ -6,7 +6,7 @@ module.exports = {
       title: 'Custo Drafto',
       styles: ['home']
     };
-    res.render('home', { title: 'home' });
+    res.render('home');
   },
   signIn: function(req, res, next){
     var email = req.body.email;
@@ -32,6 +32,7 @@ module.exports = {
       justLoggedOut: true,
       styles: ['home'] 
     };
+
     res.render('home');
   }
 };

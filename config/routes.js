@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.get('/signup', controllers.uzer.new);
   app.post('/signup', controllers.uzer.create);
   app.get('/league/:id', controllers.league.get);
-  app.get('/draft/:id',   controllers.draft.getLobby);
+  app.get('/draft/:leagueId',   controllers.draft.getLobby);
   app.get('/leagues', controllers.league.index)
 
   // restricted routes
@@ -39,14 +39,14 @@ function restrictToLoggedInUzer(req, res, next){
 
   var seshedId = req.session.uzer_id;
 
-    req.models.uzer.find({ id: seshedId }, function(err, result){
-      if(err || result.length === 0){
-        return next(new Error('Cannot find uzer'));
-      }
-      uzer = result[0];
+  req.models.uzer.find({ id: seshedId }, function(err, result){
+    if(err || result.length === 0){
+      return next(new Error('Cannot find uzer'));
+    }
+    uzer = result[0];
 
-      next();
-    });
+    next();
+  });
 }
 
 function restrictToLeagueCreator(req, res, next){
@@ -58,7 +58,6 @@ function restrictToLeagueCreator(req, res, next){
   //   for now: lets not hit the db, think more later.
 
   uzer.leagues.forEach(function(element, index){
-    console.log(element.id, element.isCreator, 61)
     if((element.id === leagueId) && (element.isCreator)){
       creator = true;
       // more elegant work around possible?

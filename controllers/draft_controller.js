@@ -8,21 +8,47 @@ module.exports = {
   },
   create: function(req, res, next){
     var startTime = parseInt(req.body.start_time);
+    var leagueId = parseInt(req.params.leagueId);
+    var redirectUrl = '/draft/' + leagueId;
 
-    req.models.draft.create({ start_time: startTime }, function(err, result){
-      if(err){
-        console.error(err);
-      }
+    req.models.draft.create({ start_time: startTime, league_id: leagueId }, 
+      function(err, result){   
+        if(err){
+          console.error(err);
+        }
 
-      res.end('hi');
+        res.redirect(redirectUrl);
     });
  
   },
   getLobby: function(req, res, next){
-    res.end();
+    var leagueId = parseInt(req.params.leagueId);
 
+    req.models.draft.find({ league_id: leagueId }, function(err, result){
+      if(err){
+        console.error(err)
+      }
+
+      res.locals = {
+        title: result[0].name + ' draft lobby',
+        styles: ['draft-lobby'],
+        leagueName: result[0].name
+      }
+
+      console.log('RES LOCALS', res.locals)
+
+      res.render('draft-lobby');
+    })
   },
   makePick: function(req, res, next){
+    // var pickerId = req.session.uzer_id;
+    // var draftId = req.params.draftId;
+    // var name = req.body.name;
+
+    // req.models.draftee.find({ name: name, draft_id: draftId }, function(err, result){
+      
+    // })
+
     res.end();
   }
 };
