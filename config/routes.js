@@ -26,6 +26,9 @@ module.exports = function (app) {
   app.post('/league/:leagueId/draft', restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.create);
 
+  app.post('/draftee/:leagueId',  restrictToLoggedInUzer,
+    restrictToLeagueCreator, controllers.draftee.create);
+
   app.post('/draft/:leagueId',  restrictToLoggedInUzer, 
     restrictToLeagueMembers, controllers.draft.makePick);
 };
