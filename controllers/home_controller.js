@@ -2,6 +2,10 @@ var orm = require('orm');
 
 module.exports = {
   get: function(req, res, next){
+    res.locals = {
+      title: 'Custo Drafto',
+      styles: ['home']
+    }
     res.render('home', { title: 'home' });
   },
   signIn: function(req, res, next){
@@ -23,7 +27,11 @@ module.exports = {
   signOut: function(req, res, next){
     delete req.session;
 
-    res.locals = { title: 'home', justLoggedOut: true };
+    res.locals = { 
+      title: 'Custo Drafto',
+      justLoggedOut: true,
+      styles: ['home'] 
+    };
     res.render('home');
   }
 };

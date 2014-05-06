@@ -4,7 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../styles/normalize.css">
-  <link rel="stylesheet" type="text/css" href="../styles/<%= title %>.css">
+  <% styles.forEach(function(element){ %>
+  <link rel="stylesheet" type="text/css" href="../styles/<%= element %>.css">
+  <% }); %>
   <script src="bundle.min.js"></script>
   <title><%= title %></title>
   <div id="jer">hi</div>
