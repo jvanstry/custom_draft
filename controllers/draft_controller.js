@@ -1,6 +1,10 @@
 module.exports = {
   new: function(req, res, next){
-    res.send('hello');
+    res.locals = {
+      title: 'New Draft',
+      styles: ['new-draft']
+    }
+    res.render('new-draft');
   },
   create: function(req, res, next){
 

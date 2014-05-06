@@ -13,17 +13,17 @@ describe('Uzer class', function(){
   afterEach(helper.dbCleanup);
 
   describe('Saving uzer to db', function(){
-    var validProperties = { email: 'jer@example.com', 
+    var validProperties = { email: 'jer@bar.com', 
       password: 'notSecurezYet', password_hash: 'notSecurezYet', 
       name: 'jerbear'};
     it('should should not save without a name', function(done){
-      var noName = omit(validProperties, 'name');
+      var noName = {email: 'jer@example.com', password_hash: 'notSecurezYet'};
 
       Uzer.create(noName, function(err){
         expect(err).to.exist;
 
 
-        Uzer.find({ email: validProperties.email }, function(err, results){
+        Uzer.find({ email: noName.email }, function(err, results){
           expect(results).to.be.empty;
           done();
         });
@@ -31,12 +31,12 @@ describe('Uzer class', function(){
     });
 
     it('should should not save without a email', function(done){
-      var noEmail = omit(validProperties, 'email');
+      var noEmail = { name: 'jerbear', password_hash: 'notSecurezYet' };
 
       Uzer.create(noEmail, function(err){
           expect(err).to.exist;
 
-        Uzer.find({ name: validProperties.name }, function(err, results){
+        Uzer.find({ name: noEmail.name }, function(err, results){
           expect(results).to.be.empty;
           done();
         });
@@ -58,7 +58,7 @@ describe('Uzer class', function(){
     });
 
     it('should not save without a password', function(done){
-      var noPassword = omit(validProperties, 'password_hash');
+      var noPassword = {email: 'jer@foo.com', name: 'jerbear'};
 
       Uzer.create(noPassword, function(err){
         expect(err).to.exist;
@@ -84,7 +84,7 @@ describe('Uzer class', function(){
   });
   
   describe('#authenticate', function(){
-    var validProperties = { email: 'jer@example.com', 
+    var validProperties = { email: 'jer@foobar.com', 
       password: 'notSecurezYet', password_hash: 'notSecurezYet', 
       name: 'jerbear'};
     beforeEach(function(done){

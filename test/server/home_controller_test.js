@@ -5,6 +5,7 @@ var request = require('supertest');
 describe('Home Controller', function(){
   before(helper.dbSetup);
   before(helper.modelSetup);
+  after(helper.dbCleanup);
 
   describe('#get', function(){
     it('should respond with plain text', function(done){
@@ -16,8 +17,6 @@ describe('Home Controller', function(){
   });
   
   describe('#signIn', function(){
-    beforeEach(helper.modelSetup);
-
     it('should log you in with proper credentials', function(done){
       var validLogin = { email: 'valid', password: 'also_valid' };
 

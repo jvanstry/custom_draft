@@ -41,8 +41,9 @@
     "lodash.pick": "^2.4.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
+    "super-request": "0.0.7",
+    "supertest": "^0.12.0",
     "tiny-lr": "0.0.5",
-    "vinyl-source-stream": "^0.1.1",
-    "supertest": "^0.12.0"
+    "vinyl-source-stream": "^0.1.1"
   }
 }

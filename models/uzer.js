@@ -15,7 +15,9 @@ module.exports = function(orm, db){
       },
       afterCreate: function(){
         // Hack for testing purposes otherwise setPwHash password_hash persists
-        this.password_hash = 'notSecurezYet';
+        if(process.env.NODE_ENV === 'test'){
+          this.password_hash = 'notSecurezYet';
+        }
       }
     },
     /* jshint ignore:start */
