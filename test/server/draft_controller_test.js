@@ -13,16 +13,27 @@ describe('Draft Controller', function(){
   after(helper.dbCleanup);
 
   describe('#new', function(){
+    var getNewDraftRoute = '/league/' + leagueId + '/draft';
+
     it('Should be accessible by league creator', function(done){
       helper.logInWithLeagueCreator()
-        .get('/league/1/draft')
+        .get(getNewDraftRoute)
         .expect(200).end(done);
     });
 
     it('Should not be accessible by league member', function(done){
       helper.logInWithLeagueMember()
-        .get('/league/1/draft')
+        .get(getNewDraftRoute)
         .expect(500).end(done);
+    });
+
+    it('Should render create draft view', function(done){
+      helper.logInWithLeagueCreator()
+        .get(getNewDraftRoute)
+        .expect(200).end(function(err, res){
+          expect(res.body).to.contain('form');
+          done();
+        });
     });
   });
   
@@ -122,20 +133,20 @@ describe('Draft Controller', function(){
 
   describe('#makePick', function(){
     var drafteeName = 'jerry';
-    var leagueId = 1;
-    var draftSpecificPostRoute = '/draft/' + leagueId;
+    var draftId = 1;
+    var draftSpecificPostRoute = '/draft/' + draftId;
 
     it('Should not be accessible by a rando', function(done){
       request(app)
         .post(draftSpecificPostRoute)
-        .form({ name: 'jerry' })
+        .form({ name: drafteeName })
         .expect(500).end(done);
     });
 
-    it('Should be accessible by league member', function(done){
+    it('Should only be accessible by draft active picker', function(done){
       helper.logInWithLeagueMember()
         .post(draftSpecificPostRoute)
-        .form({ name: 'jerry' })
+        .form({ name: drafteeName })
         .expect(200).end(done);
     });
   });

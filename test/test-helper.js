@@ -99,12 +99,14 @@ exports.logInWithLeagueCreator = function(){
     .expect(200).end()
 }
 
-exports.logInWithLeagueMember = function(){
+exports.logInWithActivePicker = function(){
   return request(app)
     .post('/')
     .form({ email: 'jer@foo.com', password: 'notSecurezYet' })
     .expect(200).end()
 }
+
+exports.logInWithLeagueMember = exports.logInWithActivePicker;
 
 exports.seed = function(next){
   var Counter = function(){ this.count = 0; };
@@ -158,8 +160,8 @@ exports.seed = function(next){
 
   models.league.create({ name: 'jerbear league' }, respondToSaveAttempt);
 
-  models.draft.create({ start_time: new Date(1497758400000), league_id: 1 },
-    respondToSaveAttempt);
+  models.draft.create({ start_time: new Date(1497758400000), league_id: 1, 
+    order: '21', active_picker_id: 2 }, respondToSaveAttempt);
 
   models.draftee.create({ name: 'jerry', draft_id: 1 }, respondToSaveAttempt);
 }

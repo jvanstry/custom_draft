@@ -42,11 +42,12 @@ module.exports = {
   },
   makePick: function(req, res, next){
     // var pickerId = req.session.uzer_id;
-    // var draftId = req.params.draftId;
+    // var leagueId = req.params.leagueId;
+
     // var name = req.body.name;
 
     // req.models.draftee.find({ name: name, draft_id: draftId }, function(err, result){
-      
+
     // })
 
     res.end();

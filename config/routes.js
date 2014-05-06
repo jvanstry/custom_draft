@@ -29,8 +29,8 @@ module.exports = function (app) {
   app.post('/draftee/:leagueId',  restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draftee.create);
 
-  app.post('/draft/:leagueId',  restrictToLoggedInUzer, 
-    restrictToLeagueMembers, controllers.draft.makePick);
+  app.post('/draft/:draftId',  restrictToLoggedInUzer, 
+    restrictToActivePicker, controllers.draft.makePick);
 };
 
 var uzer;
@@ -75,20 +75,22 @@ function restrictToLeagueCreator(req, res, next){
   }
 }
 
-function restrictToLeagueMembers(req, res, next){
-  var leagueId = parseInt(req.params.leagueId);
-  var member;
+function restrictToActivePicker(req, res, next){
+  var draftId = parseInt(req.params.draftId);
 
-  uzer.leagues.forEach(function(element, index){
-    if(element.id === leagueId){
-      member = true;
-    };
+  req.models.draft.get(draftId, function(err, result){
+    if(err || !result){
+      return next(new Error ('node orm error: ', err));
+    }else if(!result){
+      return next(new Error ('cant find draft'));
+    }else if(!result.active_picker_id){
+      return next(new Error ('draft is not live'));
+    }
+
+    if (uzer.id === result.active_picker_id){
+      return next();
+    }
+    next(new Error('only active picker can pick duh!'));
   });
-
-  if(member){
-    next()
-  }else{
-    next(new Error('Only league members may make picks, duh'));
-  }
 }
 
