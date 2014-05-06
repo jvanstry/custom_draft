@@ -31,7 +31,7 @@ function doesDbExist(cb){
   ls.stdout.on('data', function dataResponder(data) {
     // exec command checks for existence of db
     // returns string representation of 1 or 0 
-    // in 7th digit of string accordingly
+    // in 8th digit of string accordingly
     var dbExists = parseInt(data[7]);
 
     cb(dbExists)

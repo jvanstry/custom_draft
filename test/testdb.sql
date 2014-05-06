@@ -34,9 +34,11 @@ SET default_with_oids = false;
 
 CREATE TABLE draft (
     start_time timestamp without time zone NOT NULL,
+    "order" text,
     "createdAt" timestamp without time zone,
     id integer NOT NULL,
-    league_id integer NOT NULL
+    league_id integer NOT NULL,
+    active_picker_id integer
 );
 
 
@@ -246,7 +248,7 @@ ALTER TABLE ONLY uzer_leagues ALTER COLUMN join_id SET DEFAULT nextval('uzer_lea
 -- Data for Name: draft; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY draft (start_time, "createdAt", id, league_id) FROM stdin;
+COPY draft (start_time, "order", "createdAt", id, league_id, active_picker_id) FROM stdin;
 \.
 
 
@@ -276,6 +278,8 @@ SELECT pg_catalog.setval('draftee_id_seq', 1, false);
 -- Data for Name: league; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
+COPY league (name, "createdAt", id) FROM stdin;
+\.
 
 
 --
@@ -289,6 +293,8 @@ SELECT pg_catalog.setval('league_id_seq', 1, false);
 -- Data for Name: uzer; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
+COPY uzer (name, email, password_hash, "createdAt", id) FROM stdin;
+\.
 
 
 --
@@ -302,14 +308,15 @@ SELECT pg_catalog.setval('uzer_id_seq', 1, false);
 -- Data for Name: uzer_leagues; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-
+COPY uzer_leagues (uzer_id, leagues_id, "isCreator", join_id) FROM stdin;
+\.
 
 
 --
 -- Name: uzer_leagues_join_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jer
 --
 
-SELECT pg_catalog.setval('uzer_leagues_join_id_seq', 1, true);
+SELECT pg_catalog.setval('uzer_leagues_join_id_seq', 1, false);
 
 
 --
@@ -329,19 +336,19 @@ ALTER TABLE ONLY draftee
 
 
 --
--- Name: join_id; Type: CONSTRAINT; Schema: public; Owner: jer; Tablespace: 
---
-
-ALTER TABLE ONLY uzer_leagues
-    ADD CONSTRAINT join_id PRIMARY KEY (join_id);
-
-
---
 -- Name: league_pkey; Type: CONSTRAINT; Schema: public; Owner: jer; Tablespace: 
 --
 
 ALTER TABLE ONLY league
     ADD CONSTRAINT league_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: uzer_leagues_pkey; Type: CONSTRAINT; Schema: public; Owner: jer; Tablespace: 
+--
+
+ALTER TABLE ONLY uzer_leagues
+    ADD CONSTRAINT uzer_leagues_pkey PRIMARY KEY (join_id);
 
 
 --

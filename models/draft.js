@@ -1,6 +1,7 @@
 module.exports = function(orm, db){
   db.define('draft', {
     start_time: { type: 'date', required: true, time: true },
+    order: { type: 'text' },
     createdAt: { type: 'date', time: true }
   },
   {
@@ -25,6 +26,9 @@ module.exports = function(orm, db){
   db.models.draft.hasOne('league', db.models.league, {
     required: true,
     reverse: 'draft',
+    autoFetch: true
+  });
+  db.models.draft.hasOne('active_picker', db.models.uzer, {
     autoFetch: true
   });
 };
