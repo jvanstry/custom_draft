@@ -1,5 +1,8 @@
 var exec = require('child_process').exec;
-var request = require('supertest')
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+var app = require('../app.js').start();
+var request = require('super-request');
 require('./setup');
 
 exports.clientSetup = function(){
@@ -89,10 +92,21 @@ exports.dbCleanup = function(next){
   });
 }
 
-exports.seed = function(next){
-  var EventEmitter = require('events').EventEmitter;
-  var util = require('util');
+exports.logInWithLeagueCreator = function(){
+  return request(app)
+    .post('/')
+    .form({ email: 'jer@example.com', password: 'notSecurezYet' })
+    .expect(200).end()
+}
 
+exports.logInWithLeagueMember = function(){
+  return request(app)
+    .post('/')
+    .form({ email: 'jer@foo.com', password: 'notSecurezYet' })
+    .expect(200).end()
+}
+
+exports.seed = function(next){
   var Counter = function(){ this.count = 0; };
   util.inherits(Counter, EventEmitter);
 
@@ -136,7 +150,7 @@ exports.seed = function(next){
     }else if(this.count === 5){
       uzerCreator('jer@foo.com');
     }else if(this.count === 6){
-      uzerLeagueAdder(2, true);
+      uzerLeagueAdder(2, false);
     }else if(this.count > 6){
       next();
     }
