@@ -41,15 +41,37 @@ module.exports = {
     })
   },
   makePick: function(req, res, next){
-    // var pickerId = req.session.uzer_id;
-    // var leagueId = req.params.leagueId;
+    var pickerId = req.session.uzer_id;
+    var draftId = parseInt(req.params.draftId);
+    var drafteeName = req.body.name;
 
-    // var name = req.body.name;
+    var currentDraftKey = 'draft' + req.params.draftId;
+    var round = req.session[currentDraftKey];
 
-    // req.models.draftee.find({ name: name, draft_id: draftId }, function(err, result){
+    if(!req.session[currentDraftKey]){
+      round = 1;
+    }
 
-    // })
+    req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
+      function(err, currentDraftee){
+        if(err){
+          console.error(err);
+        }
 
-    res.end();
+// This is cached from restricted routes usage so async is not necessary
+        var overallPick = req.models.draft.get(draftId, function(err, currentDraft){
+          return currentDraft.calculateCurrentSelectionNumber(pickerId, round);
+        })
+
+        req.session[currentDraftKey]++;
+
+        currentDraftee[0].save({ available: false, draft_id: draftId,
+          picker_id: pickerId, overallPick: overallPick }, function(err){
+            if(err){
+              console.error(err);
+            }
+            res.end(currentDraftee[0]);
+        });
+    });
   }
 };
