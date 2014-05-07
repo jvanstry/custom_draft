@@ -27,7 +27,7 @@ module.exports = function(app){
       cookie: { maxAge: 60 * 60 * 1000 }
     }
   ));
-  app.use(express.static(path.join(__dirname, '../build')));
+  app.use(express.static(path.join(__dirname, '../public')));
   app.use(function(req, res, next){
     next()
   })

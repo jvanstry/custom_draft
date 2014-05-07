@@ -1,6 +1,6 @@
 body {
-  background-color: rgb(177, 192, 251);
-  font: 400 1.875em/4 Montserrat;
+  background-color: rgb(66, 66, 66);
+  font: 400 0.75em/1.25 Montserrat;
   color: rgb(0,0,0);
 }
 
@@ -12,14 +12,60 @@ body {
   background-color: rgb(222, 222, 222);
 }
 
+.chat {
+  float: left;
+  clear: both;
+  width: 46.6666666666%;
+  height: 606px;
+  margin: 51px 0 0 5.4166666666%;
+  background-color: rgba(241, 249, 9, 0);
+}
+
+.chat-info {
+  float: left;
+  clear: both;
+  width: 95.5357142857%;
+  height: 76px;
+  min-height: 76px;
+  margin-left: 2.2321428571%;
+  font-size: 1em;
+  color: rgb(0,0,0);
+}
+
+.chat-info p {
+  margin-bottom: 1em;
+}
+
+.chat-title {
+  float: left;
+  width: 100%;
+  margin-top: 13px;
+  font: 3.25em/1 'Yanone Kaffeesatz';
+  text-align: center;
+  color: rgb(31, 214, 18);
+}
+
+.chat-type {
+  display: block;
+  float: left;
+  clear: both;
+  width: 77.9017857142%;
+  height: 88px;
+  padding: 0 10px 0 2px;
+  background-color: rgb(242, 242, 242);
+  font-size: 1.333em;
+  line-height: 1;
+  color: rgb(0, 0, 0);
+}
+
 .custo {
   float: left;
-  width: 99.9999999999%;
+  width: 100%;
   height: 86px;
   min-height: 86px;
   padding-top: 10px;
   padding-right: 150px;
-  font: 2.167em/1.38 'Yanone Kaffeesatz';
+  font: 5.417em/1.38 'Yanone Kaffeesatz';
   text-align: center;
   color: rgb(31, 214, 18);
 }
@@ -27,18 +73,30 @@ body {
 .drafto {
   float: left;
   clear: both;
-  width: 99.9999999999%;
+  width: 100%;
   min-height: 82px;
   padding-right: 115px;
-  font: 2em/1.38 'Yanone Kaffeesatz';
+  font: 5em/1.38 'Yanone Kaffeesatz';
   text-align: right;
   color: rgb(31, 214, 18);
 }
 
+.element {
+  float: left;
+  clear: both;
+  width: 95.5357142857%;
+  height: 369px;
+  margin: 21px 0 0 2.2321428571%;
+  border: 1px solid rgb(24, 167, 14);
+  border-radius: 6px;
+  background-color: rgba(230, 230, 230, 0.59);
+}
+
 .home {
+  position: relative;
   float: left;
   width: 80%;
-  min-width: 772px;
+  min-width: 960px;
   height: 1216px;
   margin: -126px 0 0 10%;
   background-color: rgb(255, 255, 255);
@@ -48,16 +106,70 @@ body {
   float: left;
   width: 50.177935943%;
   height: 86px;
-  font-size: 1em;
+  font-size: 2.5em;
+  line-height: 4;
   text-align: center;
   color: rgb(0,0,0);
 }
 
 .logo {
-  float: left;
-  width: 41.4583333333%;
+  position: absolute;
+  top: 166px;
+  left: 58.5432942708%;
+  z-index: 18;
+  width: 41.3541666666%;
   height: 168px;
+  border: 1px solid rgb(24, 167, 14);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 2px 1px 3px rgb(182, 240, 178);
+}
+
+.recent {
+  position: relative;
+  float: left;
+  width: 21.0416666666%;
+  height: 554px;
+  margin: 103px 0 0 1.3541666666%;
+}
+
+.recent-league {
+  float: left;
+  width: 100%;
+  height: 39px;
+  padding-left: 12px;
+  font-size: 1.333em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.recent-leagues {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 8;
+  width: 100%;
+  max-width: 230px;
+  height: 80px;
+  font-size: 2.417em;
+  line-height: 1.38;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.send-chat {
+  display: block;
+  float: left;
+  width: 22.0982142857%;
+  height: 88px;
+  padding-left: 6px;
+  border-radius: 3px;
   background-color: rgb(222, 222, 222);
+  font: 400 4.167em/0.8 'Yanone Kaffeesatz';
+  text-align: left;
+  letter-spacing: 14px;
+  color: rgb(31, 214, 18);
 }
 
 .sigin-in {
@@ -65,7 +177,7 @@ body {
   clear: both;
   width: 100%;
   min-height: 44px;
-  font-size: 0.667em;
+  font-size: 1.667em;
   line-height: 1.8;
   text-align: center;
   color: rgb(0,0,0);
@@ -75,7 +187,7 @@ body {
   float: left;
   width: 100%;
   min-height: 42px;
-  font-size: 0.667em;
+  font-size: 1.667em;
   line-height: 1.8;
   text-align: center;
   color: rgb(0,0,0);
@@ -85,7 +197,8 @@ body {
   float: left;
   width: 49.8220640569%;
   height: 86px;
-  font-size: 1em;
+  font-size: 2.5em;
+  line-height: 4;
   text-align: center;
   color: rgb(0,0,0);
 }
@@ -98,15 +211,6 @@ body {
   background-color: rgb(222, 222, 222);
 }
 
-._element {
-  float: left;
-  clear: both;
-  width: 75.5208333333%;
-  height: 126px;
-  margin-top: 756px;
-  background-color: rgb(222, 222, 222);
-}
-
 .container-2 {
   float: left;
   clear: both;
@@ -115,10 +219,28 @@ body {
   background-color: rgb(222, 222, 222);
 }
 
-.container-4 {
+.container-6 {
   float: left;
   width: 24.4791666666%;
   height: 881px;
-  margin-top: 1px;
+  margin-top: -574px;
+  background-color: rgb(222, 222, 222);
+}
+
+.recent-league-1 {
+  margin-top: 97px;
+}
+
+.recent-league-2,
+.recent-league-3 {
+  clear: both;
+}
+
+.home ._element-2 {
+  float: left;
+  clear: both;
+  width: 75.5208333333%;
+  height: 76px;
+  margin-top: 231px;
   background-color: rgb(222, 222, 222);
 }

@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="../styles/normalize.css">
+  <link href="http://fonts.googleapis.com/css?family=Montserrat:400,400|Yanone+Kaffeesatz:400,400" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="styles/normalize.css">
   <% styles.forEach(function(element){ %>
-  <link rel="stylesheet" type="text/css" href="../styles/<%= element %>.css">
+  <link rel="stylesheet" type="text/css" href="styles/<%= element %>.css">
   <% }); %>
-  <script src="bundle.min.js"></script>
+  <script src="bundle.js"></script>
   <title><%= title %></title>
-  <div id="jer">hi</div>
 </head>
