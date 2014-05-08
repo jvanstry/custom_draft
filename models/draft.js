@@ -22,6 +22,10 @@ module.exports = function(orm, db){
     },
     cache: true
   });
+
+  db.models.draft.updateActivePicker = function(id, pickerId, draftOrder, cb){
+    cb(null, 1);
+  }
   
   db.models.draft.hasOne('league', db.models.league, {
     required: true,

@@ -68,8 +68,22 @@ module.exports = {
             if(err){
               console.error(err);
             }
-            var fun = 'overallpick' + currentDraftee[0].overallPick;
-            res.end(fun);
+
+            req.models.draft.updateActivePicker(draftId, pickerId, draftOrder, function(err, activePickerId){
+              var activePickerSessionKey = 'draft' + draftId + 'active';
+
+              if(err){
+                console.error(err)
+              }else if(activePickerId){
+                req.session[activePickerSessionKey] = activePickerId;
+
+                var fun = 'overallpick' + currentDraftee[0].overallPick;
+                res.end(fun);
+              }else{
+                // draft is over
+                res.end('draft over');
+              };
+            });
         });
     });
   }

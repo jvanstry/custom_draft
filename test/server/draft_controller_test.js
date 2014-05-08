@@ -135,6 +135,17 @@ describe('Draft Controller', function(){
     var drafteeName = 'jerry';
     var draftId = 1;
     var draftSpecificPostRoute = '/draft/' + draftId;
+    var activePickerId = 2;
+    var updateActivePickerStub;
+
+    beforeEach(function(){
+      updateActivePickerStub = sinon.stub(models.draft, 'updateActivePicker')
+        .callsArgWith(3, null, 1);
+    });
+
+    afterEach(function(){
+      models.draft.updateActivePicker.restore();
+    })
 
     it('Should not be accessible by a rando', function(done){
       request(app)
@@ -144,11 +155,29 @@ describe('Draft Controller', function(){
     });
 
     it('Should only be accessible by draft active picker', function(done){
-      helper.logInWithLeagueMember()
+      helper.logInWithActivePicker()
+        .post(draftSpecificPostRoute)
+        .form({ name: drafteeName })
+        .expect(200).end(done);
+    });
+
+    it('Should update pickee, and return overall pick num', function(done){
+      helper.logInWithActivePicker()
         .post(draftSpecificPostRoute)
         .form({ name: drafteeName })
         .expect(200).end(function(err, res){
-          expect(res.body).to.contain('overallpick1')
+          expect(res.body).to.contain('overallpick1');
+          done();
+        });
+    });
+
+    it('Should update the draft active picker', function(done){
+      helper.logInWithActivePicker()
+        .post(draftSpecificPostRoute)
+        .form({ name: drafteeName })
+        .expect(200).end(function(err, res){
+          expect(updateActivePickerStub.calledWithMatch(draftId, 2, '2-1'))
+            .to.equal(true);
           done();
         });
     });
