@@ -35,8 +35,6 @@ module.exports = {
         leagueName: result[0].name
       }
 
-      console.log('RES LOCALS', res.locals)
-
       res.render('draft-lobby');
     })
   },
@@ -45,12 +43,11 @@ module.exports = {
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
 
-    var currentDraftKey = 'draft' + req.params.draftId;
-    var round = req.session[currentDraftKey];
+    var orderSessionKey = 'draft' + draftId + 'order';
+    var draftOrder = req.session[orderSessionKey];
 
-    if(!req.session[currentDraftKey]){
-      round = 1;
-    }
+    var roundSessionKey = 'draft' + req.params.draftId + 'round';
+    var round = req.session[roundSessionKey] || 1;
 
     req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
       function(err, currentDraftee){
@@ -58,20 +55,48 @@ module.exports = {
           console.error(err);
         }
 
-// This is cached from restricted routes usage so async is not necessary
-        var overallPick = req.models.draft.get(draftId, function(err, currentDraft){
-          return currentDraft.calculateCurrentSelectionNumber(pickerId, round);
-        })
+  //should calcpick be an instance method? shouldn't really be on draftee
+  //and is it really worth grabbing draft instance just to run it from there
 
-        req.session[currentDraftKey]++;
+        var overallPick = calculatePickNumber(draftOrder, round, pickerId);
 
-        currentDraftee[0].save({ available: false, draft_id: draftId,
-          picker_id: pickerId, overallPick: overallPick }, function(err){
+        round++;
+        req.session[roundSessionKey] = round;
+
+        currentDraftee[0].save({ available: false, picker_id: pickerId,
+          overallPick: overallPick }, function(err){
             if(err){
               console.error(err);
             }
-            res.end(currentDraftee[0]);
+            var fun = 'overallpick' + currentDraftee[0].overallPick;
+            res.end(fun);
         });
     });
   }
 };
+
+function calculatePickNumber(order, round, picker){
+  var orderArray = order.split('-');
+  var pickWithinRound = parseInt(orderArray.indexOf(picker.toString()));
+  var numberOfLeagueMembers = orderArray.length;
+
+  var runningTotal = numberOfLeagueMembers * (round - 1);
+
+// we are assuming snake style drafting
+  if(round % 2){
+    runningTotal = runningTotal + pickWithinRound + 1;
+  }else{
+    runningTotal = runningTotal + (numberOfLeagueMembers - pickWithinRound);
+  }
+
+  return runningTotal;
+}
+
+
+
+
+
+
+
+
+

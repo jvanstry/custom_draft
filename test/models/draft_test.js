@@ -42,14 +42,10 @@ describe('Draft class', function(){
     });
 
     it('should save with valid properties', function(done){
-      Draft.create(validProperties, function(err){
+      Draft.create(validProperties, function(err, result){
         expect(err).to.not.exist;
-
-        Draft.find(validProperties, function(err, results){
-          expect(results[0].league_id).to.equal(validProperties.league_id);
-          expect(results.length).to.equal(1);
-          done();
-        });
+        expect(result.league_id).to.equal(14);
+        done();
       });
     });
   });

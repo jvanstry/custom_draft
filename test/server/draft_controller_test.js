@@ -147,7 +147,10 @@ describe('Draft Controller', function(){
       helper.logInWithLeagueMember()
         .post(draftSpecificPostRoute)
         .form({ name: drafteeName })
-        .expect(200).end(done);
+        .expect(200).end(function(err, res){
+          expect(res.body).to.contain('overallpick1')
+          done();
+        });
     });
   });
 });

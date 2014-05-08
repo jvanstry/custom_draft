@@ -18,15 +18,7 @@ module.exports = function(orm, db){
       start_time: orm.enforce.ranges.number(Date.now(), undefined, 'draft must be in future')
     },
     methods: {
-      calculateCurrentSelectionNumber: function(pickerId, round){
-      //   var currentPick = (round - 1) * (this.order.length);
-      //   if(round % 2){
-      //     return 1;
-      //     //odd
-      //   }
-      // }
-        return 1;
-      }
+
     },
     cache: true
   });

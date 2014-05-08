@@ -34,7 +34,7 @@ module.exports = function(orm, db){
       }
     },
     autoFetch: true,
-    cache: true
+    cache: (process.env.NODE_ENV !== 'test')
   });
 
   db.models.uzer.authenticate = function(email, password_attempt, cb){
