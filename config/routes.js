@@ -59,7 +59,6 @@ function restrictToLeagueCreator(req, res, next){
   // avoid hitting db for league.find and below middleware
   // or have more coherent code?
   //   for now: lets not hit the db, think more later.
-
   uzer.leagues.forEach(function(element, index){
     if((element.id === leagueId) && (element.isCreator)){
       creator = true;
@@ -75,10 +74,23 @@ function restrictToLeagueCreator(req, res, next){
   }
 }
 
+function storeDraftOrderInSession(draft, req){
+  var draftOrderKey = 'draft' + draft.id + 'order';
+  var draftOrderIsSet = draft.order;
+  var draftOrderIsNotInSesh = !req.session[draftOrderKey];
+
+  if(draftOrderIsSet && draftOrderIsNotInSesh){
+    req.session[draftOrderKey] = draft.order;
+  }
+}
+
 function restrictToActivePicker(req, res, next){
   var draftId = parseInt(req.params.draftId);
 
   req.models.draft.get(draftId, function(err, result){
+
+    storeDraftOrderInSession(result, req)
+
     if(err || !result){
       return next(new Error ('node orm error: ', err));
     }else if(!result){
