@@ -86,6 +86,12 @@ function storeDraftOrderInSession(draft, req){
 
 function restrictToActivePicker(req, res, next){
   var draftId = parseInt(req.params.draftId);
+  var draftActivePickerKey = 'draft' + draftId + 'active';
+  var activePickerId = req.session[draftActivePickerKey]
+
+  if(activePickerId === uzer.id){
+    return next();
+  }
 
   req.models.draft.get(draftId, function(err, result){
 
