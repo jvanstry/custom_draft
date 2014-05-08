@@ -35,6 +35,7 @@ SET default_with_oids = false;
 CREATE TABLE draft (
     start_time timestamp without time zone NOT NULL,
     "order" text,
+    rounds real,
     "createdAt" timestamp without time zone,
     id integer NOT NULL,
     league_id integer NOT NULL,
@@ -248,7 +249,7 @@ ALTER TABLE ONLY uzer_leagues ALTER COLUMN join_id SET DEFAULT nextval('uzer_lea
 -- Data for Name: draft; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY draft (start_time, "order", "createdAt", id, league_id, active_picker_id) FROM stdin;
+COPY draft (start_time, "order", rounds, "createdAt", id, league_id, active_picker_id) FROM stdin;
 \.
 
 

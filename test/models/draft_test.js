@@ -49,4 +49,28 @@ describe('Draft class', function(){
       });
     });
   });
+
+  describe('#updateActivePicker', function(){
+    beforeEach(helper.seed);
+
+    it('should update draft active picker in DB', function(done){
+      Draft.updateActivePicker(1, 1, 2, '2-1', function(err, activePickerId){
+        Draft.get(1, function(err, result){
+          expect(result.active_picker_id).to.equal(1);
+          done();
+        });
+      });
+    });
+
+    it('should call callback with active picker id', function(done){
+      Draft.updateActivePicker(1, 1, 2, '2-1', function(err, activePickerId){
+        expect(activePickerId).to.equal(1);
+        done();
+      });
+    });
+
+    // it('should return nothing if draft is over', function(done){
+
+    // });
+  })
 });

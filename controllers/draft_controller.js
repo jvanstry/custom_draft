@@ -69,8 +69,9 @@ module.exports = {
               console.error(err);
             }
 
-            req.models.draft.updateActivePicker(draftId, pickerId, draftOrder, function(err, activePickerId){
+            req.models.draft.updateActivePicker(draftId, overallPick, pickerId, draftOrder, function(err, activePickerId){
               var activePickerSessionKey = 'draft' + draftId + 'active';
+              console.log('here')
 
               if(err){
                 console.error(err)

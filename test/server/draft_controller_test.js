@@ -140,7 +140,7 @@ describe('Draft Controller', function(){
 
     beforeEach(function(){
       updateActivePickerStub = sinon.stub(models.draft, 'updateActivePicker')
-        .callsArgWith(3, null, 1);
+        .callsArgWith(4, null, 1);
     });
 
     afterEach(function(){
@@ -176,7 +176,7 @@ describe('Draft Controller', function(){
         .post(draftSpecificPostRoute)
         .form({ name: drafteeName })
         .expect(200).end(function(err, res){
-          expect(updateActivePickerStub.calledWithMatch(draftId, 2, '2-1'))
+          expect(updateActivePickerStub.calledWithMatch(draftId, 1, 2, '2-1'))
             .to.equal(true);
           done();
         });

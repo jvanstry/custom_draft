@@ -2,6 +2,7 @@ module.exports = function(orm, db){
   db.define('draft', {
     start_time: { type: 'date', required: true, time: true },
     order: { type: 'text' },
+    rounds: { type: 'number' },
     createdAt: { type: 'date', time: true }
   },
   {
@@ -20,12 +21,39 @@ module.exports = function(orm, db){
     methods: {
 
     },
-    cache: true
+    cache: false
   });
 
-  db.models.draft.updateActivePicker = function(id, pickerId, draftOrder, cb){
-    cb(null, 1);
-  }
+  db.models.draft.updateActivePicker = function(id, overallPick, pickerId, draftOrder, cb){
+    var orderArr = draftOrder.split('-');
+    var players = orderArr.length;
+    var pickerSpot = orderArr.indexOf(pickerId.toString());
+    var activePickerIndex;
+
+    var round = Math.ceil(overallPick / players);
+
+    if(round % 2){
+      activePickerIndex = pickerSpot + 1;
+    }else{
+      activePickerIndex = pickerSpot - 1;
+    }
+
+    console.log(activePickerIndex, pickerSpot);
+    var activePickerId = parseInt(orderArr[activePickerIndex]);
+
+    db.models.draft.get(id, function(err, result){
+      console.log(result, 'result');
+      if(err){
+        console.error(err);
+      }
+
+      console.log(activePickerId);
+      result.save({ active_picker_id: activePickerId }, function(err, result){
+        console.log(err, result, result.active_picker.id);
+        cb(err, activePickerId);
+      });
+    });
+  };
   
   db.models.draft.hasOne('league', db.models.league, {
     required: true,
