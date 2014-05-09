@@ -69,8 +69,11 @@ describe('Draft class', function(){
       });
     });
 
-    // it('should return nothing if draft is over', function(done){
-
-    // });
+    it('should return boolean true if draft is over', function(done){
+      Draft.updateActivePicker(1, 4, 2, '2-1', function(err, activePickerId){
+        expect(typeof(activePickerId)).to.equal('boolean');
+        done();
+      });
+    });
   })
 });

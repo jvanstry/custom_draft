@@ -39,6 +39,7 @@ module.exports = {
     })
   },
   makePick: function(req, res, next){
+  // wow this is massive.... think about doing SOMETHING (child process?)
     var pickerId = req.session.uzer_id;
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
@@ -71,11 +72,10 @@ module.exports = {
 
             req.models.draft.updateActivePicker(draftId, overallPick, pickerId, draftOrder, function(err, activePickerId){
               var activePickerSessionKey = 'draft' + draftId + 'active';
-              console.log('here')
 
               if(err){
                 console.error(err)
-              }else if(activePickerId){
+              }else if(typeof(activePickerId) === 'number'){
                 req.session[activePickerSessionKey] = activePickerId;
 
                 var fun = 'overallpick' + currentDraftee[0].overallPick;
@@ -106,12 +106,3 @@ function calculatePickNumber(order, round, picker){
 
   return runningTotal;
 }
-
-
-
-
-
-
-
-
-

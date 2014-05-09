@@ -161,7 +161,7 @@ exports.seed = function(next){
   models.league.create({ name: 'jerbear league' }, respondToSaveAttempt);
 
   models.draft.create({ start_time: new Date(1497758400000), league_id: 1, 
-    order: '2-1', active_picker_id: 2 }, respondToSaveAttempt);
+    order: '2-1', rounds: 2, active_picker_id: 2 }, respondToSaveAttempt);
 
   models.draftee.create({ name: 'jerry', draft_id: 1 }, respondToSaveAttempt);
 }

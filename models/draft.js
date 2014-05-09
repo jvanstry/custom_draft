@@ -25,19 +25,16 @@ module.exports = function(orm, db){
   });
 
   db.models.draft.updateActivePicker = function(id, overallPick, pickerId, draftOrder, cb){
+    // should prob at least change the arity of this func to a config obj
+
     var orderArr = draftOrder.split('-');
-    var players = orderArr.length;
+    var numOfPlayers = orderArr.length;
     var pickerSpot = orderArr.indexOf(pickerId.toString());
-    var activePickerIndex;
 
-    var round = Math.ceil(overallPick / players);
+    var helper = require('./helpers/draft-round-helper');
 
-    if(round % 2){
-      activePickerIndex = pickerSpot + 1;
-    }else{
-      activePickerIndex = pickerSpot - 1;
-    }
-
+    var round = Math.ceil(overallPick / numOfPlayers);
+    var activePickerIndex = helper.snakeOrderHandling(pickerSpot, round);
     var activePickerId = parseInt(orderArr[activePickerIndex]);
 
     db.models.draft.get(id, function(err, result){
@@ -45,8 +42,12 @@ module.exports = function(orm, db){
         console.error(err);
       }
 
+      var roundsInDraft = result.rounds;
+
       result.save({ active_picker_id: activePickerId }, function(err, updatedResult){
-        cb(err, activePickerId);
+        var islastPick = helper.isLastPickOfDraft(overallPick, roundsInDraft, numOfPlayers);
+        console.log(isLastPick, activePickerId);
+        cb(err, isLastPick || activePickerId);
       });
     });
   };
