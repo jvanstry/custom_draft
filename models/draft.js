@@ -38,18 +38,14 @@ module.exports = function(orm, db){
       activePickerIndex = pickerSpot - 1;
     }
 
-    console.log(activePickerIndex, pickerSpot);
     var activePickerId = parseInt(orderArr[activePickerIndex]);
 
     db.models.draft.get(id, function(err, result){
-      console.log(result, 'result');
       if(err){
         console.error(err);
       }
 
-      console.log(activePickerId);
-      result.save({ active_picker_id: activePickerId }, function(err, result){
-        console.log(err, result, result.active_picker.id);
+      result.save({ active_picker_id: activePickerId }, function(err, updatedResult){
         cb(err, activePickerId);
       });
     });
@@ -60,7 +56,5 @@ module.exports = function(orm, db){
     reverse: 'draft',
     autoFetch: true
   });
-  db.models.draft.hasOne('active_picker', db.models.uzer, {
-    autoFetch: true
-  });
+  db.models.draft.hasOne('active_picker', db.models.uzer);
 };
