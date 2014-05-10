@@ -26,17 +26,17 @@ module.exports = {
 
     req.models.draft.find({ league_id: leagueId }, function(err, result){
       if(err){
-        console.error(err)
+        console.error(err);
       }
 
       res.locals = {
         title: result[0].name + ' draft lobby',
         styles: ['draft-lobby'],
         leagueName: result[0].name
-      }
+      };
 
       res.render('draft-lobby');
-    })
+    });
   },
   makePick: function(req, res, next){
   // wow this is massive.... think about doing SOMETHING (child process?)
@@ -74,7 +74,7 @@ module.exports = {
               var activePickerSessionKey = 'draft' + draftId + 'active';
 
               if(err){
-                console.error(err)
+                console.error(err);
               }else if(typeof(activePickerId) === 'number'){
                 req.session[activePickerSessionKey] = activePickerId;
 
@@ -83,7 +83,7 @@ module.exports = {
               }else{
                 // draft is over
                 res.end('draft over');
-              };
+              }
             });
         });
     });
