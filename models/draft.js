@@ -45,8 +45,8 @@ module.exports = function(orm, db){
       var roundsInDraft = result.rounds;
 
       result.save({ active_picker_id: activePickerId }, function(err, updatedResult){
-        var islastPick = helper.isLastPickOfDraft(overallPick, roundsInDraft, numOfPlayers);
-        console.log(isLastPick, activePickerId);
+        var isLastPick = helper.isLastPickOfDraft(overallPick, roundsInDraft, numOfPlayers);
+        
         cb(err, isLastPick || activePickerId);
       });
     });
