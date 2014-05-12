@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.get('/signup', controllers.uzer.new);
   app.post('/signup', controllers.uzer.create);
   app.get('/league/:id', controllers.league.get);
-  app.get('/draft/:leagueId',   controllers.draft.getLobby);
+  app.get('/draft/:leagueId', controllers.draft.getLobby);
   app.get('/leagues', controllers.league.index)
 
   // restricted routes
