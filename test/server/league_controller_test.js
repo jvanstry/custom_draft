@@ -3,7 +3,7 @@ var app = require('../../app.js').start();
 var request = require('super-request');
 
 describe('League Controller', function(){
-  var leagueName = 'cool league'
+  var leagueName = 'cool league';
   var leagueCreateStub;
   var validArgs = { name: leagueName };
   var uzerId = 1;
@@ -51,7 +51,7 @@ describe('League Controller', function(){
 
           expect(res.body).to.contain('form');
           done();
-        })     
+        });     
     });
   });
 
@@ -95,7 +95,7 @@ describe('League Controller', function(){
             return done(err);
           }
 
-          expect(res.headers['location']).to.contain('league/' + newlyCreateLeagueId);
+          expect(res.headers.location).to.contain('league/' + newlyCreateLeagueId);
           done();
         });
     });

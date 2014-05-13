@@ -27,8 +27,8 @@ describe('Uzer Controller', function(){
 
           expect(res.body).to.contain('form');
           done();
-        })
-    })
+        });
+    });
   });
 
   describe('#create', function(){
@@ -78,7 +78,7 @@ describe('Uzer Controller', function(){
             return done(err);
           }
 
-          expect(res.headers['location']).to.contain('user/' + newlyCreatedUzerId);
+          expect(res.headers.location).to.contain('user/' + newlyCreatedUzerId);
           done();
         });
     });
@@ -86,7 +86,7 @@ describe('Uzer Controller', function(){
 
   describe('#get', function(){
     var getUzerRoute = '/user/' + 1;
-    var uzerName = 'jerbear'
+    var uzerName = 'jerbear';
 
     it('Should be accessible by anyone', function(done){
       request(app)

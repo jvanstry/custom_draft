@@ -1,10 +1,11 @@
 var helper = require('../test-helper');
 var Uzer;
 var path = require('path');
+/*jshint expr: true*/
 
 function referenceUzer(){
   Uzer = models.uzer;
-};  
+}
 
 describe('Uzer class', function(){
   beforeEach(helper.dbSetup);
@@ -111,7 +112,7 @@ describe('Uzer class', function(){
       Uzer.authenticate('nobodies email', 'notSecurezYet', function(uzer){
         expect(uzer.error).to.equal('no uzer by that email found');
         done();
-      })
-    })
+      });
+    });
   });
 });

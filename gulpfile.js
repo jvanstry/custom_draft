@@ -16,7 +16,7 @@ var clientScriptsLocation = 'public/scripts/*.js',
                             'controllers/*.js', './app.js'],
 
   scriptsLocation = ['models/*.js', 'config.*js', 'controllers/*.js', 
-                      './app.js', 'public/scripts/*.js'],
+                      './app.js', 'public/scripts/*.js', 'test/**/*.js', 'test/*.js'],
                       
   testsLocation = ['test/client/*.js', 'test/server/*.js', 'test/models/*.js'],
   stylesLocation = 'public/styles/*.css',

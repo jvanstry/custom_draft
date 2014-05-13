@@ -96,7 +96,7 @@ describe('Draft Controller', function(){
             return done(err);
           }
 
-          expect(res.headers['location']).to.contain('draft/' + leagueId)
+          expect(res.headers.location).to.contain('draft/' + leagueId);
           done();
         });
     });
@@ -149,7 +149,7 @@ describe('Draft Controller', function(){
 
     afterEach(function(){
       models.draft.updateActivePicker.restore();
-    })
+    });
 
     it('Should not be accessible by a rando', function(done){
       request(app)

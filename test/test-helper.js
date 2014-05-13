@@ -24,7 +24,7 @@ exports.clientSetup = function(){
 function doesDbExist(cb){
   var ls = exec('psql -l | grep custom_draft_test | wc -l', function(err){
     if(err){
-      console.log('err determining db existence: ', err)
+      console.log('err determining db existence: ', err);
     }
   });
 
@@ -34,7 +34,7 @@ function doesDbExist(cb){
     // in 8th digit of string accordingly
     var dbExists = parseInt(data[7]);
 
-    cb(dbExists)
+    cb(dbExists);
   });
 }
 
@@ -60,11 +60,11 @@ exports.dbSetup = function(next){
           console.error('Error in test db creation: ', err);
         }
 
-        loadDbFromSQLFile(next)
-     })
+        loadDbFromSQLFile(next);
+     });
     }
-  })
-}
+  });
+};
 
 exports.modelSetup = function(next){
   var models = require('../models');
@@ -90,14 +90,14 @@ exports.dbCleanup = function(next){
     }
     next();
   });
-}
+};
 
 exports.logInWithLeagueCreator = function(){
   return request(app)
     .post('/')
     .form({ email: 'jer@example.com', password: 'notSecurezYet' })
-    .expect(200).end()
-}
+    .expect(200).end();
+};
 
 exports.logInWithSimpleUzer = exports.logInWithLeagueCreator;
 
@@ -105,8 +105,8 @@ exports.logInWithActivePicker = function(){
   return request(app)
     .post('/')
     .form({ email: 'jer@foo.com', password: 'notSecurezYet' })
-    .expect(200).end()
-}
+    .expect(200).end();
+};
 
 exports.logInWithLeagueMember = exports.logInWithActivePicker;
 
@@ -138,13 +138,13 @@ exports.seed = function(next){
 
   function respondToSaveAttempt(err, result){
     if(err){
-      console.error(err)
+      console.error(err);
     }else if(result.name === 'jerbear league'){
       league = result;
     }
-    counter.count++
+    counter.count++;
     counter.emit('save-success');
-  };
+  }
 
   counter.on('save-success', function(){
     if(this.count === 3){
@@ -166,4 +166,4 @@ exports.seed = function(next){
     order: '2-1', rounds: 2, active_picker_id: 2 }, respondToSaveAttempt);
 
   models.draftee.create({ name: 'jerry', draft_id: 1 }, respondToSaveAttempt);
-}
+};

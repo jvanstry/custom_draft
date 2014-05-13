@@ -14,7 +14,7 @@ module.exports = {
     
     req.models.uzer.create(uzerInfo, function(err, result){
       if(err){
-        console.error(err)
+        console.error(err);
       }
 
       var uzerId = result.id;
@@ -28,7 +28,7 @@ module.exports = {
 
     req.models.uzer.find({ id: uzerId }, function(err, result){
       if(err){
-        console.err(err)
+        console.err(err);
       }
 
       var uzerName = result[0].name;

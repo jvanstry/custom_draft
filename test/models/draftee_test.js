@@ -1,10 +1,11 @@
 var helper = require('../test-helper');
 var Draftee;
 var validProperties = { name: 'jerry', draft_id: 1 };
+/*jshint expr: true*/
 
 function referenceDraftee(){
   Draftee = models.draftee;
-};
+}
 
 describe('Draftee class', function(){
   beforeEach(helper.dbSetup);

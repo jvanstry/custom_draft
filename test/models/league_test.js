@@ -1,10 +1,11 @@
 var helper = require('../test-helper');
 var League;
 var validProperties = { name: 'jerry_league' };
+/*jshint expr: true*/
 
 function referenceLeague(){
   League = models.league;
-};
+}
 
 describe('League class', function(){
   beforeEach(helper.dbSetup);

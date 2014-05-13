@@ -1,6 +1,7 @@
 var helper = require('../test-helper.js');
 var app = require('../../app.js').start();
 var request = require('supertest');
+/*jshint expr: true*/
 
 describe('Home Controller', function(){
   before(helper.dbSetup);
@@ -35,7 +36,7 @@ describe('Home Controller', function(){
 
           models.uzer.authenticate.restore();
           done();
-        })
+        });
     });
 
     it('should not log you in with invalid creds', function(done){
@@ -56,7 +57,7 @@ describe('Home Controller', function(){
 
           models.uzer.authenticate.restore();
           done();
-        })
+        });
     });
   });
 

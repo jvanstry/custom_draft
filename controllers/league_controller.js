@@ -12,7 +12,7 @@ module.exports = {
 
     req.models.league.create({ name: name }, function(err, result){
       if(err){
-        console.err(err)
+        console.err(err);
       }
 
       var leagueHomePageUrl = 'league/' + result.id;
@@ -24,7 +24,7 @@ module.exports = {
 
     req.models.league.find({ id: leagueId }, function(err, result){
       if(err){
-        console.err(err)
+        console.err(err);
       }
 
       var leagueName = result[0].name;
@@ -36,12 +36,12 @@ module.exports = {
       };
 
       res.render('league');
-    })
+    });
   },
   index: function(req, res, next){
     req.models.league.find({}, 15, function(err, result){
       if(err){
-        console.err(err)
+        console.err(err);
       }
 
       var leagueName = result[0].name;
@@ -52,6 +52,6 @@ module.exports = {
       };
 
       res.render('leagues');
-    })
+    });
   }
 };
