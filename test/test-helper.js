@@ -99,6 +99,8 @@ exports.logInWithLeagueCreator = function(){
     .expect(200).end()
 }
 
+exports.logInWithSimpleUzer = exports.logInWithLeagueCreator;
+
 exports.logInWithActivePicker = function(){
   return request(app)
     .post('/')
