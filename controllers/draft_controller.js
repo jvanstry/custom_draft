@@ -50,16 +50,13 @@ module.exports = {
     var roundSessionKey = 'draft' + req.params.draftId + 'round';
     var round = req.session[roundSessionKey] || 1;
 
+    var overallPick = req.models.draft.calculateOverallPickNumber(draftOrder, round, pickerId);
+
     req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
       function(err, currentDraftee){
         if(err){
           console.error(err);
         }
-
-  //should calcpick be an instance method? shouldn't really be on draftee
-  //and is it really worth grabbing draft instance just to run it from there
-
-        var overallPick = calculatePickNumber(draftOrder, round, pickerId);
 
         round++;
         req.session[roundSessionKey] = round;
@@ -89,20 +86,3 @@ module.exports = {
     });
   }
 };
-
-function calculatePickNumber(order, round, picker){
-  var orderArray = order.split('-');
-  var pickWithinRound = parseInt(orderArray.indexOf(picker.toString()));
-  var numberOfLeagueMembers = orderArray.length;
-
-  var runningTotal = numberOfLeagueMembers * (round - 1);
-
-// we are assuming snake style drafting
-  if(round % 2){
-    runningTotal = runningTotal + pickWithinRound + 1;
-  }else{
-    runningTotal = runningTotal + (numberOfLeagueMembers - pickWithinRound);
-  }
-
-  return runningTotal;
-}

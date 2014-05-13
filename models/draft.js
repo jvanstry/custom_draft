@@ -1,3 +1,5 @@
+var helper = require('./helpers/draft-round-helper');
+
 module.exports = function(orm, db){
   db.define('draft', {
     start_time: { type: 'date', required: true, time: true },
@@ -30,9 +32,6 @@ module.exports = function(orm, db){
     var orderArr = draftOrder.split('-');
     var numOfPlayers = orderArr.length;
     var pickerSpot = orderArr.indexOf(pickerId.toString());
-
-    var helper = require('./helpers/draft-round-helper');
-
     var round = Math.ceil(overallPick / numOfPlayers);
     var activePickerIndex = helper.snakeOrderHandling(pickerSpot, round);
     var activePickerId = parseInt(orderArr[activePickerIndex]);
@@ -51,6 +50,8 @@ module.exports = function(orm, db){
       });
     });
   };
+
+  db.models.draft.calculateOverallPickNumber = helper.calculateOverallPickNumber;
   
   db.models.draft.hasOne('league', db.models.league, {
     required: true,
