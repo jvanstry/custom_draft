@@ -2,7 +2,7 @@ module.exports = {
   new: function(req, res, next){
     res.locals = {
       title: 'Create New League',
-      styles: ['new-draft']
+      styles: ['new-league']
     };
     res.render('new-league');
   },
