@@ -31,6 +31,10 @@ describe('Draft Controller', function(){
       helper.logInWithLeagueCreator()
         .get(getNewDraftRoute)
         .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
           expect(res.body).to.contain('form');
           done();
         });
@@ -92,7 +96,7 @@ describe('Draft Controller', function(){
             return done(err);
           }
 
-          expect(res.headers['location']).to.contain('/draft/' + leagueId)
+          expect(res.headers['location']).to.contain('draft/' + leagueId)
           done();
         });
     });
@@ -109,7 +113,7 @@ describe('Draft Controller', function(){
 
     afterEach(function(){
       models.draft.find.restore();
-    })
+    });
 
     it('Should be accessible by anyone', function(done){
       request(app)

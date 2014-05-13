@@ -8,15 +8,17 @@ describe('League Controller', function(){
   var validArgs = { name: leagueName };
   var uzerId = 1;
   var preCreatedLeagueId = 1;
+  var newlyCreateLeagueId = 2;
+  var preExistingLeagueName = 'jerbear league';
 
-  before(helper.dbSetup);
-  before(helper.modelSetup);
-  before(helper.seed);
-  after(helper.dbCleanup);
+  beforeEach(helper.dbSetup);
+  beforeEach(helper.modelSetup);
+  beforeEach(helper.seed);
+  afterEach(helper.dbCleanup);
 
   beforeEach(function(){
     leagueCreateStub = sinon.stub(models.league, 'create')
-      .callsArgWith(1, null, { name: leagueName });
+      .callsArgWith(1, null, { name: leagueName, id: newlyCreateLeagueId });
 
   });
 
@@ -38,6 +40,19 @@ describe('League Controller', function(){
         .get(newLeagueRoute)
         .expect(500).end(done);
     });
+
+    it('Should render the new view creation page', function(done){
+      helper.logInWithSimpleUzer()
+        .get(newLeagueRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(res.body).to.contain('form');
+          done();
+        })     
+    });
   });
 
   describe('#create', function(){
@@ -47,7 +62,7 @@ describe('League Controller', function(){
       helper.logInWithSimpleUzer()
         .post(createLeagueRoute)
         .form(validArgs)
-        .expect(200).end(done);
+        .expect(302).end(done);
     });
 
     it('Should not be accessible by rando', function(done){
@@ -56,25 +71,125 @@ describe('League Controller', function(){
         .form(validArgs)
         .expect(500).end(done);
     });
+
+    it('Should call the create league function', function(done){
+      helper.logInWithSimpleUzer()
+        .post(createLeagueRoute)
+        .form(validArgs)
+        .expect(302).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(leagueCreateStub.calledWith(validArgs)).to.equal(true);
+          done();
+        });
+    });
+
+    it('Should redirect to the league home page', function(done){
+      helper.logInWithSimpleUzer()
+        .post(createLeagueRoute)
+        .form(validArgs)
+        .expect(302).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(res.headers['location']).to.contain('league/' + newlyCreateLeagueId);
+          done();
+        });
+    });
   });
 
   describe('#get', function(){
     var getLeagueRoute = '/league/' + preCreatedLeagueId;
+    var validFindArgs = { id: preCreatedLeagueId };
+
+    beforeEach(function(){
+      leagueFindStub = sinon.stub(models.league, 'find')
+        .callsArgWith(1, null, [{ name: preExistingLeagueName }]);    
+    });
+
+    afterEach(function(){
+      models.league.find.restore();
+    });
 
     it('Should be accessible by rando', function(done){
       request(app)
         .get(getLeagueRoute)
         .expect(200).end(done);
     });
+
+    it('Should call the league find method', function(done){
+      request(app)
+        .get(getLeagueRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(leagueFindStub.calledWith(validFindArgs)).to.equal(true);
+          done();
+        });      
+    });
+
+    it('Should render league homepage view', function(done){
+      request(app)
+        .get(getLeagueRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(res.body).to.contain(preExistingLeagueName);
+          done();
+        }); 
+    });
   });
 
   describe('#index', function(){
     var indexLeaguesRoute = '/leagues';
+    var leagueFindAllStub;
+
+    beforeEach(function(){
+      leagueFindAllStub = sinon.stub(models.league, 'find')
+        .callsArgWith(2, null, [{ name: preExistingLeagueName }]);    
+    });
+
+    afterEach(function(){
+      models.league.find.restore();
+    });
 
     it('Should be accessible by rando', function(done){
       request(app)
         .get(indexLeaguesRoute)
         .expect(200).end(done);
+    });
+
+    it('Should call the league find method with no filter', function(done){
+      request(app)
+        .get(indexLeaguesRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(leagueFindAllStub.calledWith({})).to.equal(true);
+          done();
+        });       
+    });
+
+    it('Should render the view index page', function(done){
+      request(app)
+        .get(indexLeaguesRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(res.body).to.contain('Recent Leagues');
+          done();
+        }); 
     });
   });
 });
