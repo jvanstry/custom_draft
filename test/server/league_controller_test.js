@@ -11,10 +11,10 @@ describe('League Controller', function(){
   var newlyCreateLeagueId = 2;
   var preExistingLeagueName = 'jerbear league';
 
-  beforeEach(helper.dbSetup);
-  beforeEach(helper.modelSetup);
-  beforeEach(helper.seed);
-  afterEach(helper.dbCleanup);
+  before(helper.dbSetup);
+  before(helper.modelSetup);
+  before(helper.seed);
+  after(helper.dbCleanup);
 
   beforeEach(function(){
     leagueCreateStub = sinon.stub(models.league, 'create')

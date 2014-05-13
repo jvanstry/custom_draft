@@ -44,7 +44,6 @@ module.exports = {
         console.err(err)
       }
 
-      console.log(result)
       var leagueName = result[0].name;
 
       res.locals = {

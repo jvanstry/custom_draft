@@ -1,5 +1,3 @@
-var orm = require('orm');
-
 module.exports = {
   get: function(req, res, next){
     res.locals = {
