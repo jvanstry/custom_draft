@@ -7,7 +7,7 @@ module.exports = function (app) {
   app.get('/', controllers.home.get);
   app.post('/', controllers.home.signIn);
   app.delete('/', controllers.home.signOut);
-  app.get('/user/:id', controllers.uzer.get);
+  app.get('/user/:uzerId', controllers.uzer.get);
   app.get('/signup', controllers.uzer.new);
   app.post('/signup', controllers.uzer.create);
   app.get('/league/:leagueId', controllers.league.get);
