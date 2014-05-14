@@ -25,9 +25,15 @@ module.exports = function(orm, db){
     autoFetch: true
   });
 
-  db.models.draftee.hasOne('picker', db.models.uzer, {
+  db.models.draftee.hasOne('picker', db.models.uzer, 
+  {
+    reverse: 'draftPicks',
+    autoFetch: true
+  },
+  {
     autoFetch: true
   });
+
 
   db.sync();
 };

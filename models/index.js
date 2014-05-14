@@ -12,6 +12,7 @@ function setup(db, cb) {
   require('./league')(orm, db); 
   require('./draft')(orm, db);
   require('./draftee')(orm, db);
+  db.models.team = require('./team');
 
   return cb(null, db);
 }

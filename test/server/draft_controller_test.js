@@ -51,7 +51,7 @@ describe('Draft Controller', function(){
         .callsArgWith(1, null, 'draft dummy');
 
       draftFindStub = sinon.stub(models.draft, 'find')
-        .callsArgWith(1, null, [{name: leagueName }]);     
+        .callsArgWith(1, null, [ { league: {name: leagueName } }]);     
     });
 
     afterEach(function(){
@@ -108,7 +108,7 @@ describe('Draft Controller', function(){
 
     beforeEach(function(){
       draftFindStub = sinon.stub(models.draft, 'find')
-        .callsArgWith(1, null, [{name: leagueName }]);    
+        .callsArgWith(1, null, [ { league: {name: leagueName } } ]);    
     });
 
     afterEach(function(){

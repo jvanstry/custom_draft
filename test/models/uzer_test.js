@@ -1,6 +1,5 @@
 var helper = require('../test-helper');
 var Uzer;
-var path = require('path');
 /*jshint expr: true*/
 
 function referenceUzer(){

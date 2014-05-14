@@ -21,8 +21,8 @@ module.exports = function (app) {
   
   app.post('/league', restrictToLoggedInUzer, controllers.league.create);
 
-  // app.get('/league/:leagueId/draft', restrictToLoggedInUzer,
-  //   restrictToLeagueCreator, controllers.draft.new);
+  app.get('/league/:leagueId/draft', restrictToLoggedInUzer,
+    restrictToLeagueCreator, controllers.draft.new);
 
   app.post('/league/:leagueId/draft', restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.create);

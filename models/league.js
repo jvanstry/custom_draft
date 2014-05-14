@@ -17,17 +17,14 @@ module.exports = function(orm, db){
     },
     cache: (process.env.NODE_ENV !== 'test')
   });
-
+  
   db.models.uzer.hasMany('leagues', db.models.league, 
     { 
       isCreator: { type: 'boolean', defaultValue: false }, 
       join_id: { type: 'serial', primaryKey: true } 
     },
     { 
-      reverse: 'members' 
-    },
-    { 
-      autoFetch: true,
+      reverse: 'members',
       cache: (process.env.NODE_ENV !== 'test')
     });
 };
