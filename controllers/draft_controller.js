@@ -30,7 +30,7 @@ module.exports = {
       }
 
       res.locals = {
-        title: result[0].name + ' draft lobby',
+        title: result[0].league.name + ' draft lobby',
         styles: ['draft-lobby'],
         leagueName: result[0].name
       };

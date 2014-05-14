@@ -12,7 +12,8 @@ module.exports = function (app) {
   app.post('/signup', controllers.uzer.create);
   app.get('/league/:leagueId', controllers.league.get);
   app.get('/draft/:leagueId', controllers.draft.getLobby);
-  app.get('/leagues', controllers.league.index)
+  app.get('/leagues', controllers.league.index);
+
 
   // restricted routes
 
@@ -20,8 +21,8 @@ module.exports = function (app) {
   
   app.post('/league', restrictToLoggedInUzer, controllers.league.create);
 
-  app.get('/league/:leagueId/draft', restrictToLoggedInUzer,
-    restrictToLeagueCreator, controllers.draft.new);
+  // app.get('/league/:leagueId/draft', restrictToLoggedInUzer,
+  //   restrictToLeagueCreator, controllers.draft.new);
 
   app.post('/league/:leagueId/draft', restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.create);

@@ -12,7 +12,7 @@ module.exports = {
 
     req.models.league.create({ name: name }, function(err, result){
       if(err){
-        console.err(err);
+        console.error(err);
       }
 
       var leagueHomePageUrl = 'league/' + result.id;
@@ -24,7 +24,7 @@ module.exports = {
 
     req.models.league.find({ id: leagueId }, function(err, result){
       if(err){
-        console.err(err);
+        console.error(err);
       }
 
       var leagueName = result[0].name;
@@ -41,7 +41,7 @@ module.exports = {
   index: function(req, res, next){
     req.models.league.find({}, 15, function(err, result){
       if(err){
-        console.err(err);
+        console.error(err);
       }
 
       var leagueName = result[0].name;

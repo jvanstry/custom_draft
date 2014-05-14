@@ -15,7 +15,7 @@ module.exports = function(app){
   // switch views path to ../build/views upon deployment
   app.set('views', path.join(__dirname, '../public/views'));
   app.set('view engine', 'ejs');
-
+  app.use(express.static(path.join(__dirname, '../public')));
   app.use(favicon());
   app.use(logger('dev'));
   app.use(compress())
@@ -27,7 +27,6 @@ module.exports = function(app){
       cookie: { maxAge: 60 * 60 * 1000 }
     }
   ));
-  app.use(express.static(path.join(__dirname, '../public')));
   app.use(function(req, res, next){
     next()
   })

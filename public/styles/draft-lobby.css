@@ -1,0 +1,487 @@
+body {
+  background-color: rgb(66, 66, 66);
+  font: 400 0.75em/1.38 Montserrat;
+  color: rgb(0,0,0);
+}
+
+.active-notify {
+  float: left;
+  width: 100%;
+  min-height: 45px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  font: 2.833em/1.38 'Yanone Kaffeesatz';
+  color: rgb(31, 214, 18);
+}
+
+.active-picker {
+  font-weight: 700;
+  color: rgb(31, 214, 18);
+}
+
+.active-picker-container {
+  float: left;
+  clear: both;
+  width: 19.306184012%;
+  height: 47px;
+  margin: 31px 0 0 6.3348416289%;
+}
+
+.auth {
+  float: left;
+  width: 72.3404255319%;
+  height: 86px;
+  background-color: rgb(222, 222, 222);
+}
+
+.available-container {
+  position: relative;
+  float: left;
+  z-index: 43;
+  width: 24.2708333333%;
+  height: 428px;
+  margin: -401px 0 0 75.5208333333%;
+}
+
+.available-draftee {
+  float: left;
+  width: 100%;
+  height: 25px;
+  min-height: 25px;
+  font-size: 1.333em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.available-draftee-title {
+  float: left;
+  clear: both;
+  width: 296.09375%;
+  min-height: 39px;
+  margin: -47px 0 0 181.25%;
+  padding-left: 3px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  font: 2.667em/1.38 'Yanone Kaffeesatz';
+  color: rgb(31, 214, 18);
+}
+
+.available-draftees {
+  float: left;
+  clear: both;
+  width: 96.1373390557%;
+  height: 359px;
+  margin: 11px 0 0 3.8626609442%;
+}
+
+.available-draftees-title,
+.drafted-title {
+  float: left;
+  width: 100%;
+  min-height: 42px;
+  border: 2px solid rgb(0, 0, 0);
+  font: 700 2.5em/1.8 'Yanone Kaffeesatz';
+  text-align: center;
+  color: rgb(31, 214, 18);
+}
+
+.chat-type {
+  display: block;
+  float: left;
+  clear: both;
+  width: 78.1297134238%;
+  height: 88px;
+  margin-top: 16px;
+  padding: 0 10px 0 2px;
+  background-color: rgb(242, 242, 242);
+  font-size: 1.333em;
+  line-height: 1;
+  color: rgb(0, 0, 0);
+}
+
+.custo {
+  float: left;
+  width: 100%;
+  height: 86px;
+  min-height: 86px;
+  padding-top: 10px;
+  padding-right: 150px;
+  font: 5.417em/1.38 'Yanone Kaffeesatz';
+  text-align: center;
+  color: rgb(31, 214, 18);
+}
+
+.draft-container {
+  position: relative;
+  float: left;
+  clear: both;
+  z-index: 30;
+  width: 69.0625%;
+  height: 846px;
+  margin: 15px 0 0 5.4166666666%;
+  background-color: rgba(241, 249, 9, 0);
+}
+
+.draft-history-container {
+  position: relative;
+  float: left;
+  z-index: 58;
+  width: 24.2708333333%;
+  height: 279px;
+  margin: -692px 0 0 75.5208333333%;
+}
+
+.draft-title {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  padding-right: 85px;
+  font: 3.25em/1 'Yanone Kaffeesatz';
+  text-align: center;
+  color: rgb(31, 214, 18);
+}
+
+.drafted-by {
+  float: left;
+  width: 34.8936170212%;
+  height: 19px;
+  min-height: 15px;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.draftee-input-container {
+  float: left;
+  height: 30px;
+}
+
+.draftee-name {
+  float: left;
+  min-height: 30px;
+  font-size: 1.667em;
+  line-height: 1.38;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.draftee-search {
+  display: block;
+  float: left;
+  clear: both;
+  width: 170.3125%;
+  height: 44px;
+  margin: 11px 0 0 -25%;
+  padding: 0 10px;
+  background-color: rgb(242, 242, 242);
+  font-size: 1.167em;
+  line-height: 1.38;
+  color: rgb(0, 0, 0);
+}
+
+.draftee-selectors-container {
+  float: left;
+  clear: both;
+  width: 311.71875%;
+  height: 211px;
+  margin: -204px 0 0 174.21875%;
+}
+
+.drafto {
+  float: left;
+  clear: both;
+  width: 100%;
+  min-height: 82px;
+  padding-right: 115px;
+  font: 5em/1.38 'Yanone Kaffeesatz';
+  text-align: right;
+  color: rgb(31, 214, 18);
+}
+
+.element {
+  float: left;
+  clear: both;
+  width: 96.2292609351%;
+  height: 369px;
+  margin: 24px 0 0 2.2624434389%;
+  border: 1px solid rgb(24, 167, 14);
+  border-radius: 6px;
+  background-color: rgba(230, 230, 230, 0.59);
+}
+
+.home {
+  position: relative;
+  float: left;
+  width: 80%;
+  min-width: 960px;
+  height: 1216px;
+  margin: -127px 0 0 10%;
+  background-color: rgb(255, 255, 255);
+}
+
+.league-name {
+  float: left;
+  width: 49.8220640569%;
+  height: 86px;
+  font-size: 2.5em;
+  line-height: 4;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.league-settings {
+  float: left;
+  width: 50.177935943%;
+  height: 86px;
+  font-size: 2.5em;
+  line-height: 4;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.logo {
+  position: absolute;
+  top: 166px;
+  left: 58.5432942708%;
+  z-index: 33;
+  width: 41.3541666666%;
+  height: 168px;
+  border: 1px solid rgb(24, 167, 14);
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 2px 1px 3px rgb(182, 240, 178);
+}
+
+.logout {
+  float: left;
+  width: 100%;
+  min-height: 42px;
+  font-size: 1.667em;
+  line-height: 1.8;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.make-pick {
+  display: block;
+  float: left;
+  clear: both;
+  width: 144.53125%;
+  height: 147px;
+  margin: 13px 0 0 -21.09375%;
+  border-radius: 25px;
+  background-color: rgb(222, 222, 222);
+  font: 3.75em/1.38 'Yanone Kaffeesatz';
+  text-align: center;
+  color: rgb(31, 214, 18);
+}
+
+.order-list {
+  float: left;
+  clear: both;
+  width: 100%;
+  min-height: 18px;
+  font-size: 1em;
+  line-height: 1.38;
+}
+
+.order-list-container {
+  float: left;
+  clear: both;
+  width: 6.4583333333%;
+  height: 360px;
+  margin-top: -773px;
+  padding-left: 4px;
+}
+
+.order-round-direction {
+  float: left;
+  clear: both;
+  width: 82.7586206896%;
+  min-height: 22px;
+  margin-top: 16px;
+  font-size: 1.333em;
+  font-weight: 700;
+  line-height: 1.38;
+  color: rgb(4, 26, 2);
+}
+
+.order-title {
+  float: left;
+  width: 100%;
+  min-height: 22px;
+  border-bottom: 1px solid rgb(0, 0, 0);
+  font-size: 1.25em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.player-drafted {
+  float: left;
+  width: 47.659574468%;
+  height: 19px;
+  min-height: 15px;
+  font-size: 1em;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.radio {
+  display: block;
+  float: left;
+  width: 20px;
+  margin-top: 6px;
+}
+
+.selection-container {
+  float: left;
+  width: 100%;
+  height: 19px;
+}
+
+.selection-spot {
+  float: left;
+  width: 17.4468085106%;
+  min-height: 16px;
+  font-size: 1.167em;
+  font-weight: 400;
+  line-height: 1.38;
+  color: rgb(0,0,0);
+}
+
+.selections-container {
+  float: left;
+  clear: both;
+  width: 100.8583690987%;
+  height: 210px;
+  margin-top: 11px;
+}
+
+.send-chat {
+  display: block;
+  float: left;
+  width: 21.8702865761%;
+  height: 88px;
+  margin-top: 16px;
+  padding-left: 6px;
+  border-radius: 3px;
+  background-color: rgb(222, 222, 222);
+  font: 400 4.167em/0.8 'Yanone Kaffeesatz';
+  text-align: left;
+  letter-spacing: 14px;
+  color: rgb(31, 214, 18);
+}
+
+.top-buffer {
+  float: left;
+  width: 100%;
+  height: 40px;
+  margin-top: 126px;
+  background-color: rgb(222, 222, 222);
+}
+
+.user-home {
+  float: left;
+  clear: both;
+  width: 100%;
+  min-height: 42px;
+  margin-top: 2px;
+  font-size: 1.667em;
+  line-height: 1.8;
+  text-align: center;
+  color: rgb(0,0,0);
+}
+
+.available-draftee-2,
+.available-draftee-3,
+.selection-container-2,
+.selection-container-3 {
+  clear: both;
+}
+
+.container-2 {
+  float: left;
+  clear: both;
+  width: 58.5416666666%;
+  height: 86px;
+  background-color: rgb(222, 222, 222);
+}
+
+.container-4 {
+  position: relative;
+  float: left;
+  z-index: 4;
+  width: 24.4791666666%;
+  height: 881px;
+  margin-top: -805px;
+  background-color: rgb(222, 222, 222);
+}
+
+.draftee-input-container-1 {
+  width: 47.1177944862%;
+}
+
+.draftee-input-container-2 {
+  width: 52.8822055137%;
+}
+
+.draftee-input-container-3 {
+  clear: both;
+  width: 47.1177944862%;
+  margin-top: 17px;
+}
+
+.draftee-input-container-4 {
+  width: 52.8822055137%;
+  margin-top: 17px;
+}
+
+.draftee-input-container-5 {
+  clear: both;
+  width: 47.1177944862%;
+  margin-top: 14px;
+}
+
+.draftee-name-2 {
+  width: 85.7819905213%;
+}
+
+.draftee-name-1,
+.draftee-name-3 {
+  width: 85.6382978723%;
+}
+
+.draftee-name-4 {
+  width: 86.7298578199%;
+}
+
+.draftee-name-5 {
+  width: 86.1702127659%;
+}
+
+.order-list-4 {
+  margin-top: 4px;
+  font-weight: 400;
+  color: rgb(0,0,0);
+}
+
+.order-list-1,
+.order-list-3,
+.order-list-5,
+.order-list-6 {
+  font-weight: 400;
+  color: rgb(0,0,0);
+}
+
+.radio-2 {
+  margin-left: 0.4739336492%;
+}
+
+.home ._element-2 {
+  float: left;
+  clear: both;
+  width: 75.5208333333%;
+  height: 76px;
+  background-color: rgb(222, 222, 222);
+}

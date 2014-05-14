@@ -92,16 +92,6 @@ body {
   background-color: rgba(230, 230, 230, 0.59);
 }
 
-.home {
-  position: relative;
-  float: left;
-  width: 80%;
-  min-width: 960px;
-  height: 1216px;
-  margin: -126px 0 0 10%;
-  background-color: rgb(255, 255, 255);
-}
-
 .join-league {
   float: left;
   width: 50.177935943%;
@@ -116,7 +106,7 @@ body {
   position: absolute;
   top: 166px;
   left: 58.5432942708%;
-  z-index: 18;
+  z-index: 16;
   width: 41.3541666666%;
   height: 168px;
   border: 1px solid rgb(24, 167, 14);
@@ -125,37 +115,30 @@ body {
   box-shadow: 2px 1px 3px rgb(182, 240, 178);
 }
 
-.recent {
-  position: relative;
+.mascot {
   float: left;
-  width: 21.0416666666%;
-  height: 554px;
-  margin: 103px 0 0 1.3541666666%;
+  width: 23.3333333333%;
+  height: 241px;
+  margin-top: 151px;
 }
 
-.recent-league {
+.mascot-label {
   float: left;
-  width: 100%;
-  height: 39px;
-  padding-left: 12px;
-  font-size: 1.333em;
-  font-weight: 400;
-  line-height: 1.38;
-  color: rgb(0,0,0);
-}
-
-.recent-leagues {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 8;
-  width: 100%;
-  max-width: 230px;
-  height: 80px;
-  font-size: 2.417em;
-  line-height: 1.38;
+  clear: both;
+  width: 93.75%;
+  min-height: 42px;
+  font-size: 1.167em;
+  line-height: 2.5;
   text-align: center;
   color: rgb(0,0,0);
+}
+
+.mascot-pic {
+  display: block;
+  float: left;
+  width: 224px;
+  height: auto;
+  overflow: hidden;
 }
 
 .send-chat {
@@ -227,13 +210,14 @@ body {
   background-color: rgb(222, 222, 222);
 }
 
-.recent-league-1 {
-  margin-top: 97px;
-}
-
-.recent-league-2,
-.recent-league-3 {
-  clear: both;
+.home-1 {
+  position: relative;
+  float: left;
+  width: 80%;
+  min-width: 960px;
+  height: 1216px;
+  margin: -126px 0 0 10%;
+  background-color: rgb(255, 255, 255);
 }
 
 .home ._element-2 {
