@@ -135,6 +135,54 @@ describe('Draft Controller', function(){
     });
   });
 
+  describe('#draftJSON', function(){
+    var leagueSpecificGetRoute = '/draft-info/' + leagueId;
+    var draftFindStub;
+
+    beforeEach(function(){
+      var findResultMock = [{ 
+        active_picker_id: 1, draftees: ['a draftee'], 
+        league: {
+          getMembers: function(cb){
+            cb(null, ['member1', 'member2'])
+          }
+        }
+      }];
+
+      draftFindStub = sinon.stub(models.draft, 'find')
+        .callsArgWith(1, null, findResultMock);
+    });
+
+    afterEach(function(){
+      models.draft.find.restore();
+    });
+
+    it('Should be accessible by anyone', function(done){
+      request(app)
+        .get(leagueSpecificGetRoute)
+        .expect(200).end(done);
+    });
+
+    it('Should return the league info', function(done){
+      request(app)
+        .get(leagueSpecificGetRoute)
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+          var draftData = {
+            leagueMembers: ['member1', 'member2'],
+            draftees: ['a draftee'],
+            clientId: 1,
+            activePickerId: 1 
+          }
+
+          expect(res.body).to.equal(JSON.stringify(draftData));
+          done();
+        });
+    });
+  });
+
   describe('#makePick', function(){
     var drafteeName = 'jerry';
     var draftId = 1;

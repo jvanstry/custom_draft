@@ -30,12 +30,41 @@ module.exports = {
       }
 
       res.locals = {
+        leagueId: leagueId,
         title: result[0].league.name + ' draft lobby',
         styles: ['draft-lobby'],
         leagueName: result[0].name
       };
 
       res.render('draft-lobby');
+    });
+  },
+  draftJSON: function(req, res, next){
+    var leagueId = parseInt(req.params.leagueId);
+    // console.log(req, leagueId)
+    // var uzerId = req.session.uzer_id;
+    var uzerId = 1;
+    // todo figure out how to test this prob if(process.env.NOD..etc.)
+
+    var draftData = {};
+    req.models.draft.find({ league_id: leagueId }, function(err, result){
+      if(err){
+        console.error(err);
+      }
+
+      var draft = result[0];
+
+      draft.league.getMembers(function(err, members){
+        var draftData = {};
+
+        draftData.leagueMembers = members;
+        draftData.draftees = draft.draftees;
+        draftData.clientId = uzerId;
+        draftData.activePickerId = draft.active_picker_id;
+
+        var str = JSON.stringify(draftData);
+        res.end(str);
+      });
     });
   },
   makePick: function(req, res, next){
