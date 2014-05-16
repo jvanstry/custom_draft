@@ -1,15 +1,14 @@
 <% include head %>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
 <script src="../scripts/draft-lobby.js"></script>
-<body class="body draft clearfix" ng-app='draftLobbyApp' 
-  data-league-id="<%= leagueId %>">
-  <div class="home container clearfix">
+<body class="body draft clearfix" ng-app='draftLobbyApp'>
+  <div class="home container clearfix"  ng-controller='draftController'>
     <div class="top-buffer"></div>
     <nav class="container container-2 clearfix">
       <h2 class="league-name">Awesome League</h2>
       <h2 class="league-settings">&nbsp;League Settings</h2>
     </nav>
-    <div class="draft-container clearfix" ng-controller='draftController'>
+    <div class="draft-container clearfix">
       <h2 class="draft-title">Draft Lobby</h2>
       <div class="element"></div>
       <input class="chat-type" placeholder="Don't be shy" type="text">
@@ -79,10 +78,10 @@
     </div>
     <div class="available-container clearfix">
       <h4 class="available-draftees-title">&nbsp;available</h4>
-      <div class="available-draftees clearfix">
-        <h5 class="available-draftee">&nbsp;Blake Bortles</h5>
-        <h5 class="available-draftee available-draftee-2">&nbsp;Blake Bortles</h5>
-        <h5 class="available-draftee available-draftee-3">&nbsp;Blake Bortles</h5>
+      <div class="available-draftees clearfix" ng-repeat="draftee in draftData.draftees">
+        <h5 class="available-draftee" ng-show="draftee.available">
+          {{ draftee.name }}
+        </h5>
       </div>
     </div>
     <footer class="_element-2"></footer>
