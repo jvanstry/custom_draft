@@ -1,12 +1,15 @@
 <% include head %>
-<body class="body draft clearfix">
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script src="../scripts/draft-lobby.js"></script>
+<body class="body draft clearfix" ng-app='draftLobbyApp' 
+  data-league-id="<%= leagueId %>">
   <div class="home container clearfix">
     <div class="top-buffer"></div>
     <nav class="container container-2 clearfix">
       <h2 class="league-name">Awesome League</h2>
       <h2 class="league-settings">&nbsp;League Settings</h2>
     </nav>
-    <div class="draft-container clearfix">
+    <div class="draft-container clearfix" ng-controller='draftController'>
       <h2 class="draft-title">Draft Lobby</h2>
       <div class="element"></div>
       <input class="chat-type" placeholder="Don't be shy" type="text">

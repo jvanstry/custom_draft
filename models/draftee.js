@@ -21,6 +21,7 @@ module.exports = function(orm, db){
   });
 
   db.models.draftee.hasOne('draft', db.models.draft, {
+    reverse: 'draftees',
     required: true,
     autoFetch: true
   });
