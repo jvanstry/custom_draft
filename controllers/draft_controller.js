@@ -41,7 +41,6 @@ module.exports = {
   },
   draftJSON: function(req, res, next){
     var leagueId = parseInt(req.params.leagueId);
-    // console.log(req, leagueId)
     // var uzerId = req.session.uzer_id;
     var uzerId = 1;
     // todo figure out how to test this prob if(process.env.NOD..etc.)

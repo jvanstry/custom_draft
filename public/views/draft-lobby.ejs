@@ -9,7 +9,12 @@
       <h2 class="league-settings">&nbsp;League Settings</h2>
     </nav>
     <div class="draft-container clearfix">
-      <h2 class="draft-title">Draft Lobby</h2>
+      <h2 class="draft-title">
+        Draft Lobby 
+        <span ng-show="isCreator && !draftData.order" ng-click="startDraft()" class="start-draft">
+          START DRAFT
+        </span>
+      </h2>
       <div class="element"></div>
       <input class="chat-type" placeholder="Don't be shy" type="text">
       <button class="send-chat">SUB MIT</button>

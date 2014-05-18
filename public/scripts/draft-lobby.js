@@ -46,7 +46,8 @@ draftLobbyApp.service('draftOrder', function(){
       var orderSortedNames = [];
 
       orderArr.forEach(function(el, i, arr){
-        orderSortedNames.push({ name: idToNameMap[el] })
+        var orderInt = parseInt(el);
+        orderSortedNames.push({ name: idToNameMap[orderInt] })
       });
 
       return orderSortedNames;
@@ -54,8 +55,24 @@ draftLobbyApp.service('draftOrder', function(){
   }
 });
 
+draftLobbyApp.service('isCreator', function(){
+  return function(leagueMembers, clientId){
+    var uzer = leagueMembers.filter(function(member){
+      return member.id === clientId;
+    });
+
+    var isCreator = false;
+
+    if(uzer.length){
+      isCreator = uzer[0].isCreator;
+    }
+
+    return isCreator;
+  }
+});
+
 var controller = draftLobbyApp
-  .controller('draftController', function(formatHistory, 
+  .controller('draftController', function(formatHistory, isCreator, 
     mapIdsToMemberNames, draftOrder, $http, $window, $scope) {
 
     // $scope.availableDraftees = [];
@@ -70,14 +87,32 @@ var controller = draftLobbyApp
         $scope.draftData = data;
         $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
 
-        $scope.draftData.order = [2, 1]
-        $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
+        $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
+          $scope.draftData.clientId);
 
-        
+        if($scope.draftData.order){
+          $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
+        }
+
         console.log($scope.draftData);
 
         $scope.createHistory();
     });
+
+    $scope.startDraft = function(){
+      var url = '/start-draft/' + $scope.leagueId;
+      var memberIds =[];
+      $scope.draftData.leagueMembers.forEach(function(member){
+        memberIds.push(member.id);
+      });
+
+      $http.post(url, memberIds)
+        .success(function(data){
+          $scope.draftData.order = data;
+          $scope.orderSortedNames = draftOrder($scope.idToNameMap, 
+            $scope.draftData.order);
+      });
+    };
 
 
     $scope.createHistory = function(){
