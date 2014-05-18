@@ -1,5 +1,6 @@
 <% include head %>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script src="../scripts/draft-lobby.js"></script>
 <body class="body draft clearfix" ng-app='draftLobbyApp'>
   <div class="home container clearfix"  ng-controller='draftController'>
@@ -11,38 +12,24 @@
     <div class="draft-container clearfix">
       <h2 class="draft-title">
         Draft Lobby 
-        <span ng-show="isCreator && !draftData.order" ng-click="startDraft()" class="start-draft">
+        <span ng-show="isCreator && !draftData.order && timeToDraft" ng-click="startDraft()" class="start-draft">
           START DRAFT
         </span>
       </h2>
-      <div class="element"></div>
-      <input class="chat-type" placeholder="Don't be shy" type="text">
+      <div ng-controller='socketController'>
+        <div class="element"></div>
+        <input class="chat-type" placeholder="Don't be shy" type="text">
+      </div>
       <button class="send-chat">SUB MIT</button>
-      <div class="active-picker-container clearfix">
+      <div class="active-picker-container clearfix" ng-controller='socketController' ng-show="draftData.activePickerId === draftData.clientId + 1">
         <h3 class="active-notify">YOUR TURN!</h3>
         <h3 class="available-draftee-title">Your choices:&nbsp;</h3>
         <input class="draftee-search" placeholder="Start Typing a Name...." type="text">
         <button class="make-pick">Make Pick&nbsp;</button>
         <div class="draftee-selectors-container clearfix">
-          <div class="draftee-input-container draftee-input-container-1 clearfix">
-            <h4 class="draftee-name draftee-name-1">Blake Bortles</h4>
-            <input class="radio" type="radio">
-          </div>
-          <div class="draftee-input-container draftee-input-container-2 clearfix">
-            <h4 class="draftee-name draftee-name-2">Blake Bortles</h4>
-            <input class="radio radio-2" type="radio">
-          </div>
-          <div class="draftee-input-container draftee-input-container-3 clearfix">
-            <h4 class="draftee-name draftee-name-3">Blake Bortles</h4>
-            <input class="radio" type="radio">
-          </div>
-          <div class="draftee-input-container draftee-input-container-4 clearfix">
-            <h4 class="draftee-name draftee-name-4">Blake Bortles</h4>
-            <input class="radio" type="radio">
-          </div>
-          <div class="draftee-input-container draftee-input-container-5 clearfix">
-            <h4 class="draftee-name draftee-name-5">Blake Bortles</h4>
-            <input class="radio" type="radio">
+          <div ng-repeat="draftee in draftData.draftees" ng-show="draftee.available"class="draftee-input-container draftee-input-container-1 clearfix">
+            <h4 class="draftee-name draftee-name-1">{{ draftee.name }}</h4>
+            <input class="radio" type="radio" name="draft-pick">
           </div>
         </div>
       </div>
@@ -56,12 +43,7 @@
       <h6 class="order-list" ng-repeat="member in orderSortedNames">
         {{ member.name }}
       </h6>
-<!--       <h6 class="order-list active-picker">jerbear</h6>
-      <h6 class="order-list ">jerbear</h6>
-      <h6 class="order-list ">jerbear</h6>
-      <h6 class="order-list ">jerbear</h6>
-      <h6 class="order-list ">jerbear</h6>
-      <h6 class="order-round-direction">R1-v</h6> -->
+<!--  todo: figure out how to apply "active-picker" ng-class -->
     </div>
     <div class="draft-history-container clearfix">
       <h4 class="drafted-title">&nbsp;draft history</h4>
@@ -75,8 +57,8 @@
     </div>
     <div class="available-container clearfix">
       <h4 class="available-draftees-title">&nbsp;available</h4>
-      <div class="available-draftees clearfix" ng-repeat="draftee in draftData.draftees">
-        <h5 class="available-draftee" ng-show="draftee.available">
+      <div class="available-draftees clearfix">
+        <h5 class="available-draftee" ng-repeat="draftee in draftData.draftees" ng-show="draftee.available">
           {{ draftee.name }}
         </h5>
       </div>
