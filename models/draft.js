@@ -1,4 +1,5 @@
 var helper = require('./helpers/draft-round-helper');
+var arrayShuffle = require('./helpers/shuffle-array');
 
 module.exports = function(orm, db){
   db.define('draft', {
@@ -21,13 +22,25 @@ module.exports = function(orm, db){
       start_time: orm.enforce.ranges.number(Date.now(), undefined, 'draft must be in future')
     },
     methods: {
+      startDraft: function(membersIds, cb){
+        var orderArray = arrayShuffle(membersIds);
+        this.order = orderArray.join('-');
 
+        this.save(function(err){
+          if(err){
+            console.error(err);
+          }
+
+          cb(null, orderArray);
+        });
+      }
     },
     cache: false
   });
 
   db.models.draft.updateActivePicker = function(id, overallPick, pickerId, draftOrder, cb){
     // should prob at least change the arity of this func to a config obj
+    // todo: think about making an instance method
 
     var orderArr = draftOrder.split('-');
     var numOfPlayers = orderArr.length;

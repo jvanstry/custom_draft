@@ -97,4 +97,63 @@ describe('Draft class', function(){
       });
     });
   });
+
+  describe('draft#startDraft', function(){
+    var draft;
+    var arrayRandomizer = require('../../models/helpers/shuffle-array');
+    var draftSaveStub;
+
+    var arrayRandomizerStub = sinon.stub(module.children[0], 'exports')
+      .returns([2, 1]);
+
+    beforeEach(function(done){
+      Draft.create(validProperties, function(err, result){
+        if(err){
+          console.error(err);
+        }
+
+        draft = result;
+        draftSaveStub = sinon.stub(draft, 'save')
+          .callsArgWith(0, null)
+
+        done();
+      });
+    });
+
+    afterEach(function(){
+      draft.save.restore();
+      arrayRandomizerStub.restore();
+    });
+
+    it('should call the helper method for array randomization', function(){
+      draft.startDraft(['1', '2'], function(){});
+
+      expect(arrayRandomizerStub.called).to.equal(true);
+
+    });
+
+    it('should call callback with newly randomized order', function(){
+      var spy = sinon.spy();
+
+      draft.startDraft(['1', '2'], spy)
+      expect(spy.calledWith(null, [2, 1])).to.equal(true);
+    });
+
+    it('should save new random order to DB', function(){
+      draft.startDraft(['1', '2'], function(){});
+
+      expect(draftSaveStub.called).to.equal(true);
+    });
+  });
 });
+
+
+
+
+
+
+
+
+
+
+
