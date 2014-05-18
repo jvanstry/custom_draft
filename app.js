@@ -1,6 +1,14 @@
 var app = require('express')();
 var routes = require('./config/routes');
 var environment = require('./config/environment');
+var server = require('http').createServer(app);
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 
 environment(app);
@@ -11,7 +19,7 @@ app.use(function(err, req, res, next){
 });
 
 app.start = function(){
-  return this.listen(app.get('port'), function(){
+  server.listen(app.get('port'), function(){
     console.log("Express on port: " + app.get('port'));
   });
 };

@@ -60,6 +60,8 @@ module.exports = {
           draftData.order = draft.order.split('-');
         }
 
+        draftData.startTime = draft.start_time;
+        draftData.draftId = draft.id;
         draftData.leagueMembers = members;
         draftData.draftees = draft.draftees;
         draftData.clientId = uzerId;
@@ -94,7 +96,8 @@ module.exports = {
   },
   makePick: function(req, res, next){
   // wow this is massive.... think about doing SOMETHING (child process?)
-    var pickerId = req.session.uzer_id;
+    // var pickerId = req.session.uzer_id;
+    var pickerId = 1;
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
 

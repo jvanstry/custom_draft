@@ -28,6 +28,30 @@ draftLobbyApp.service('formatHistory', function(){
   }
 });
 
+draftLobbyApp.factory('socket', function ($rootScope) {
+  var socket = io.connect();
+  return {
+    on: function (eventName, callback) {
+      socket.on(eventName, function () {  
+        var args = arguments;
+        $rootScope.$apply(function () {
+          callback.apply(socket, args);
+        });
+      });
+    },
+    emit: function (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      })
+    }
+  };
+});
+
 draftLobbyApp.service('mapIdsToMemberNames', function(){
   return function(members){
     var mappingObj = { numMembers: members.length };
@@ -71,63 +95,89 @@ draftLobbyApp.service('isCreator', function(){
   }
 });
 
-var controller = draftLobbyApp
-  .controller('draftController', function(formatHistory, isCreator, 
-    mapIdsToMemberNames, draftOrder, $http, $window, $scope) {
+draftLobbyApp.controller('draftController', function(formatHistory, isCreator, 
+  mapIdsToMemberNames, draftOrder, socket, $http, $window, $scope) {
 
-    // $scope.availableDraftees = [];
-    $scope.results = [];
+  // $scope.availableDraftees = [];
+  $scope.results = [];
 
-    $scope.leagueId = $window.location.pathname.substring(7);
+  $scope.leagueId = $window.location.pathname.substring(7);
 
-    var url = '/draft-info/' + $scope.leagueId;
+  var url = '/draft-info/' + $scope.leagueId;
 
-    $http.get(url)
-      .success(function(data) {
-        $scope.draftData = data;
-        $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
+  $http.get(url)
+    .success(function(data) {
+      $scope.draftData = data;
+      $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
 
-        $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
-          $scope.draftData.clientId);
+      $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
+        $scope.draftData.clientId);
 
-        if($scope.draftData.order){
-          $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
-        }
+      $scope.timeToDraft = new Date($scope.draftData.startTime) < new Date();
+      // Todo: investigate if this needs a "watch" function
 
-        console.log($scope.draftData);
+      if($scope.draftData.order){
+        $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
+      }
 
-        $scope.createHistory();
+      console.log($scope.draftData);
+
+      $scope.createHistory();
+  });
+
+  $scope.startDraft = function(){
+    var url = '/start-draft/' + $scope.leagueId;
+    var memberIds =[];
+    $scope.draftData.leagueMembers.forEach(function(member){
+      memberIds.push(member.id);
     });
 
-    $scope.startDraft = function(){
-      var url = '/start-draft/' + $scope.leagueId;
-      var memberIds =[];
-      $scope.draftData.leagueMembers.forEach(function(member){
-        memberIds.push(member.id);
-      });
+    $http.post(url, memberIds)
+      .success(function(data){
+        $scope.draftData.order = data;
+        $scope.orderSortedNames = draftOrder($scope.idToNameMap, 
+          $scope.draftData.order);
+    });
+  };
 
-      $http.post(url, memberIds)
-        .success(function(data){
-          $scope.draftData.order = data;
-          $scope.orderSortedNames = draftOrder($scope.idToNameMap, 
-            $scope.draftData.order);
-      });
-    };
+  $scope.makePick = function(){
+
+  };
+
+  $scope.updateActivePicker = function(){
+
+  };
+
+  $scope.createHistory = function(){
+    var takenDraftees = $scope.draftData.draftees.filter(function(draftee){
+      return !draftee.available;
+    });
 
 
-    $scope.createHistory = function(){
-      var takenDraftees = $scope.draftData.draftees.filter(function(draftee){
-        return !draftee.available;
-      });
+    $scope.formattedHistory = formatHistory(takenDraftees, $scope.idToNameMap);
+  };
+
+  $scope.updateHistory = function(){
+
+  };
 
 
-      $scope.formattedHistory = formatHistory(takenDraftees, $scope.idToNameMap);
-    };
+});
 
-    $scope.updateHistory = function(){
-
-    };
-
+draftLobbyApp.controller('socketController', function(socket, $scope){
+  socket.on('message', function (data) {
 
   });
+
+  socket.on('pickMade', function (message) {
+
+  });
+
+  $scope.makePick = function(){
+    // post to draft/:draftId
+    // form data is draftee name
+    // include clientId why not?
+  }
+
+});
 
