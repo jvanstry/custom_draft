@@ -26,7 +26,7 @@ draftLobbyApp.service('formatHistory', function(){
 
     return formattedArray;
   }
-})
+});
 
 draftLobbyApp.service('mapIdsToMemberNames', function(){
   return function(members){
@@ -38,11 +38,25 @@ draftLobbyApp.service('mapIdsToMemberNames', function(){
 
     return mappingObj;
   }
-})
+});
+
+draftLobbyApp.service('draftOrder', function(){
+  return function(idToNameMap, orderArr){
+    if(idToNameMap && angular.isArray(orderArr)){
+      var orderSortedNames = [];
+
+      orderArr.forEach(function(el, i, arr){
+        orderSortedNames.push({ name: idToNameMap[el] })
+      });
+
+      return orderSortedNames;
+    }
+  }
+});
 
 var controller = draftLobbyApp
   .controller('draftController', function(formatHistory, 
-    mapIdsToMemberNames, $http, $window, $scope) {
+    mapIdsToMemberNames, draftOrder, $http, $window, $scope) {
 
     // $scope.availableDraftees = [];
     $scope.results = [];
@@ -56,11 +70,12 @@ var controller = draftLobbyApp
         $scope.draftData = data;
         $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
 
+        $scope.draftData.order = [2, 1];
+        $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
         console.log($scope.draftData);
 
         $scope.createHistory();
     });
-
 
 
     $scope.createHistory = function(){
