@@ -70,7 +70,6 @@ var controller = draftLobbyApp
 
 
       $scope.formattedHistory = formatHistory(takenDraftees, $scope.idToNameMap);
-      console.log($scope.formattedHistory);
     };
 
     $scope.updateHistory = function(){

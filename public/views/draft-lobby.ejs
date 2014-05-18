@@ -48,31 +48,21 @@
     </div>
     <div class="order-list-container clearfix">
       <h5 class="order-title">ORDER</h5>
-      <h6 class="order-list order-list-1">jerbear</h6>
+      <h6 class="order-list ">jerbear</h6>
       <h6 class="order-list active-picker">jerbear</h6>
-      <h6 class="order-list order-list-3">jerbear</h6>
-      <h6 class="order-list order-list-4">jerbear</h6>
-      <h6 class="order-list order-list-5">jerbear</h6>
-      <h6 class="order-list order-list-6">jerbear</h6>
+      <h6 class="order-list ">jerbear</h6>
+      <h6 class="order-list ">jerbear</h6>
+      <h6 class="order-list ">jerbear</h6>
+      <h6 class="order-list ">jerbear</h6>
       <h6 class="order-round-direction">R1-v</h6>
     </div>
     <div class="draft-history-container clearfix">
       <h4 class="drafted-title">&nbsp;draft history</h4>
       <div class="selections-container clearfix">
-        <div class="selection-container clearfix">
-          <h6 class="selection-spot">1.1&nbsp;</h6>
-          <h6 class="player-drafted">Johnny Manziel</h6>
-          <h6 class="drafted-by">&nbsp;jerbear</h6>
-        </div>
-        <div class="selection-container selection-container-2 clearfix">
-          <h6 class="selection-spot">1.2</h6>
-          <h6 class="player-drafted">Johnny Manziel</h6>
-          <h6 class="drafted-by">&nbsp;jerbear</h6>
-        </div>
-        <div class="selection-container selection-container-3 clearfix">
-          <h6 class="selection-spot">1.3&nbsp;</h6>
-          <h6 class="player-drafted">Johnny Manziel</h6>
-          <h6 class="drafted-by">&nbsp;jerbear</h6>
+        <div class="selection-container clearfix" ng-repeat="pick in formattedHistory">
+          <h6 class="selection-spot">{{pick.round}}.{{pick.pickInRound}}</h6>
+          <h6 class="player-drafted">{{pick.name}}</h6>
+          <h6 class="drafted-by">{{pick.pickerName}}</h6>
         </div>
       </div>
     </div>
