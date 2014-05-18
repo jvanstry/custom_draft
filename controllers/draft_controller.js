@@ -57,6 +57,10 @@ module.exports = {
       draft.league.getMembers(function(err, members){
         var draftData = {};
 
+        if(draft.order){
+          draftData.order = draft.order.split('-');
+        }
+
         draftData.leagueMembers = members;
         draftData.draftees = draft.draftees;
         draftData.clientId = uzerId;
@@ -64,6 +68,28 @@ module.exports = {
 
         var str = JSON.stringify(draftData);
         res.end(str);
+      });
+    });
+  },
+  startDraft: function(req, res, next){
+    var leagueId = parseInt(req.params.leagueId);
+    var membersIds = req.body.members;
+
+    req.models.draft.find({ league_id: leagueId }, function(err, result){
+      if(err){
+        console.error(err);
+      }
+
+      var draft = result[0];
+
+      draft.startDraft(membersIds, function(err, order){
+        if(err){
+          console.error(err);
+        }
+
+        var strOrder = JSON.stringify(order);
+        //todo: broadcast order to all sockets
+        res.end(strOrder);      
       });
     });
   },

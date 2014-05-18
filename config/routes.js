@@ -30,6 +30,9 @@ module.exports = function (app) {
   app.post('/draftee/:leagueId',  restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draftee.create);
 
+  app.post('/start-draft/:leagueId',  restrictToLoggedInUzer,
+    restrictToLeagueCreator, controllers.draft.startDraft);
+
   app.post('/draft/:draftId',  restrictToLoggedInUzer, 
     restrictToActivePicker, controllers.draft.makePick);
 };

@@ -46,7 +46,7 @@
       <h1 class="custo">&nbsp;Custo'</h1>
       <h1 class="drafto">Drafto'</h1>
     </div>
-    <div class="order-list-container clearfix">
+    <div ng-show="draftData.order" class="order-list-container clearfix">
       <h5 class="order-title">ORDER</h5>
       <h6 class="order-list" ng-repeat="member in orderSortedNames">
         {{ member.name }}

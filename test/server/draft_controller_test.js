@@ -135,6 +135,55 @@ describe('Draft Controller', function(){
     });
   });
 
+  describe('#startDraft', function(){
+    var leagueId = 1;
+    var startDraftPostRoute = '/start-draft/' + leagueId;
+    var draftFindStub;
+
+    beforeEach(function(){
+      var findResultMock = [{ 
+         startDraft: function(memberIds, cb){
+          cb(null, memberIds)
+         }
+      }];
+
+      draftFindStub = sinon.stub(models.draft, 'find')
+        .callsArgWith(1, null, findResultMock);
+    });
+
+    afterEach(function(){
+      models.draft.find.restore();
+    });
+
+    it('Should not be accessible by a random person', function(done){
+      request(app)
+        .post(startDraftPostRoute)
+        .form({ members: [1, 2] })
+        .expect(500).end(done);
+    });
+
+    it('Should be accessible by league creator', function(done){
+      helper.logInWithLeagueCreator()
+        .post(startDraftPostRoute)
+        .form({ members: [1, 2] })
+        .expect(200).end(done);
+    });
+
+    it('Should return the league info', function(done){
+      helper.logInWithLeagueCreator()
+        .post(startDraftPostRoute)
+        .form({ members: [1, 2] })
+        .expect(200).end(function(err, res){
+          if(err){
+            return done(err);
+          }
+
+          expect(res.body).to.equal('["1","2"]');
+          done();
+        });
+    });
+  });
+
   describe('#draftJSON', function(){
     var leagueSpecificGetRoute = '/draft-info/' + leagueId;
     var draftFindStub;

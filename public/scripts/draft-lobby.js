@@ -70,8 +70,10 @@ var controller = draftLobbyApp
         $scope.draftData = data;
         $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
 
-        $scope.draftData.order = [2, 1];
+        $scope.draftData.order = [2, 1]
         $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
+
+        
         console.log($scope.draftData);
 
         $scope.createHistory();
