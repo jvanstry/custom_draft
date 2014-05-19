@@ -140,10 +140,6 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
     });
   };
 
-  $scope.makePick = function(){
-
-  };
-
   $scope.updateActivePicker = function(){
 
   };
@@ -164,14 +160,21 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
 
 });
 
-draftLobbyApp.controller('socketController', function(socket, $scope){
+draftLobbyApp.controller('chatController', function(socket, $scope){
   socket.on('message', function (data) {
 
+    console.log(data, 'client on message');
   });
 
-  socket.on('pickMade', function (message) {
+  socket.on('pick-made', function(data){
 
   });
+
+  $scope.sendMessage = function(){
+    var name = $scope.idToNameMap[$scope.draftData.clientId];
+
+    socket.emit('message', { message: $scope.message, name: name });
+  }
 
   $scope.makePick = function(){
     // post to draft/:draftId
@@ -180,4 +183,20 @@ draftLobbyApp.controller('socketController', function(socket, $scope){
   }
 
 });
+
+draftLobbyApp.controller('pickController', function($http, $scope){
+  $scope.makePick = function(){
+
+    var url = '/draft/' + $scope.draftData.draftId;
+    var drafteeName = $scope.draftData.currentPick;
+
+    $http.post(url, { name: drafteeName })
+      .success(function(data){
+        console.log(data);
+    });
+  }
+
+});
+
+
 

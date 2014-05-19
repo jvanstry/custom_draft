@@ -33,8 +33,10 @@ module.exports = function (app) {
   app.post('/start-draft/:leagueId',  restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.startDraft);
 
-  app.post('/draft/:draftId',  restrictToLoggedInUzer, 
-    restrictToActivePicker, controllers.draft.makePick);
+  // app.post('/draft/:draftId',  restrictToLoggedInUzer, 
+  //   restrictToActivePicker, controllers.draft.makePick);
+
+  app.post('/draft/:draftId',   controllers.draft.makePick);
 };
 
 var uzer;
@@ -90,15 +92,8 @@ function storeDraftOrderInSession(draft, req){
 
 function restrictToActivePicker(req, res, next){
   var draftId = parseInt(req.params.draftId);
-  var draftActivePickerKey = 'draft' + draftId + 'active';
-  var activePickerId = req.session[draftActivePickerKey]
-
-  if(activePickerId === uzer.id){
-    return next();
-  }
 
   req.models.draft.get(draftId, function(err, result){
-
     storeDraftOrderInSession(result, req)
 
     if(err || !result){
@@ -107,9 +102,7 @@ function restrictToActivePicker(req, res, next){
       return next(new Error ('cant find draft'));
     }else if(!result.active_picker_id){
       return next(new Error ('draft is not live'));
-    }
-
-    if (uzer.id === result.active_picker_id){
+    }else if (uzer.id === result.active_picker_id){
       return next();
     }
     next(new Error('only active picker can pick duh!'));

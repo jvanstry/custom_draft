@@ -98,6 +98,8 @@ module.exports = {
   // wow this is massive.... think about doing SOMETHING (child process?)
     // var pickerId = req.session.uzer_id;
     var pickerId = 1;
+    // for dev purposes here
+    
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
 
@@ -106,7 +108,7 @@ module.exports = {
 
     var roundSessionKey = 'draft' + req.params.draftId + 'round';
     var round = req.session[roundSessionKey] || 1;
-
+    draftOrder = '2-1';
     var overallPick = req.models.draft.calculateOverallPickNumber(draftOrder, round, pickerId);
 
     req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
@@ -125,12 +127,10 @@ module.exports = {
             }
 
             req.models.draft.updateActivePicker(draftId, overallPick, pickerId, draftOrder, function(err, activePickerId){
-              var activePickerSessionKey = 'draft' + draftId + 'active';
 
               if(err){
                 console.error(err);
               }else if(typeof(activePickerId) === 'number'){
-                req.session[activePickerSessionKey] = activePickerId;
 
                 var fun = 'overallpick' + currentDraftee[0].overallPick;
                 res.end(fun);

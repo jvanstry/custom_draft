@@ -16,22 +16,30 @@
           START DRAFT
         </span>
       </h2>
-      <div ng-controller='socketController'>
-        <div class="element"></div>
-        <input class="chat-type" placeholder="Don't be shy" type="text">
+      <div ng-controller='chatController'>
+        <div class="element">
+          <h5 ng-repeat="message in messages">
+            {{ }}
+          </h5>
+        </div>
+        <form name="chat" ng-submit="sendMessage()">
+          <input ng-model="message" class="chat-type" placeholder="Don't be shy" type="text" required>
+          <button class="send-chat">SUB MIT</button>
+        </form>
       </div>
-      <button class="send-chat">SUB MIT</button>
-      <div class="active-picker-container clearfix" ng-controller='socketController' ng-show="draftData.activePickerId === draftData.clientId + 1">
+      <div class="active-picker-container clearfix" ng-controller='pickController' ng-show="draftData.activePickerId === draftData.clientId">
         <h3 class="active-notify">YOUR TURN!</h3>
         <h3 class="available-draftee-title">Your choices:&nbsp;</h3>
         <input class="draftee-search" placeholder="Start Typing a Name...." type="text">
-        <button class="make-pick">Make Pick&nbsp;</button>
-        <div class="draftee-selectors-container clearfix">
-          <div ng-repeat="draftee in draftData.draftees" ng-show="draftee.available"class="draftee-input-container draftee-input-container-1 clearfix">
-            <h4 class="draftee-name draftee-name-1">{{ draftee.name }}</h4>
-            <input class="radio" type="radio" name="draft-pick">
+        <form ng-submit="makePick()" name="selection-form">
+          <button class="make-pick">Make Pick&nbsp;</button>
+          <div class="draftee-selectors-container clearfix">
+            <div ng-repeat="draftee in draftData.draftees" ng-show="draftee.available"class="draftee-input-container draftee-input-container-1 clearfix">
+              <h4 class="draftee-name draftee-name-1">{{ draftee.name }}</h4>
+              <input ng-model="draftData.currentPick" value="{{draftee.name}}" class="radio" type="radio" name="draft-pick">
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <div class="logo container clearfix">
@@ -49,6 +57,7 @@
       <h4 class="drafted-title">&nbsp;draft history</h4>
       <div class="selections-container clearfix">
         <div class="selection-container clearfix" ng-repeat="pick in formattedHistory">
+<!-- todo: sort history by round and pick -->
           <h6 class="selection-spot">{{pick.round}}.{{pick.pickInRound}}</h6>
           <h6 class="player-drafted">{{pick.name}}</h6>
           <h6 class="drafted-by">{{pick.pickerName}}</h6>
