@@ -2,12 +2,12 @@ var app = require('express')();
 var routes = require('./config/routes');
 var environment = require('./config/environment');
 var server = require('http').createServer(app);
-// var sockets = require('./sockets.js');
+var sockets = require('./sockets.js');
 
 
 environment(app);
 routes(app);
-// sockets(server);
+sockets(server);
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
