@@ -11,6 +11,7 @@ function setup(db, cb) {
   require('./uzer')(orm, db);
   require('./league')(orm, db); 
   require('./draft')(orm, db);
+  require('./room')(orm, db);
   require('./draftee')(orm, db);
   db.models.team = require('./team');
 
