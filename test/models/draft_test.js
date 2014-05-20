@@ -50,27 +50,6 @@ describe('Draft class', function(){
     });
   });
 
-  describe('#calculateOverallPickNumber', function(){
-    var draftOrder = '1-2-3-4-5';
-    var pickerId = 4;
-
-    it('should calculate overall pick number properly', function(done){
-      var round = 1;
-
-      var pickNum = Draft.calculateOverallPickNumber(draftOrder, round, pickerId);
-      expect(pickNum).to.equal(4);
-      done();
-    });
-
-    it('should deal with snake ordering', function(done){
-      var round = 2;
-
-      var pickNum = Draft.calculateOverallPickNumber(draftOrder, round, pickerId);
-      expect(pickNum).to.equal(7);
-      done();
-    });
-  });
-
   describe('#updateActivePicker', function(){
     beforeEach(helper.seed);
 

@@ -14,18 +14,7 @@ exports.isLastPickOfDraft = function(overallPick, rounds, numPlayers){
 }
 
 exports.calculateOverallPickNumber = function (order, round, picker){
-  var orderArray = order.split('-');
-  var pickWithinRound = parseInt(orderArray.indexOf(picker.toString()));
-  var numberOfLeagueMembers = orderArray.length;
 
-  var runningTotal = numberOfLeagueMembers * (round - 1);
-
-// we are assuming snake style drafting
-  if(round % 2){
-    runningTotal = runningTotal + pickWithinRound + 1;
-  }else{
-    runningTotal = runningTotal + (numberOfLeagueMembers - pickWithinRound);
-  }
 
   return runningTotal;
 }

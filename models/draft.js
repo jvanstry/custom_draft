@@ -64,7 +64,21 @@ module.exports = function(orm, db){
     });
   };
 
-  db.models.draft.calculateOverallPickNumber = helper.calculateOverallPickNumber;
+  db.models.draft.calculateOverallPickNumber = function(id, cb){
+    db.models.draftee.find({ draft_id: id }, [ "createdAt", "Z" ], 1, 
+      function(err, result){
+        if(err, !result){
+          var message = err || 'no result';
+          cb(message);
+        }
+
+        var lastDrafteePicked = result[0];
+
+        var overallPick = lastDrafteePicked.overallPick || 0;
+        overallPick++;
+        cb(overallPick);
+      });
+  }
   
   db.models.draft.hasOne('league', db.models.league, {
     required: true,

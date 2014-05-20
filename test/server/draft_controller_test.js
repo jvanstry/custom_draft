@@ -267,7 +267,7 @@ describe('Draft Controller', function(){
         .post(draftSpecificPostRoute)
         .form({ name: drafteeName })
         .expect(200).end(function(err, res){
-          expect(res.body).to.contain('overallpick1');
+          expect(res.body).to.contain('overallpick2');
           done();
         });
     });
@@ -277,7 +277,7 @@ describe('Draft Controller', function(){
         .post(draftSpecificPostRoute)
         .form({ name: drafteeName })
         .expect(200).end(function(err, res){
-          expect(updateActivePickerStub.calledWithMatch(draftId, 1, 2, '2-1'))
+          expect(updateActivePickerStub.calledWithMatch(draftId, 3, 2, '2-1'))
             .to.equal(true);
           done();
         });

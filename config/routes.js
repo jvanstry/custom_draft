@@ -11,10 +11,10 @@ module.exports = function (app) {
   app.get('/signup', controllers.uzer.new);
   app.post('/signup', controllers.uzer.create);
   app.get('/league/:leagueId', controllers.league.get);
-  app.get('/draft/:leagueId', controllers.socket.setupSocket, 
-    controllers.draft.getLobby);
+  app.get('/draft/:leagueId', controllers.draft.getLobby);
   app.get('/draft-info/:leagueId', controllers.draft.draftJSON);
   app.get('/leagues', controllers.league.index);
+  app.get('/socket/:leagueId', controllers.draft.establishSocket)
 
   // restricted routes
 

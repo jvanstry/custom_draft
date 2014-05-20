@@ -96,34 +96,45 @@ draftLobbyApp.service('isCreator', function(){
 });
 
 draftLobbyApp.controller('draftController', function(formatHistory, isCreator, 
-  mapIdsToMemberNames, draftOrder, socket, $http, $window, $scope) {
-
-  // $scope.availableDraftees = [];
-  $scope.results = [];
+  mapIdsToMemberNames, draftOrder, $http, $window, $scope) {
 
   $scope.leagueId = $window.location.pathname.substring(7);
+  $scope.getDraftInfo = function(){
+    var url = '/draft-info/' + $scope.leagueId;
 
-  var url = '/draft-info/' + $scope.leagueId;
+    $http.get(url)
+      .success(function(data) {
+        $scope.draftData = data;
+        $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
 
-  $http.get(url)
-    .success(function(data) {
-      $scope.draftData = data;
-      $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
+        $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
+          $scope.draftData.clientId);
 
-      $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
-        $scope.draftData.clientId);
+        $scope.timeToDraft = new Date($scope.draftData.startTime) < new Date();
+        // Todo: investigate if this needs a "watch" function
 
-      $scope.timeToDraft = new Date($scope.draftData.startTime) < new Date();
-      // Todo: investigate if this needs a "watch" function
+        if($scope.draftData.order){
+          $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
+        }
 
-      if($scope.draftData.order){
-        $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
-      }
+        console.log($scope.draftData);
 
-      console.log($scope.draftData);
+        $scope.createHistory();
+    });
+  };
 
-      $scope.createHistory();
-  });
+  $scope.setupSockets = function(){
+    var url = '/socket/' + $scope.leagueId;
+
+    $http.get(url)
+      .success(function(data){
+        console.log(data);
+        $scope.$broadcast('socket-data', data);
+      })
+  };
+
+  $scope.getDraftInfo();
+  $scope.setupSockets();
 
   $scope.startDraft = function(){
     var url = '/start-draft/' + $scope.leagueId;
@@ -161,13 +172,17 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
 });
 
 draftLobbyApp.controller('chatController', function(socket, $scope){
-  socket.on('message', function (data) {
+  $scope.$on('socket-data', function(data){
+    console.log(data, 'from chat controller')
+    socket.on('message', function (data) {
 
-    console.log(data, 'client on message');
-  });
+      console.log(data, 'client on message');
+    });
 
-  socket.on('pick-made', function(data){
+    socket.on('pick-made', function(data){
 
+    });
+    console.log(data);
   });
 
   $scope.sendMessage = function(){
@@ -185,6 +200,10 @@ draftLobbyApp.controller('chatController', function(socket, $scope){
 });
 
 draftLobbyApp.controller('pickController', function($http, $scope){
+  $scope.$on('socket-join', function(data){
+
+  });
+
   $scope.makePick = function(){
 
     var url = '/draft/' + $scope.draftData.draftId;

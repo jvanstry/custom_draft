@@ -11,20 +11,28 @@ module.exports = function(orm, db){
       beforeValidation: function(){
         this.createdAt = new Date();
         this.socket_id = uuid.v4();
-      }
+      },
+      beforeSave: this.draftersToString
     },
     validations: {
       socket_id: orm.enforce.ranges.length(1, 128)
     },
     methods: {
       draftersToString: function(){
-
+        if(typeof(this.drafters) !== 'string'){
+          this.drafters.join('-')
+        }
       }, 
       draftersToArray: function(){
-
+        if(typeof(this.drafters) === 'string'){
+          return this.drafters.split('-');
+        }
       }
     }
   });
 
-  db.models.room.hasOne('draft', db.models.draft);
+  db.models.room.hasOne('draft', db.models.draft, {
+    reverse: 'room',
+    autoFetch: true
+  });
 };

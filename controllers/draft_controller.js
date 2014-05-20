@@ -1,3 +1,5 @@
+var socket = require('../models/socket');
+
 module.exports = {
   new: function(req, res, next){
     res.locals = {
@@ -72,6 +74,24 @@ module.exports = {
       });
     });
   },
+  establishSocket: function(req, res, next){
+    var leagueId = parseInt(req.params.leagueId);
+    var membersIds = req.body.members;
+    // var uzerId = req.session.uzer_id;
+    var uzerId = 1;
+    console.log('here 82')
+    req.models.draft.find({ league_id: leagueId }, function(err, result){
+      if(err){
+        console.error(err);
+      }
+      console.log('here in func 87')
+
+      var draft = result[0];
+      socket(draft, uzerId, function(socket_id){
+        res.end(socket_id)
+      });
+    });
+  },
   startDraft: function(req, res, next){
     var leagueId = parseInt(req.params.leagueId);
     var membersIds = req.body.members;
@@ -95,9 +115,9 @@ module.exports = {
     });
   },
   makePick: function(req, res, next){
-  // wow this is massive.... think about doing SOMETHING (child process?)
-    // var pickerId = req.session.uzer_id;
-    var pickerId = 1;
+    // wow this is massive.... think about doing SOMETHING (child process?)
+    var pickerId = req.session.uzer_id;
+    // var pickerId = 1;
     // for dev purposes here
     
     var draftId = parseInt(req.params.draftId);
@@ -106,40 +126,36 @@ module.exports = {
     var orderSessionKey = 'draft' + draftId + 'order';
     var draftOrder = req.session[orderSessionKey];
 
-    var roundSessionKey = 'draft' + req.params.draftId + 'round';
-    var round = req.session[roundSessionKey] || 1;
     draftOrder = '2-1';
-    var overallPick = req.models.draft.calculateOverallPickNumber(draftOrder, round, pickerId);
 
-    req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
-      function(err, currentDraftee){
-        if(err){
-          console.error(err);
-        }
+    req.models.draft.calculateOverallPickNumber(draftId, function(overallPick){
+      req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
+        function(err, currentDraftee){
+          if(err){
+            console.error(err);
+          }
 
-        round++;
-        req.session[roundSessionKey] = round;
-
-        currentDraftee[0].save({ available: false, picker_id: pickerId,
-          overallPick: overallPick }, function(err){
-            if(err){
-              console.error(err);
-            }
-
-            req.models.draft.updateActivePicker(draftId, overallPick, pickerId, draftOrder, function(err, activePickerId){
-
+          currentDraftee[0].save({ available: false, picker_id: pickerId,
+            overallPick: overallPick }, function(err){
               if(err){
                 console.error(err);
-              }else if(typeof(activePickerId) === 'number'){
-
-                var fun = 'overallpick' + currentDraftee[0].overallPick;
-                res.end(fun);
-              }else{
-                // draft is over
-                res.end('draft over');
               }
-            });
-        });
+
+              req.models.draft.updateActivePicker(draftId, overallPick, pickerId, draftOrder, 
+                function(err, activePickerId){
+                if(err){
+                  console.error(err);
+                }else if(typeof(activePickerId) === 'number'){
+
+                  var fun = 'overallpick' + currentDraftee[0].overallPick;
+                  res.end(fun);
+                }else{
+                  // draft is over
+                  res.end('draft over');
+                }
+              });
+          });
+      });
     });
   }
 };
