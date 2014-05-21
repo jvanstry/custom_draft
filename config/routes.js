@@ -34,10 +34,10 @@ module.exports = function (app) {
   app.post('/start-draft/:leagueId',  restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.startDraft);
 
-  app.post('/draft/:draftId',  restrictToLoggedInUzer, 
-    restrictToActivePicker, controllers.draft.makePick);
+  // app.post('/draft/:draftId',  restrictToLoggedInUzer, 
+  //   restrictToActivePicker, controllers.draft.makePick);
 
-  // app.post('/draft/:draftId',   controllers.draft.makePick);
+  app.post('/draft/:draftId',   controllers.draft.makePick);
 };
 
 var uzer;

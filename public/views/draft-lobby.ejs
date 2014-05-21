@@ -19,7 +19,7 @@
       <div ng-controller='chatController'>
         <div class="element">
           <h5 ng-repeat="message in messages">
-            {{ }}
+            {{ message }}
           </h5>
         </div>
         <form name="chat" ng-submit="sendMessage()">

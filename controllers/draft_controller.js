@@ -79,12 +79,11 @@ module.exports = {
     var membersIds = req.body.members;
     // var uzerId = req.session.uzer_id;
     var uzerId = 1;
-    console.log('here 82')
+
     req.models.draft.find({ league_id: leagueId }, function(err, result){
       if(err){
         console.error(err);
       }
-      console.log('here in func 87')
 
       var draft = result[0];
       socket(draft, uzerId, function(socket_id){
@@ -119,7 +118,7 @@ module.exports = {
     var pickerId = req.session.uzer_id;
     // var pickerId = 1;
     // for dev purposes here
-    
+    console.log('hic  ', req.body, 'req body')
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
 

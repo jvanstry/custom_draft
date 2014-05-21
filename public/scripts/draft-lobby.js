@@ -172,8 +172,11 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
 });
 
 draftLobbyApp.controller('chatController', function(socket, $scope){
-  $scope.$on('socket-data', function(data){
+  $scope.messages = [];
+
+  $scope.$on('socket-data', function(e, data){
     console.log(data, 'from chat controller')
+
     socket.on('message', function (data) {
 
       console.log(data, 'client on message');

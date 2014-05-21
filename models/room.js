@@ -24,8 +24,10 @@ module.exports = function(orm, db){
         }
       }, 
       draftersToArray: function(){
-        if(typeof(this.drafters) === 'string'){
+        if(typeof(this.drafters) === 'string' && (this.drafters.length > 0)){
           return this.drafters.split('-');
+        }else{
+          return [];
         }
       }
     }
