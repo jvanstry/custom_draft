@@ -8,29 +8,37 @@ module.exports = function(orm, db){
   },
   {
     hooks: {
-      beforeValidation: function(){
-        this.createdAt = new Date();
+      beforeCreate: function(){
         this.socket_id = uuid.v4();
       },
-      beforeSave: this.draftersToString
+      beforeValidation: function(){
+        this.createdAt = new Date();
+      },
+      beforeSave: function(){
+        if(this.drafters && typeof(this.drafters) !== 'string'){
+          this.drafters = this.drafters.join('-');
+        }
+      }
     },
     validations: {
       socket_id: orm.enforce.ranges.length(1, 128)
     },
     methods: {
-      draftersToString: function(){
-        if(typeof(this.drafters) !== 'string'){
-          this.drafters.join('-')
-        }
-      }, 
       draftersToArray: function(){
         if(typeof(this.drafters) === 'string' && (this.drafters.length > 0)){
-          return this.drafters.split('-');
+          var splitted = this.drafters.split('-');
+          var toNumArray;
+          splitted.forEach(function(el){
+            toNumArray = [];
+            toNumArray.push(parseInt(el));
+          })
+          return toNumArray;
         }else{
-          return [];
+          return this.drafters || [];
         }
       }
-    }
+    },
+    cache: false
   });
 
   db.models.room.hasOne('draft', db.models.draft, {
