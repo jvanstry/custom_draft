@@ -14,7 +14,6 @@ module.exports = function (app) {
   app.get('/draft/:leagueId', controllers.draft.getLobby);
   app.get('/draft-info/:leagueId', controllers.draft.draftJSON);
   app.get('/leagues', controllers.league.index);
-  app.get('/socket/:leagueId', controllers.draft.establishSocket)
 
   // restricted routes
 
@@ -34,10 +33,10 @@ module.exports = function (app) {
   app.post('/start-draft/:leagueId',  restrictToLoggedInUzer,
     restrictToLeagueCreator, controllers.draft.startDraft);
 
-  // app.post('/draft/:draftId',  restrictToLoggedInUzer, 
-  //   restrictToActivePicker, controllers.draft.makePick);
+  app.post('/draft/:draftId',  restrictToLoggedInUzer, 
+    restrictToActivePicker, controllers.draft.makePick);
 
-  app.post('/draft/:draftId',   controllers.draft.makePick);
+  // app.post('/draft/:draftId',   controllers.draft.makePick);
 };
 
 var uzer;

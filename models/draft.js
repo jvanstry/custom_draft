@@ -1,12 +1,14 @@
 var helper = require('./helpers/draft-round-helper');
 var arrayShuffle = require('./helpers/shuffle-array');
+var uuid = require('node-uuid');
 
 module.exports = function(orm, db){
   db.define('draft', {
     start_time: { type: 'date', required: true, time: true },
     order: { type: 'text' },
     rounds: { type: 'number' },
-    createdAt: { type: 'date', time: true }
+    createdAt: { type: 'date', time: true },
+    socket_id: { type: 'text' }
   },
   {
     hooks: {
@@ -14,6 +16,9 @@ module.exports = function(orm, db){
         this.createdAt = new Date();
         this.start_time = Date.parse(new Date(this.start_time));
       }, 
+      beforeCreate: function(){
+        this.socket_id = uuid.v4();
+      },
       beforeSave: function(){
         this.start_time = new Date(this.start_time);
       }

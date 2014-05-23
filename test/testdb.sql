@@ -37,6 +37,7 @@ CREATE TABLE draft (
     "order" text,
     rounds real,
     "createdAt" timestamp without time zone,
+    socket_id text,
     id integer NOT NULL,
     league_id integer NOT NULL,
     active_picker_id integer
@@ -140,42 +141,6 @@ ALTER SEQUENCE league_id_seq OWNED BY league.id;
 
 
 --
--- Name: room; Type: TABLE; Schema: public; Owner: jer; Tablespace: 
---
-
-CREATE TABLE room (
-    socket_id text NOT NULL,
-    drafters text,
-    "createdAt" timestamp without time zone,
-    id integer NOT NULL,
-    draft_id integer
-);
-
-
-ALTER TABLE public.room OWNER TO jer;
-
---
--- Name: room_id_seq; Type: SEQUENCE; Schema: public; Owner: jer
---
-
-CREATE SEQUENCE room_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.room_id_seq OWNER TO jer;
-
---
--- Name: room_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jer
---
-
-ALTER SEQUENCE room_id_seq OWNED BY room.id;
-
-
---
 -- Name: uzer; Type: TABLE; Schema: public; Owner: jer; Tablespace: 
 --
 
@@ -271,13 +236,6 @@ ALTER TABLE ONLY league ALTER COLUMN id SET DEFAULT nextval('league_id_seq'::reg
 -- Name: id; Type: DEFAULT; Schema: public; Owner: jer
 --
 
-ALTER TABLE ONLY room ALTER COLUMN id SET DEFAULT nextval('room_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: jer
---
-
 ALTER TABLE ONLY uzer ALTER COLUMN id SET DEFAULT nextval('uzer_id_seq'::regclass);
 
 
@@ -292,7 +250,7 @@ ALTER TABLE ONLY uzer_leagues ALTER COLUMN join_id SET DEFAULT nextval('uzer_lea
 -- Data for Name: draft; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY draft (start_time, "order", rounds, "createdAt", id, league_id, active_picker_id) FROM stdin;
+COPY draft (start_time, "order", rounds, "createdAt", socket_id, id, league_id, active_picker_id) FROM stdin;
 \.
 
 
@@ -331,21 +289,6 @@ COPY league (name, "createdAt", id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('league_id_seq', 1, false);
-
-
---
--- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: jer
---
-
-COPY room (socket_id, drafters, "createdAt", id, draft_id) FROM stdin;
-\.
-
-
---
--- Name: room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jer
---
-
-SELECT pg_catalog.setval('room_id_seq', 1, false);
 
 
 --
@@ -400,14 +343,6 @@ ALTER TABLE ONLY draftee
 
 ALTER TABLE ONLY league
     ADD CONSTRAINT league_pkey PRIMARY KEY (id);
-
-
---
--- Name: room_pkey; Type: CONSTRAINT; Schema: public; Owner: jer; Tablespace: 
---
-
-ALTER TABLE ONLY room
-    ADD CONSTRAINT room_pkey PRIMARY KEY (id);
 
 
 --

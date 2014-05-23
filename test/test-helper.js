@@ -148,15 +148,15 @@ exports.seed = function(next){
   }
 
   counter.on('save-success', function(){
-    if(this.count === 4){
+    if(this.count === 3){
       uzerCreator('jer@example.com');
-    }else if(this.count ===  5){
+    }else if(this.count ===  4){
       uzerLeagueAdder(1, true);
-    }else if(this.count === 6){
+    }else if(this.count === 5){
       uzerCreator('jer@foo.com');
-    }else if(this.count === 7){
+    }else if(this.count === 6){
       uzerLeagueAdder(2, false);
-    }else if(this.count > 7){
+    }else if(this.count > 6){
       next();
     }
   });
@@ -167,5 +167,4 @@ exports.seed = function(next){
     order: '2-1', rounds: 2, active_picker_id: 2 }, respondToSaveAttempt);
 
   models.draftee.create({ name: 'jerry', draft_id: 1 }, respondToSaveAttempt);
-  models.room.create({ draft_id: 1}, respondToSaveAttempt);
 };
