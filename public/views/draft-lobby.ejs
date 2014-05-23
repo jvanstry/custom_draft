@@ -18,11 +18,12 @@
       </h2>
       <div ng-controller='chatController'>
         <div class="element">
-          <h5 ng-repeat="message in messages">
-            {{ message }}
-          </h5>
+          <div class="chat-message" ng-repeat="message in messages | orderBy:time:false | limitTo: 24">
+            <span>{{ message.name }}</span>
+            <span>{{ message.text }}</span>
+          </div>
         </div>
-        <form name="chat" ng-submit="sendMessage()">
+        <form name="chatForm" ng-submit="sendMessage()">
           <input ng-model="message" class="chat-type" placeholder="Don't be shy" type="text" required>
           <button class="send-chat">SUB MIT</button>
         </form>

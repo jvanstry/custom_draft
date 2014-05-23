@@ -1,5 +1,3 @@
-var socket = require('../models/socket');
-
 module.exports = {
   new: function(req, res, next){
     res.locals = {
@@ -56,38 +54,22 @@ module.exports = {
       var draft = result[0];
 
       draft.league.getMembers(function(err, members){
-        var draftData = {};
+        var draftData = { 
+          startTime: draft.start_time,
+          draftId: draft.id,
+          leagueMembers: members,
+          draftees: draft.draftees,
+          clientId: uzerId,
+          activePickerId: draft.active_picker_id,
+          socketId: draft.socket_id
+        };
 
         if(draft.order){
           draftData.order = draft.order.split('-');
         }
 
-        draftData.startTime = draft.start_time;
-        draftData.draftId = draft.id;
-        draftData.leagueMembers = members;
-        draftData.draftees = draft.draftees;
-        draftData.clientId = uzerId;
-        draftData.activePickerId = draft.active_picker_id;
-
         var str = JSON.stringify(draftData);
         res.end(str);
-      });
-    });
-  },
-  establishSocket: function(req, res, next){
-    var leagueId = parseInt(req.params.leagueId);
-    var membersIds = req.body.members;
-    // var uzerId = req.session.uzer_id;
-    var uzerId = 1;
-
-    req.models.draft.find({ league_id: leagueId }, function(err, result){
-      if(err){
-        console.error(err);
-      }
-
-      var draft = result[0];
-      socket(draft, uzerId, function(socket_id){
-        res.end(socket_id)
       });
     });
   },

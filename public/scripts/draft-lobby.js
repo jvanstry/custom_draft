@@ -118,23 +118,13 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
         }
 
         console.log($scope.draftData);
+        $scope.$broadcast('socket-data', $scope.draftData.socketId);
 
         $scope.createHistory();
     });
   };
 
-  $scope.setupSockets = function(){
-    var url = '/socket/' + $scope.leagueId;
-
-    $http.get(url)
-      .success(function(data){
-        console.log(data);
-        $scope.$broadcast('socket-data', data);
-      })
-  };
-
   $scope.getDraftInfo();
-  $scope.setupSockets();
 
   $scope.startDraft = function(){
     var url = '/start-draft/' + $scope.leagueId;
@@ -174,24 +164,30 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
 draftLobbyApp.controller('chatController', function(socket, $scope){
   $scope.messages = [];
 
-  $scope.$on('socket-data', function(e, data){
-    console.log(data, 'from chat controller')
+
+  $scope.$on('socket-data', function(e, socketId){
+    console.log(socketId, 'from chat controller')
+
+    socket.emit('join-room', socketId)
 
     socket.on('message', function (data) {
-
-      console.log(data, 'client on message');
+      data.time = new Date();
+      console.log(data);
+      $scope.messages.push(data);
     });
 
     socket.on('pick-made', function(data){
 
     });
-    console.log(data);
   });
 
   $scope.sendMessage = function(){
     var name = $scope.idToNameMap[$scope.draftData.clientId];
 
-    socket.emit('message', { message: $scope.message, name: name });
+    socket.emit('message', { text: $scope.message, name: name });
+
+    $scope.chatForm.$setPristine();
+    $scope.message = null;
   }
 
   $scope.makePick = function(){
