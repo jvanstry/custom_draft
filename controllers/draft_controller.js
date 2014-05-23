@@ -97,8 +97,8 @@ module.exports = {
   },
   makePick: function(req, res, next){
     // wow this is massive.... think about doing SOMETHING (child process?)
-    var pickerId = req.session.uzer_id;
-    // var pickerId = 1;
+    // var pickerId = req.session.uzer_id;
+    var pickerId = 1;
     // for dev purposes here
     console.log('hic  ', req.body, 'req body')
     var draftId = parseInt(req.params.draftId);

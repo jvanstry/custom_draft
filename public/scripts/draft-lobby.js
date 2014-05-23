@@ -12,14 +12,15 @@ draftLobbyApp.service('formatHistory', function(){
     var inNeedOfFormatting = takenDraftees.length - formattedArray.length;
 
     for(var i = inNeedOfFormatting; i > 0; i--){
-      var formattedDraftee = {};
       var index = takenDraftees.length - i;
       var draftee = takenDraftees[index];
 
-      formattedDraftee.round = Math.floor(draftee.overallPick / numberOfPickers) + 1;
-      formattedDraftee.pickInRound = draftee.overallPick % numberOfPickers;
-      formattedDraftee.pickerName = idToNameMap[draftee.picker_id];
-      formattedDraftee.name = draftee.name;
+      var formattedDraftee = {
+        round: Math.floor(draftee.overallPick / numberOfPickers) + 1,
+        pickInRound: draftee.overallPick % numberOfPickers,
+        pickerName: idToNameMap[draftee.picker_id],
+        name: draftee.name
+      };
 
       formattedArray.push(formattedDraftee);
     }
@@ -105,7 +106,9 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
     $http.get(url)
       .success(function(data) {
         $scope.draftData = data;
+
         $scope.idToNameMap = mapIdsToMemberNames($scope.draftData.leagueMembers);
+        $scope.draftData.name = $scope.idToNameMap[$scope.draftData.clientId];
 
         $scope.isCreator = isCreator($scope.draftData.leagueMembers, 
           $scope.draftData.clientId);
@@ -117,9 +120,7 @@ draftLobbyApp.controller('draftController', function(formatHistory, isCreator,
           $scope.orderSortedNames = draftOrder($scope.idToNameMap, $scope.draftData.order);
         }
 
-        console.log($scope.draftData);
         $scope.$broadcast('socket-data', $scope.draftData.socketId);
-
         $scope.createHistory();
     });
   };
@@ -166,54 +167,55 @@ draftLobbyApp.controller('chatController', function(socket, $scope){
 
 
   $scope.$on('socket-data', function(e, socketId){
-    console.log(socketId, 'from chat controller')
-
     socket.emit('join-room', socketId)
 
     socket.on('message', function (data) {
       data.time = new Date();
-      console.log(data);
       $scope.messages.push(data);
-    });
-
-    socket.on('pick-made', function(data){
-
     });
   });
 
   $scope.sendMessage = function(){
-    var name = $scope.idToNameMap[$scope.draftData.clientId];
-
-    socket.emit('message', { text: $scope.message, name: name });
+    socket.emit('message', { 
+      text: $scope.message, 
+      name: $scope.draftData.name,
+      socketId: $scope.draftData.socketId 
+    });
 
     $scope.chatForm.$setPristine();
     $scope.message = null;
   }
-
-  $scope.makePick = function(){
-    // post to draft/:draftId
-    // form data is draftee name
-    // include clientId why not?
-  }
-
 });
 
-draftLobbyApp.controller('pickController', function($http, $scope){
-  $scope.$on('socket-join', function(data){
+draftLobbyApp.controller('pickController', function($http, socket, $scope){
+  $scope.$on('socket-join', function(){
 
   });
 
-  $scope.makePick = function(){
+  socket.on('pick-made', function(pickData){
+    $scope.processPickMade(pickData);
+  })
 
+  $scope.makePick = function(){
     var url = '/draft/' + $scope.draftData.draftId;
     var drafteeName = $scope.draftData.currentPick;
 
     $http.post(url, { name: drafteeName })
       .success(function(data){
-        console.log(data);
-    });
+        var pickData = { 
+          pickName: drafteeName, 
+          name: $scope.draftData.name,
+          socketId: $scope.draftData.socketId
+        };
+
+        console.log(data, 'pick has been made')
+        socket.emit('pick-made', pickData);
+      });
   }
 
+  $scope.processPickMade = function(pickData){
+    console.log(pickData, 'we received pick data');
+  }
 });
 
 
