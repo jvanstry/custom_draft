@@ -22,6 +22,10 @@ draftLobbyApp.service('formatHistory', function(){
         name: draftee.name
       };
 
+      if(draftData.pickInRound === 0){
+        draftData.pickInRound = numberOfPickers;
+      }
+
       formattedArray.push(formattedDraftee);
     }
 

@@ -97,17 +97,12 @@ module.exports = {
   },
   makePick: function(req, res, next){
     // wow this is massive.... think about doing SOMETHING (child process?)
-    // var pickerId = req.session.uzer_id;
-    var pickerId = 1;
-    // for dev purposes here
-    console.log('hic  ', req.body, 'req body')
+    var pickerId = req.session.uzer_id;
     var draftId = parseInt(req.params.draftId);
     var drafteeName = req.body.name;
 
     var orderSessionKey = 'draft' + draftId + 'order';
     var draftOrder = req.session[orderSessionKey];
-
-    draftOrder = '2-1';
 
     req.models.draft.calculateOverallPickNumber(draftId, function(overallPick){
       req.models.draftee.find({ name: drafteeName, draft_id: draftId }, 
