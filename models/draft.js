@@ -44,8 +44,8 @@ module.exports = function(orm, db){
   });
 
   db.models.draft.updateActivePicker = function(id, overallPick, pickerId, draftOrder, cb){
-    // should prob at least change the arity of this func to a config obj
     // todo: think about making an instance method
+    // again quandary arises: hit db or write less clear code
 
     var orderArr = draftOrder.split('-');
     var numOfPlayers = orderArr.length;

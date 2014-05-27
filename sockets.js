@@ -4,8 +4,13 @@ module.exports = function(server){
   io.sockets.on('connection', function (socket) {
 
     socket.on('join-room', function(roomId){
-      socket.join(roomId);
-      
+      if(roomId){
+        socket.leave('lobby');
+        socket.join(roomId);
+      }else{
+        socket.join('lobby');
+      }
+
       socket.emit('message', { name: 'Custo Drafto', 
         text: 'hello and welcome to your draft' });
     });

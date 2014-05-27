@@ -41,11 +41,9 @@ module.exports = {
   },
   draftJSON: function(req, res, next){
     var leagueId = parseInt(req.params.leagueId);
-    // var uzerId = req.session.uzer_id;
-    var uzerId = 1;
-    // todo figure out how to test this prob if(process.env.NOD..etc.)
+    var uzerId = req.session.uzer_id;
+// TODO THIS NEEDS TESTS
 
-    var draftData = {};
     req.models.draft.find({ league_id: leagueId }, function(err, result){
       if(err){
         console.error(err);
@@ -90,7 +88,6 @@ module.exports = {
         }
 
         var strOrder = JSON.stringify(order);
-        //todo: broadcast order to all sockets
         res.end(strOrder);      
       });
     });
