@@ -72,7 +72,7 @@ module.exports = function(orm, db){
   db.models.draft.calculateOverallPickNumber = function(id, cb){
     db.models.draftee.find({ draft_id: id }, [ "createdAt", "Z" ], 1, 
       function(err, result){
-        if(err, !result){
+        if(err || !result){
           var message = err || 'no result';
           cb(message);
         }

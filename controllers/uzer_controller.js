@@ -1,5 +1,3 @@
-var orm = require('orm');
-
 module.exports = {
   new: function(req, res, next){
     res.locals = {
@@ -11,6 +9,7 @@ module.exports = {
   },
   create: function(req, res, next){
     var uzerInfo = req.body;
+    uzerInfo.password_hash = uzerInfo.password;
     
     req.models.uzer.create(uzerInfo, function(err, result){
       if(err){
