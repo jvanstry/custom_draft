@@ -190,7 +190,7 @@ describe('Draft Controller', function(){
 
     beforeEach(function(){
       var findResultMock = [{ 
-        active_picker_id: 1, draftees: ['a draftee'], 
+        active_picker_id: 1, draftees: ['a draftee'],
         league: {
           getMembers: function(cb){
             cb(null, ['member1', 'member2'])
@@ -213,7 +213,8 @@ describe('Draft Controller', function(){
     });
 
     it('Should return the league info', function(done){
-      request(app)
+      // request(app)
+      helper.logInWithActivePicker()
         .get(leagueSpecificGetRoute)
         .expect(200).end(function(err, res){
           if(err){
@@ -222,7 +223,7 @@ describe('Draft Controller', function(){
           var draftData = {
             leagueMembers: ['member1', 'member2'],
             draftees: ['a draftee'],
-            clientId: 1,
+            clientId: 2,
             activePickerId: 1 
           }
 

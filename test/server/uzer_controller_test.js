@@ -34,7 +34,7 @@ describe('Uzer Controller', function(){
   describe('#create', function(){
     var createUzerRoute = '/signup';
     var validArgs = { name: 'jerry', email: 'jer@fun.com', 
-      password_hash: '14monkeys' };
+      password: '14monkeys' };
     var uzerCreateStub;
     var newlyCreatedUzerId = 3;
 
@@ -56,6 +56,8 @@ describe('Uzer Controller', function(){
     });
 
     it('should call create uzer method', function(done){
+      validArgs.password_hash = '14monkeys';
+
       request(app)
         .post(createUzerRoute)
         .form(validArgs)
