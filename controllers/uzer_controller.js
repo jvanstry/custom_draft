@@ -2,7 +2,8 @@ module.exports = {
   new: function(req, res, next){
     res.locals = {
       title: 'Signup',
-      styles: ['new-uzer']
+      styles: ['new-uzer'],
+      id: req.session.uzer_id
     };
 
     res.render('new-uzer');
@@ -17,6 +18,7 @@ module.exports = {
       }
 
       var uzerId = result.id;
+      req.session.uzer_id = uzerId;
       var uzerHomeURL = 'user/' + uzerId;
 
       res.redirect(uzerHomeURL);
