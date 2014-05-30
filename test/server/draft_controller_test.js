@@ -13,7 +13,7 @@ describe('Draft Controller', function(){
   after(helper.dbCleanup);
 
   describe('#new', function(){
-    var getNewDraftRoute = '/league/' + leagueId + '/draft';
+    var getNewDraftRoute = '/leagues/' + leagueId + '/draft';
 
     it('Should be accessible by league creator', function(done){
       helper.logInWithLeagueCreator()

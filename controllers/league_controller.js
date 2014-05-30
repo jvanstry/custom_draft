@@ -10,24 +10,22 @@ module.exports = {
     var uzerId = req.session.uzer_id;
     var name = req.body.name;
     var rules = req.body.rules;
-    console.log('RLYY WTF IS GOING ON')
+
     req.models.league.create({ name: name, rules: rules }, function(err, league){
       if(err){
         console.error(err);
       }
 
-      console.log('WTF IS GOING ONNNN')
       req.models.uzer.get(uzerId, function(err, uzer){
         if(err){
           console.error(err)
         }
 
-        console.log(uzer, 'UUUUUZEERRRRRR')
         uzer.addLeagues(league, { isCreator: true }, function(err){
           if(err){
             console.error(err)
           }
-          console.log(league.id, 'LEAGUE ID!@#$@#$@#$@#$')
+          
           var draftCreatePageUrl = 'league/' + league.id + '/draft';
           res.redirect(draftCreatePageUrl);
         });
