@@ -15,8 +15,8 @@ module.exports = {
         console.error(err);
       }
 
-      var leagueHomePageUrl = 'league/' + result.id;
-      res.redirect(leagueHomePageUrl);
+      var draftCreatePageUrl = 'league/' + result.id + '/draft';
+      res.redirect(draftCreatePageUrl);
     });
   },
   get: function(req, res, next){

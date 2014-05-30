@@ -86,7 +86,7 @@ describe('League Controller', function(){
         });
     });
 
-    it('Should redirect to the league home page', function(done){
+    it('Should redirect to the draft create page', function(done){
       helper.logInWithSimpleUzer()
         .post(createLeagueRoute)
         .form(validArgs)
@@ -95,7 +95,7 @@ describe('League Controller', function(){
             return done(err);
           }
 
-          expect(res.headers.location).to.contain('league/' + newlyCreateLeagueId);
+          expect(res.headers.location).to.contain('league/' + newlyCreateLeagueId + '/draft');
           done();
         });
     });
