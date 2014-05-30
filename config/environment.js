@@ -27,6 +27,7 @@ module.exports = function(app){
       cookie: { maxAge: 60 * 60 * 1000 }
     }
   ));
+  app.use(methodOverride());
   app.use(function(req, res, next){
     next()
   })
