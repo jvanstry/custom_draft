@@ -5,7 +5,7 @@ var request = require('super-request');
 describe('League Controller', function(){
   var leagueName = 'cool league';
   var leagueCreateStub;
-  var validArgs = { name: leagueName };
+  var validArgs = { name: leagueName, rules: 'some rules' };
   var uzerId = 1;
   var preCreatedLeagueId = 1;
   var newlyCreateLeagueId = 2;
@@ -57,6 +57,20 @@ describe('League Controller', function(){
 
   describe('#create', function(){
     var createLeagueRoute = '/league';
+    var uzerGetStub;
+
+    beforeEach(function(){
+      uzerGetStub = sinon.stub(models.uzer, 'get')
+        .callsArgWith(1, null, {
+          addLeagues: function(league, additionalColumns, cb){
+            cb()
+          }
+        })
+    });
+
+    afterEach(function(){
+      uzerGetStub.restore();
+    })
 
     it('Should be accessible by logged in uzer', function(done){
       helper.logInWithSimpleUzer()
@@ -82,6 +96,20 @@ describe('League Controller', function(){
           }
 
           expect(leagueCreateStub.calledWith(validArgs)).to.equal(true);
+          done();
+        });
+    });
+
+    it('Should call the uzer get funciton', function(done){
+      helper.logInWithSimpleUzer()
+        .post(createLeagueRoute)
+        .form(validArgs)
+        .expect(302).end(function(err, res){
+          if(err){
+            return done(err)
+          }
+
+          expect(uzerGetStub.calledOnce).to.equal(true);
           done();
         });
     });
