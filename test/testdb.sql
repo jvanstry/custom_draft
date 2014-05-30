@@ -113,6 +113,7 @@ ALTER SEQUENCE draftee_id_seq OWNED BY draftee.id;
 CREATE TABLE league (
     name text NOT NULL,
     "createdAt" timestamp without time zone,
+    rules text,
     id integer NOT NULL
 );
 
@@ -280,7 +281,7 @@ SELECT pg_catalog.setval('draftee_id_seq', 1, false);
 -- Data for Name: league; Type: TABLE DATA; Schema: public; Owner: jer
 --
 
-COPY league (name, "createdAt", id) FROM stdin;
+COPY league (name, "createdAt", rules, id) FROM stdin;
 \.
 
 

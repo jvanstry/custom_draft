@@ -1,6 +1,7 @@
 module.exports = function(orm, db){
   db.define('league', {
     name: { type: 'text', required: true },
+    rules: { type: 'text' },
     createdAt: { type: 'date', time: true }
   },
   {
