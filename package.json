@@ -27,6 +27,7 @@
   "devDependencies": {
     "browserify": "^3.44.2",
     "chai": "^1.9.1",
+    "connect-livereload": "^0.4.0",
     "gulp": "^3.6.0",
     "gulp-concat": "^2.2.0",
     "gulp-embedlr": "^0.5.2",

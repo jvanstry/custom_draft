@@ -24,6 +24,7 @@ var clientScriptsLocation = 'public/scripts/*.js',
   LIVERELOAD_PORT = 35729,
   EXPRESS_PORT = 4114;
 
+process.env.NODE_ENV = 'dev';
 var app = require('./app.js');
 var server;
 
@@ -57,10 +58,6 @@ gulp.task('client-scripts', function() {
    .pipe(streamify(uglify()))
    .pipe(gulp.dest('build/'))
    .pipe(refresh(lr))
-})
-
-gulp.task('server-scripts', function(){
-  refresh(lr)
 })
  
 gulp.task('styles', function() {
@@ -100,14 +97,14 @@ function restartExpressServer(){
   server = app.start(EXPRESS_PORT);
 }
 
-var defaultTasks = ['styles', 'html','lint', 'client-scripts', 
-  'server-scripts', 'test', 'serve'];
+var defaultTasks = ['styles', 'html', 'lint', 'client-scripts', 
+  'test', 'serve'];
 
 gulp.task('default', defaultTasks, function() {
     gulp.watch(clientScriptsLocation, ['lint', 'client-scripts']);
-    gulp.watch(serverScriptsLocation, ['lint', 'server-scripts'])
+    gulp.watch(serverScriptsLocation, ['lint'])
       .on('change', function(data) {
-    // delay executing to ensure server-scripts task completion
+    // delay executing to ensure linting task completion
     // fileChanged = data.path;
         process.nextTick(function(){
           breakRequireCache(restartExpressServer)

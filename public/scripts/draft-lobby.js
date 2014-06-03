@@ -30,7 +30,7 @@ draftLobbyApp.service('formatHistory', function(){
     }
 
     return formattedArray;
-  }
+  };
 });
 
 draftLobbyApp.factory('socket', function ($rootScope) {
@@ -52,7 +52,7 @@ draftLobbyApp.factory('socket', function ($rootScope) {
             callback.apply(socket, args);
           }
         });
-      })
+      });
     }
   };
 });
@@ -66,7 +66,7 @@ draftLobbyApp.service('mapIdsToMemberNames', function(){
     });
 
     return mappingObj;
-  }
+  };
 });
 
 draftLobbyApp.service('draftOrder', function(){
@@ -76,12 +76,12 @@ draftLobbyApp.service('draftOrder', function(){
 
       orderArr.forEach(function(el, i, arr){
         var orderInt = parseInt(el);
-        orderSortedNames.push({ name: idToNameMap[orderInt] })
+        orderSortedNames.push({ name: idToNameMap[orderInt] });
       });
 
       return orderSortedNames;
     }
-  }
+  };
 });
 
 draftLobbyApp.service('isCreator', function(){
@@ -97,7 +97,7 @@ draftLobbyApp.service('isCreator', function(){
     }
 
     return isCreator;
-  }
+  };
 });
 
 draftLobbyApp.controller('draftController', function(formatHistory, isCreator, 
@@ -171,7 +171,7 @@ draftLobbyApp.controller('chatController', function(socket, $scope){
 
 
   $scope.$on('socket-data', function(e, socketId){
-    socket.emit('join-room', socketId)
+    socket.emit('join-room', socketId);
 
     socket.on('message', function (data) {
       data.time = new Date();
@@ -188,7 +188,7 @@ draftLobbyApp.controller('chatController', function(socket, $scope){
 
     $scope.chatForm.$setPristine();
     $scope.message = null;
-  }
+  };
 });
 
 draftLobbyApp.controller('pickController', function($http, socket, $scope){
@@ -198,7 +198,7 @@ draftLobbyApp.controller('pickController', function($http, socket, $scope){
 
   socket.on('pick-made', function(pickData){
     $scope.processPickMade(pickData);
-  })
+  });
 
   $scope.makePick = function(){
     var url = '/draft/' + $scope.draftData.draftId;
@@ -212,14 +212,14 @@ draftLobbyApp.controller('pickController', function($http, socket, $scope){
           socketId: $scope.draftData.socketId
         };
 
-        console.log(data, 'pick has been made')
+        console.log(data, 'pick has been made');
         socket.emit('pick-made', pickData);
       });
-  }
+  };
 
   $scope.processPickMade = function(pickData){
     console.log(pickData, 'we received pick data');
-  }
+  };
 });
 
 

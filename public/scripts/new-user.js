@@ -11,12 +11,12 @@ $(document).ready(function(){
 
       notifyPwMismatch();
     }
-  })
+  });
 
   function notifyPwMismatch(){
     if(!isPwMismatchUp){
       form.append("<h2 class='alert pw-mismatch'>Passwords Must Match</h2>");
-      isPwMismatchUp = true
+      isPwMismatchUp = true;
     }else{
       $('.pw-mismatch').remove();
       setTimeout(function(){

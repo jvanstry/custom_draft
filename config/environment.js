@@ -13,9 +13,10 @@ var sessionSecret = require('../settings').cookieSecret;
 module.exports = function(app){
   app.set('port', process.env.PORT || 4114);
   // switch views path to ../build/views upon deployment
-  app.set('views', path.join(__dirname, '../build/views'));
+  app.set('views', path.join(__dirname, '../public/views'));
   app.set('view engine', 'ejs');
-  app.use(express.static(path.join(__dirname, '../build')));
+  // switch static path to ../build upon deployment
+  app.use(express.static(path.join(__dirname, '../public')));
   app.use(favicon());
   app.use(logger('dev'));
   app.use(compress())

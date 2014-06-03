@@ -3,7 +3,14 @@ var routes = require('./config/routes');
 var environment = require('./config/environment');
 var server = require('http').createServer(app);
 var sockets = require('./sockets.js');
+var livereload = require('connect-livereload');
 
+
+
+
+if(process.env.NODE_ENV === 'dev'){
+  app.use(livereload({port: 35729}));
+}
 
 environment(app);
 routes(app);
