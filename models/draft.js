@@ -83,7 +83,7 @@ module.exports = function(orm, db){
         overallPick++;
         cb(overallPick);
       });
-  }
+  };
   
   db.models.draft.hasOne('league', db.models.league, {
     required: true,

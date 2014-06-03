@@ -143,7 +143,7 @@ describe('Draft Controller', function(){
     beforeEach(function(){
       var findResultMock = [{ 
          startDraft: function(memberIds, cb){
-          cb(null, memberIds)
+          cb(null, memberIds);
          }
       }];
 
@@ -193,7 +193,7 @@ describe('Draft Controller', function(){
         active_picker_id: 1, draftees: ['a draftee'],
         league: {
           getMembers: function(cb){
-            cb(null, ['member1', 'member2'])
+            cb(null, ['member1', 'member2']);
           }
         }
       }];
@@ -225,7 +225,7 @@ describe('Draft Controller', function(){
             draftees: ['a draftee'],
             clientId: 2,
             activePickerId: 1 
-          }
+          };
 
           expect(res.body).to.equal(JSON.stringify(draftData));
           done();

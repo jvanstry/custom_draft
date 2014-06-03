@@ -63,14 +63,14 @@ describe('League Controller', function(){
       uzerGetStub = sinon.stub(models.uzer, 'get')
         .callsArgWith(1, null, {
           addLeagues: function(league, additionalColumns, cb){
-            cb()
+            cb();
           }
-        })
+        });
     });
 
     afterEach(function(){
       uzerGetStub.restore();
-    })
+    });
 
     it('Should be accessible by logged in uzer', function(done){
       helper.logInWithSimpleUzer()
@@ -106,7 +106,7 @@ describe('League Controller', function(){
         .form(validArgs)
         .expect(302).end(function(err, res){
           if(err){
-            return done(err)
+            return done(err);
           }
 
           expect(uzerGetStub.calledOnce).to.equal(true);

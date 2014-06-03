@@ -12,7 +12,7 @@ Team.prototype.addMembers = function(){
   }
 
   return this.owner.draftPicks.filter(properLeague);
-}
+};
 
 Team.prototype.calculateTotalScore = function(){
   var teamScore = 0;
@@ -22,7 +22,7 @@ Team.prototype.calculateTotalScore = function(){
   }
 
   return teamScore;
-}
+};
 
 
 module.exports = Team;

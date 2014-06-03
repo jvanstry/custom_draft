@@ -18,12 +18,12 @@ module.exports = {
 
       req.models.uzer.get(uzerId, function(err, uzer){
         if(err){
-          console.error(err)
+          console.error(err);
         }
 
         uzer.addLeagues(league, { isCreator: true }, function(err){
           if(err){
-            console.error(err)
+            console.error(err);
           }
           
           var draftCreatePageUrl = 'league/' + league.id + '/draft';

@@ -93,7 +93,7 @@ describe('Draft class', function(){
 
         draft = result;
         draftSaveStub = sinon.stub(draft, 'save')
-          .callsArgWith(0, null)
+          .callsArgWith(0, null);
 
         done();
       });
@@ -114,7 +114,7 @@ describe('Draft class', function(){
     it('should call callback with newly randomized order', function(){
       var spy = sinon.spy();
 
-      draft.startDraft(['1', '2'], spy)
+      draft.startDraft(['1', '2'], spy);
       expect(spy.calledWith(null, [2, 1])).to.equal(true);
     });
 
