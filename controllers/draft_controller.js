@@ -1,9 +1,13 @@
+var merge = require('merge')
+
 module.exports = {
   new: function(req, res, next){
-    res.locals = {
+    var specificResLocals = {
       title: 'New Draft',
       styles: ['new-draft']
     };
+
+    res.locals = merge(res.locals, specificResLocals);
     res.render('new-draft');
   },
   create: function(req, res, next){
@@ -29,13 +33,14 @@ module.exports = {
         console.error(err);
       }
 
-      res.locals = {
+      var specificResLocals = {
         leagueId: leagueId,
         title: result[0].league.name + ' draft lobby',
         styles: ['draft-lobby'],
         leagueName: result[0].name
       };
-
+    
+      res.locals = merge(res.locals, specificResLocals);
       res.render('draft-lobby');
     });
   },

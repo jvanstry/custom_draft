@@ -1,9 +1,13 @@
+var merge = require('merge');
+
 module.exports = {
   new: function(req, res, next){
-    res.locals = {
+    var specificResLocals = {
       title: 'Create New League',
       styles: ['new-league']
     };
+
+    res.locals = merge(res.locals, specificResLocals);
     res.render('new-league');
   },
   create: function(req, res, next){
@@ -43,11 +47,12 @@ module.exports = {
       var leagueName = result[0].name;
       var pageTitle = leagueName + ' home';
 
-      res.locals = {
+      var specificResLocals = {
         title: pageTitle,
         styles: ['league']
       };
 
+      res.locals = merge(res.locals, specificResLocals);
       res.render('league');
     });
   },
@@ -59,11 +64,12 @@ module.exports = {
 
       var leagueName = result[0].name;
 
-      res.locals = {
+      var specificResLocals = {
         title: 'Recent Leagues',
         styles: ['leagues']
       };
 
+      res.locals = merge(res.locals, specificResLocals);
       res.render('leagues');
     });
   }

@@ -1,11 +1,13 @@
+var merge = require('merge');
+
 module.exports = {
   new: function(req, res, next){
-    res.locals = {
+    var specificResLocals = {
       title: 'Signup',
-      styles: ['new-uzer'],
-      id: req.session.uzer_id
+      styles: ['new-uzer']
     };
 
+    res.locals = merge(res.locals, specificResLocals);
     res.render('new-uzer');
   },
   create: function(req, res, next){
@@ -18,7 +20,7 @@ module.exports = {
       }
 
       var uzerId = result.id;
-      req.session.uzer_id = uzerId;
+      req.session.uzer_id = res.locals.id = uzerId; 
       var uzerHomeURL = 'user/' + uzerId;
 
       res.redirect(uzerHomeURL);
@@ -35,12 +37,13 @@ module.exports = {
       var uzerName = result[0].name;
       var pageTitle = uzerName + ' home';
 
-      res.locals = {
+      var specificResLocals = {
         title: pageTitle,
         styles: ['uzer'],
         uzer: result[0]
       };
 
+      res.locals = merge(res.locals, specificResLocals);
       res.render('uzer');
     });   
   }

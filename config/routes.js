@@ -4,6 +4,7 @@ module.exports = function (app) {
 
   //public routes
 
+  app.all('*', controllers.home.isUzerSignedIn);
   app.get('/', controllers.home.get);
   app.post('/', controllers.home.signIn);
   app.delete('/', controllers.home.signOut);
