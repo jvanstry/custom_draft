@@ -2,12 +2,14 @@ module.exports = function(orm, db){
   db.define('league', {
     name: { type: 'text', required: true },
     rules: { type: 'text' },
-    createdAt: { type: 'date', time: true }
+    createdAt: { type: 'date', time: true },
+    accessCode: { type: 'text' }
   },
   {
     hooks: {
       beforeValidation: function(){
         this.createdAt = new Date();
+        this.accessCode = Math.floor(Math.random() * 1000000000).toString(32);
       }
     },
     validations: {

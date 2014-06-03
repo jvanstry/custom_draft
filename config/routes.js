@@ -60,7 +60,6 @@ function restrictToLeagueCreator(req, res, next){
   var leagueId = parseInt(req.params.leagueId);
   var creator;
 
-  console.log(uzer.id)
   // avoid hitting db for league.find and below middleware
   // or have more coherent code?
   //   for now: lets not hit the db, think more later.
@@ -69,7 +68,6 @@ function restrictToLeagueCreator(req, res, next){
       creator = true;
       // more elegant work around possible?
     };
-    console.log('huh')
   });
 
 // this should work fine since uzer.leagues gets autoFetched

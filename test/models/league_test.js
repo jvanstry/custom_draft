@@ -38,5 +38,16 @@ describe('League class', function(){
         });
       });
     });
+
+    it('should generate an access code', function(done){
+      League.create(validProperties, function(err){
+        expect(err).to.not.exist;
+
+        League.find(validProperties, function(err, results){
+          expect(results[0].accessCode).to.exist;
+          done();
+        });
+      });
+    });
   });
 });
